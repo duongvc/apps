@@ -1,10 +1,12 @@
 package com.travel.gate365;
 
+import com.travel.gate365.view.BaseActivity;
+
 import android.os.Bundle;
 import android.app.Activity;
 import android.view.Menu;
 
-public class Gate365Activity extends Activity {
+public class Gate365Activity extends BaseActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

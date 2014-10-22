@@ -1,6 +1,38 @@
-<resources>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <!--
+	<style name="CommonEditTextStyle" parent="@android:style/TextAppearance.Small">
+		<item name="font">Context-Condensed-SSi-Condensed.ttf</item>
+	</style>
+    
+	<style name="CommonTextViewStyle" parent="@android:style/TextAppearance.Small">
+		<item name="font">Context-Condensed-SSi-Condensed.ttf</item>
+	</style>
+		
+	<style name="CommonButtonStyle">
+		<item name="font">Context-Condensed-SSi-Condensed.ttf</item>
+	</style>
+    
+	<style name="CommonRadioButtonStyle" parent="@android:style/TextAppearance.Small">
+		<item name="font">Context-Condensed-SSi-Condensed.ttf</item>
+	</style>
+		
+	<style name="CommonCheckboxStyle" parent="@android:style/TextAppearance.Small">
+		<item name="font">Context-Condensed-SSi-Condensed.ttf</item>
+	</style>
+		
+	<style name="CommonSpinnerStyle" parent="@android:style/TextAppearance.Small">
+		<item name="font">Context-Condensed-SSi-Condensed.ttf</item>
+	</style>
+
+	<style name="CommonSpinnerDropDownItemStyle" parent="@android:style/TextAppearance.Small">
+		<item name="font">Context-Condensed-SSi-Condensed.ttf</item>
+	</style>
+
+	<style name="CommonSpinnerItemStyle" parent="@android:style/TextAppearance.Small">
+		<item name="font">Context-Condensed-SSi-Condensed.ttf</item>
+	</style>
+
+		<!--
         Base application theme, dependent on API level. This theme is replaced
         by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
     -->
@@ -15,6 +47,17 @@
     <!-- Application theme. -->
     <style name="AppTheme" parent="AppBaseTheme">
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+		<item name="android:windowNoTitle">false</item>
+   		<item name="android:windowFullscreen">true</item>        
+        <item name="android:spinnerStyle">@style/CommonSpinnerStyle</item>
+        <item name="android:textStyle">@style/CommonTextViewStyle</item>
+        <item name="android:textViewStyle">@style/CommonTextViewStyle</item>
+        <item name="android:buttonStyle">@style/CommonButtonStyle</item>
+        <item name="android:checkboxStyle">@style/CommonCheckboxStyle</item>
+        <item name="android:editTextStyle">@style/CommonEditTextStyle</item>
+        <item name="android:radioButtonStyle">@style/CommonRadioButtonStyle</item>
+        <item name="android:spinnerDropDownItemStyle">@style/CommonSpinnerDropDownItemStyle</item>
+        <item name="android:spinnerItemStyle">@style/CommonSpinnerItemStyle</item>   
     </style>
 
 </resources>

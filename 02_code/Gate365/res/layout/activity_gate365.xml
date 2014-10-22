@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     tools:context=".Gate365Activity" >
 
-    <TextView
+    <com.travel.gate365.view.widget.FontableTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
