@@ -17,5 +17,9 @@
 <resources>
     <item type="id" name="actionbar_compat" />
     <item type="id" name="actionbar_compat_title" />
-  
+    <item type="id" name="txt_username" />
+    <item type="id" name="txt_password" />
+    <item type="id" name="edt_username" />
+    <item type="id" name="edt_password" />    
+        
 </resources>

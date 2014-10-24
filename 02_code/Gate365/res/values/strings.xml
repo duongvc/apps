@@ -4,5 +4,7 @@
     <string name="app_name">Gate365</string>
     <string name="hello_world">Hello world!</string>
     <string name="menu_settings">Settings</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
 
 </resources>

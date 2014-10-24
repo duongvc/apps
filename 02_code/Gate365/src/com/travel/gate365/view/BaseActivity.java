@@ -1,8 +1,8 @@
 package com.travel.gate365.view;
 
-import android.support.v4.actionbar.ActionBarActivity;
+import android.app.Activity;
 
-public class BaseActivity extends ActionBarActivity {
+public class BaseActivity extends Activity {
 
 	public BaseActivity() {
 	}
