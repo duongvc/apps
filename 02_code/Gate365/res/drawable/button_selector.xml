@@ -35,9 +35,12 @@
 		        android:bottom="2dip"
 		        android:left="2dip">
 				<shape>
-					<solid android:color="@android:color/white"/>
+				    <gradient
+				    	android:startColor="@color/bg_button_inactive_start"
+				        android:endColor="@color/bg_button_inactive_end"
+				        android:angle="90"
+				        />    
 				    <corners android:radius="2dip"/>
-				    <stroke android:width="1dip" android:color="@android:color/white"/>
 				</shape>
 			</item>			    
 	    </layer-list>    
@@ -77,9 +80,12 @@
 		        android:bottom="2dip"
 		        android:left="2dip">
 				<shape>
-					<solid android:color="@android:color/white"/>
+				    <gradient
+				    	android:startColor="@color/bg_button_active_start"
+				        android:endColor="@color/bg_button_active_end"
+				        android:angle="90"
+				        />    
 				    <corners android:radius="2dip"/>
-				    <stroke android:width="1dip" android:color="@android:color/white"/>
 				</shape>
 			</item>			    
 	    </layer-list>    
@@ -119,9 +125,12 @@
 		        android:bottom="2dip"
 		        android:left="2dip">
 				<shape>
-					<solid android:color="@android:color/white"/>
+				    <gradient
+				    	android:startColor="@color/bg_button_active_start"
+				        android:endColor="@color/bg_button_active_end"
+				        android:angle="90"
+				        />    
 				    <corners android:radius="2dip"/>
-				    <stroke android:width="1dip" android:color="@android:color/white"/>
 				</shape>
 			</item>			    
 	    </layer-list>    
@@ -161,9 +170,12 @@
 		        android:bottom="2dip"
 		        android:left="2dip">
 				<shape>
-					<solid android:color="@android:color/white"/>
+				    <gradient
+				    	android:startColor="@color/bg_button_active_start"
+				        android:endColor="@color/bg_button_active_end"
+				        android:angle="90"
+				        />    
 				    <corners android:radius="2dip"/>
-				    <stroke android:width="1dip" android:color="@android:color/white"/>
 				</shape>
 			</item>			    
 	    </layer-list>    
@@ -201,12 +213,14 @@
 		        android:bottom="2dip"
 		        android:left="2dip">
 				<shape>
-					<solid android:color="@android:color/white"/>
+				    <gradient
+				    	android:startColor="@color/bg_button_active_start"
+				        android:endColor="@color/bg_button_active_end"
+				        android:angle="90"
+				        />    
 				    <corners android:radius="2dip"/>
-				    <stroke android:width="1dip" android:color="@android:color/white"/>
 				</shape>
 			</item>			    
 	    </layer-list>    
 	</item>
-	
 </selector>

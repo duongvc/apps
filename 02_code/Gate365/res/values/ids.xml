@@ -21,5 +21,6 @@
     <item type="id" name="txt_password" />
     <item type="id" name="edt_username" />
     <item type="id" name="edt_password" />    
+    <item type="id" name="btn_login" />
         
 </resources>

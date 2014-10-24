@@ -11,7 +11,7 @@ public class Gate365Activity extends BaseActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_gate365);
+		setContentView(R.layout.activity_login);
 	}
 
 	@Override

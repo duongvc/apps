@@ -26,7 +26,7 @@ public class FontableButton extends Button {
                 R.styleable.com_travel_gate365_view_widget_FontableButton_font);
     }
     
-    @Override
+    /*@Override
 	public void setEnabled(boolean enabled) {
 		if(isEnabled() == enabled)
 	        return;
@@ -41,5 +41,5 @@ public class FontableButton extends Button {
 
 	    super.setEnabled(enabled);
 	    startAnimation(a);		
-	}        
+	} */       
 }
