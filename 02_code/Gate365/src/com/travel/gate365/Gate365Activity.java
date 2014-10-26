@@ -8,6 +8,10 @@ import android.view.Menu;
 
 public class Gate365Activity extends BaseActivity {
 
+	public Gate365Activity() {
+		super(Gate365Activity.class.getSimpleName());
+	}
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);

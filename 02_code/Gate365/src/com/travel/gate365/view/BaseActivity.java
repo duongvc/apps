@@ -2,9 +2,19 @@ package com.travel.gate365.view;
 
 import android.app.Activity;
 
-public class BaseActivity extends Activity {
+public abstract class BaseActivity extends Activity {
 
-	public BaseActivity() {
+	private final String id;
+	
+	public BaseActivity(String id) {
+		this.id = id;
 	}
 
+	protected void init() {
+		
+	}
+
+	public String getId() {
+		return id;
+	}
 }

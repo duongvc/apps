@@ -17,10 +17,14 @@
 <resources>
     <item type="id" name="actionbar_compat" />
     <item type="id" name="actionbar_compat_title" />
+    <item type="id" name="btn_login" />
+    <item type="id" name="edt_username" />
+    <item type="id" name="edt_password" />
+    <item type="id" name="header" />    
+    <item type="id" name="img_ic_header" />
     <item type="id" name="txt_username" />
     <item type="id" name="txt_password" />
-    <item type="id" name="edt_username" />
-    <item type="id" name="edt_password" />    
-    <item type="id" name="btn_login" />
-        
+    <item type="id" name="txt_header_left" />
+    <item type="id" name="txt_header_right" />
+    
 </resources>

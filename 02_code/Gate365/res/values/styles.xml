@@ -1,6 +1,6 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
-	<style name="CommonEditTextStyle" parent="@android:style/TextAppearance.Small">
+	<style name="CommonEditTextStyle" parent="@android:style/TextAppearance.Widget.EditText">
 		<item name="font">Context-Condensed-SSi-Condensed.ttf</item>
 		<item name="android:background">@drawable/edit_text_selector</item>
 		<item name="android:padding">5dp</item>
@@ -23,31 +23,43 @@
 		<item name="android:gravity">center_vertical|center_horizontal</item>
 	</style>
     
-	<style name="CommonRadioButtonStyle" parent="@android:style/TextAppearance.Small">
+	<style name="CommonRadioButtonStyle" parent="@android:style/Widget.CompoundButton.RadioButton">
 		<item name="font">Context-Condensed-SSi-Condensed.ttf</item>
+		<item name="android:padding">5dp</item>
+		<item name="android:focusable">true</item>
+		<item name="android:clickable">true</item>
+		<item name="android:gravity">center_vertical|left</item>
 	</style>
 		
-	<style name="CommonCheckboxStyle" parent="@android:style/TextAppearance.Small">
+	<style name="CommonCheckboxStyle" parent="@android:style/Widget.CompoundButton.CheckBox">
 		<item name="font">Context-Condensed-SSi-Condensed.ttf</item>
+		<item name="android:padding">5dp</item>
+		<item name="android:focusable">true</item>
+		<item name="android:clickable">true</item>
+		<item name="android:gravity">center_vertical|left</item>
 	</style>
 		
-	<style name="CommonSpinnerStyle" parent="@android:style/TextAppearance.Small">
+	<style name="CommonSpinnerStyle" parent="@android:style/Widget.Spinner">
 		<item name="font">Context-Condensed-SSi-Condensed.ttf</item>
 	</style>
 
-	<style name="CommonSpinnerDropDownItemStyle" parent="@android:style/TextAppearance.Small">
+	<style name="CommonSpinnerDropDownItemStyle" parent="@android:style/Widget.DropDownItem">
 		<item name="font">Context-Condensed-SSi-Condensed.ttf</item>
 	</style>
 
-	<style name="CommonSpinnerItemStyle" parent="@android:style/TextAppearance.Small">
+	<style name="CommonSpinnerItemStyle" parent="@android:style/Widget.TextView.SpinnerItem">
 		<item name="font">Context-Condensed-SSi-Condensed.ttf</item>
 	</style>
 
+	<style name="CommonImageViewStyle">
+		<item name="android:padding">5dp</item>
+	</style>
+		
 		<!--
         Base application theme, dependent on API level. This theme is replaced
         by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
     -->
-    <style name="AppBaseTheme" parent="android:Theme.Light">
+    <style name="AppBaseTheme" parent="android:Theme.Light.NoTitleBar.Fullscreen">
         <!--
             Theme customizations available in newer API levels can go in
             res/values-vXX/styles.xml, while customizations related to
@@ -58,7 +70,7 @@
     <!-- Application theme. -->
     <style name="AppTheme" parent="AppBaseTheme">
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
-		<item name="android:windowNoTitle">false</item>
+		<item name="android:windowNoTitle">true</item>
    		<item name="android:windowFullscreen">true</item>        
         <item name="android:spinnerStyle">@style/CommonSpinnerStyle</item>
         <item name="android:textStyle">@style/CommonTextViewStyle</item>
@@ -69,7 +81,6 @@
         <item name="android:radioButtonStyle">@style/CommonRadioButtonStyle</item>
         <item name="android:spinnerDropDownItemStyle">@style/CommonSpinnerDropDownItemStyle</item>
         <item name="android:spinnerItemStyle">@style/CommonSpinnerItemStyle</item>   
-        <item name="android:background">@color/dark_gray</item>
     </style>
 
 </resources>

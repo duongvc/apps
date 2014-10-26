@@ -6,6 +6,7 @@
     <string name="menu_settings">Settings</string>
     <string name="username">Username</string>
     <string name="password">Password</string>
-    <string name="login">Login</string>
+    <string name="login_l">Login</string>
+    <string name="login_U">LOGIN</string>
     
 </resources>
