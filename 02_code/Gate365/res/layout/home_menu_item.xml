@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@id/header"
     android:layout_width="match_parent"
     android:layout_height="wrap_content" 
-    android:background="@drawable/header_selector">
+    android:background="@drawable/button_selector">
     
     <ImageView android:id="@id/img_icon"
         android:layout_width="wrap_content"
@@ -21,14 +20,4 @@
         android:textColor="@android:color/black"
         android:text="@string/login_U"/>
 
-    <com.travel.gate365.view.widget.FontableTextView android:id="@id/txt_right" 
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:layout_margin="5dp"
-        style="@style/CommonTextViewStyle"
-        android:textColor="@android:color/black" 
-        android:text=""/>
-    
 </RelativeLayout>

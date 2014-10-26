@@ -1,10 +1,13 @@
 package com.travel.gate365;
 
-import com.travel.gate365.view.BaseActivity;
-
+import android.content.Intent;
 import android.os.Bundle;
-import android.app.Activity;
 import android.view.Menu;
+
+import com.travel.gate365.model.Model;
+import com.travel.gate365.view.BaseActivity;
+import com.travel.gate365.view.HomeActivity;
+import com.travel.gate365.view.LoginActivity;
 
 public class Gate365Activity extends BaseActivity {
 
@@ -15,7 +18,12 @@ public class Gate365Activity extends BaseActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_login);
+		if(!Model.getInstance().isLogin()){
+			finish();
+			//Intent intent = new Intent(Gate365Activity.this, LoginActivity.class);
+			Intent intent = new Intent(Gate365Activity.this, HomeActivity.class);
+			startActivity(intent);
+		}
 	}
 
 	@Override

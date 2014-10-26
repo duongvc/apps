@@ -147,173 +147,174 @@ containing a value of this type.
         public static final int hk=0x7f02006e;
         public static final int hm=0x7f02006f;
         public static final int hn=0x7f020070;
-        public static final int hr=0x7f020071;
-        public static final int ht=0x7f020072;
-        public static final int hu=0x7f020073;
-        public static final int ic_0=0x7f020074;
-        public static final int ic_0_f=0x7f020075;
-        public static final int ic_1=0x7f020076;
-        public static final int ic_1_f=0x7f020077;
-        public static final int ic_2=0x7f020078;
-        public static final int ic_2_f=0x7f020079;
-        public static final int ic_3=0x7f02007a;
-        public static final int ic_365=0x7f02007b;
-        public static final int ic_3_f=0x7f02007c;
-        public static final int ic_4=0x7f02007d;
-        public static final int ic_4_f=0x7f02007e;
-        public static final int ic_5=0x7f02007f;
-        public static final int ic_5_f=0x7f020080;
-        public static final int ic_do=0x7f020081;
-        public static final int ic_launcher=0x7f020082;
-        public static final int id=0x7f020083;
-        public static final int ie=0x7f020084;
-        public static final int il=0x7f020085;
-        public static final int im=0x7f020086;
-        public static final int in=0x7f020087;
-        public static final int io=0x7f020088;
-        public static final int iq=0x7f020089;
-        public static final int ir=0x7f02008a;
-        public static final int is=0x7f02008b;
-        public static final int it=0x7f02008c;
-        public static final int je=0x7f02008d;
-        public static final int jm=0x7f02008e;
-        public static final int jo=0x7f02008f;
-        public static final int jp=0x7f020090;
-        public static final int ke=0x7f020091;
-        public static final int kg=0x7f020092;
-        public static final int kh=0x7f020093;
-        public static final int ki=0x7f020094;
-        public static final int km=0x7f020095;
-        public static final int kn=0x7f020096;
-        public static final int kp=0x7f020097;
-        public static final int kr=0x7f020098;
-        public static final int kw=0x7f020099;
-        public static final int ky=0x7f02009a;
-        public static final int kz=0x7f02009b;
-        public static final int la=0x7f02009c;
-        public static final int lb=0x7f02009d;
-        public static final int lc=0x7f02009e;
-        public static final int li=0x7f02009f;
-        public static final int lk=0x7f0200a0;
-        public static final int lr=0x7f0200a1;
-        public static final int ls=0x7f0200a2;
-        public static final int lt=0x7f0200a3;
-        public static final int lu=0x7f0200a4;
-        public static final int lv=0x7f0200a5;
-        public static final int ly=0x7f0200a6;
-        public static final int ma=0x7f0200a7;
-        public static final int mc=0x7f0200a8;
-        public static final int md=0x7f0200a9;
-        public static final int me=0x7f0200aa;
-        public static final int mf=0x7f0200ab;
-        public static final int mg=0x7f0200ac;
-        public static final int mh=0x7f0200ad;
-        public static final int mk=0x7f0200ae;
-        public static final int ml=0x7f0200af;
-        public static final int mm=0x7f0200b0;
-        public static final int mn=0x7f0200b1;
-        public static final int mo=0x7f0200b2;
-        public static final int mp=0x7f0200b3;
-        public static final int mq=0x7f0200b4;
-        public static final int mr=0x7f0200b5;
-        public static final int ms=0x7f0200b6;
-        public static final int mt=0x7f0200b7;
-        public static final int mu=0x7f0200b8;
-        public static final int mv=0x7f0200b9;
-        public static final int mw=0x7f0200ba;
-        public static final int mx=0x7f0200bb;
-        public static final int my=0x7f0200bc;
-        public static final int mz=0x7f0200bd;
-        public static final int na=0x7f0200be;
-        public static final int nc=0x7f0200bf;
-        public static final int ne=0x7f0200c0;
-        public static final int nf=0x7f0200c1;
-        public static final int ng=0x7f0200c2;
-        public static final int ni=0x7f0200c3;
-        public static final int nl=0x7f0200c4;
-        public static final int no=0x7f0200c5;
-        public static final int np=0x7f0200c6;
-        public static final int nr=0x7f0200c7;
-        public static final int nu=0x7f0200c8;
-        public static final int nz=0x7f0200c9;
-        public static final int om=0x7f0200ca;
-        public static final int pa=0x7f0200cb;
-        public static final int pe=0x7f0200cc;
-        public static final int pf=0x7f0200cd;
-        public static final int pg=0x7f0200ce;
-        public static final int ph=0x7f0200cf;
-        public static final int pk=0x7f0200d0;
-        public static final int pl=0x7f0200d1;
-        public static final int pm=0x7f0200d2;
-        public static final int pn=0x7f0200d3;
-        public static final int pr=0x7f0200d4;
-        public static final int ps=0x7f0200d5;
-        public static final int pt=0x7f0200d6;
-        public static final int pw=0x7f0200d7;
-        public static final int py=0x7f0200d8;
-        public static final int qa=0x7f0200d9;
-        public static final int re=0x7f0200da;
-        public static final int ro=0x7f0200db;
-        public static final int rs=0x7f0200dc;
-        public static final int ru=0x7f0200dd;
-        public static final int rw=0x7f0200de;
-        public static final int sa=0x7f0200df;
-        public static final int sb=0x7f0200e0;
-        public static final int sc=0x7f0200e1;
-        public static final int sd=0x7f0200e2;
-        public static final int se=0x7f0200e3;
-        public static final int sg=0x7f0200e4;
-        public static final int sh=0x7f0200e5;
-        public static final int si=0x7f0200e6;
-        public static final int sj=0x7f0200e7;
-        public static final int sk=0x7f0200e8;
-        public static final int sl=0x7f0200e9;
-        public static final int sm=0x7f0200ea;
-        public static final int sn=0x7f0200eb;
-        public static final int so=0x7f0200ec;
-        public static final int sr=0x7f0200ed;
-        public static final int ss=0x7f0200ee;
-        public static final int st=0x7f0200ef;
-        public static final int sv=0x7f0200f0;
-        public static final int sx=0x7f0200f1;
-        public static final int sy=0x7f0200f2;
-        public static final int sz=0x7f0200f3;
-        public static final int tc=0x7f0200f4;
-        public static final int td=0x7f0200f5;
-        public static final int tf=0x7f0200f6;
-        public static final int tg=0x7f0200f7;
-        public static final int th=0x7f0200f8;
-        public static final int tj=0x7f0200f9;
-        public static final int tk=0x7f0200fa;
-        public static final int tl=0x7f0200fb;
-        public static final int tm=0x7f0200fc;
-        public static final int tn=0x7f0200fd;
-        public static final int to=0x7f0200fe;
-        public static final int tr=0x7f0200ff;
-        public static final int tt=0x7f020100;
-        public static final int tv=0x7f020101;
-        public static final int tw=0x7f020102;
-        public static final int tz=0x7f020103;
-        public static final int ua=0x7f020104;
-        public static final int ug=0x7f020105;
-        public static final int um=0x7f020106;
-        public static final int us=0x7f020107;
-        public static final int uy=0x7f020108;
-        public static final int uz=0x7f020109;
-        public static final int va=0x7f02010a;
-        public static final int vc=0x7f02010b;
-        public static final int ve=0x7f02010c;
-        public static final int vg=0x7f02010d;
-        public static final int vi=0x7f02010e;
-        public static final int vn=0x7f02010f;
-        public static final int vu=0x7f020110;
-        public static final int wf=0x7f020111;
-        public static final int ws=0x7f020112;
-        public static final int ye=0x7f020113;
-        public static final int yt=0x7f020114;
-        public static final int za=0x7f020115;
-        public static final int zm=0x7f020116;
-        public static final int zw=0x7f020117;
+        public static final int home_menuitem_selector=0x7f020071;
+        public static final int hr=0x7f020072;
+        public static final int ht=0x7f020073;
+        public static final int hu=0x7f020074;
+        public static final int ic_0=0x7f020075;
+        public static final int ic_0_f=0x7f020076;
+        public static final int ic_1=0x7f020077;
+        public static final int ic_1_f=0x7f020078;
+        public static final int ic_2=0x7f020079;
+        public static final int ic_2_f=0x7f02007a;
+        public static final int ic_3=0x7f02007b;
+        public static final int ic_365=0x7f02007c;
+        public static final int ic_3_f=0x7f02007d;
+        public static final int ic_4=0x7f02007e;
+        public static final int ic_4_f=0x7f02007f;
+        public static final int ic_5=0x7f020080;
+        public static final int ic_5_f=0x7f020081;
+        public static final int ic_do=0x7f020082;
+        public static final int ic_launcher=0x7f020083;
+        public static final int id=0x7f020084;
+        public static final int ie=0x7f020085;
+        public static final int il=0x7f020086;
+        public static final int im=0x7f020087;
+        public static final int in=0x7f020088;
+        public static final int io=0x7f020089;
+        public static final int iq=0x7f02008a;
+        public static final int ir=0x7f02008b;
+        public static final int is=0x7f02008c;
+        public static final int it=0x7f02008d;
+        public static final int je=0x7f02008e;
+        public static final int jm=0x7f02008f;
+        public static final int jo=0x7f020090;
+        public static final int jp=0x7f020091;
+        public static final int ke=0x7f020092;
+        public static final int kg=0x7f020093;
+        public static final int kh=0x7f020094;
+        public static final int ki=0x7f020095;
+        public static final int km=0x7f020096;
+        public static final int kn=0x7f020097;
+        public static final int kp=0x7f020098;
+        public static final int kr=0x7f020099;
+        public static final int kw=0x7f02009a;
+        public static final int ky=0x7f02009b;
+        public static final int kz=0x7f02009c;
+        public static final int la=0x7f02009d;
+        public static final int lb=0x7f02009e;
+        public static final int lc=0x7f02009f;
+        public static final int li=0x7f0200a0;
+        public static final int lk=0x7f0200a1;
+        public static final int lr=0x7f0200a2;
+        public static final int ls=0x7f0200a3;
+        public static final int lt=0x7f0200a4;
+        public static final int lu=0x7f0200a5;
+        public static final int lv=0x7f0200a6;
+        public static final int ly=0x7f0200a7;
+        public static final int ma=0x7f0200a8;
+        public static final int mc=0x7f0200a9;
+        public static final int md=0x7f0200aa;
+        public static final int me=0x7f0200ab;
+        public static final int mf=0x7f0200ac;
+        public static final int mg=0x7f0200ad;
+        public static final int mh=0x7f0200ae;
+        public static final int mk=0x7f0200af;
+        public static final int ml=0x7f0200b0;
+        public static final int mm=0x7f0200b1;
+        public static final int mn=0x7f0200b2;
+        public static final int mo=0x7f0200b3;
+        public static final int mp=0x7f0200b4;
+        public static final int mq=0x7f0200b5;
+        public static final int mr=0x7f0200b6;
+        public static final int ms=0x7f0200b7;
+        public static final int mt=0x7f0200b8;
+        public static final int mu=0x7f0200b9;
+        public static final int mv=0x7f0200ba;
+        public static final int mw=0x7f0200bb;
+        public static final int mx=0x7f0200bc;
+        public static final int my=0x7f0200bd;
+        public static final int mz=0x7f0200be;
+        public static final int na=0x7f0200bf;
+        public static final int nc=0x7f0200c0;
+        public static final int ne=0x7f0200c1;
+        public static final int nf=0x7f0200c2;
+        public static final int ng=0x7f0200c3;
+        public static final int ni=0x7f0200c4;
+        public static final int nl=0x7f0200c5;
+        public static final int no=0x7f0200c6;
+        public static final int np=0x7f0200c7;
+        public static final int nr=0x7f0200c8;
+        public static final int nu=0x7f0200c9;
+        public static final int nz=0x7f0200ca;
+        public static final int om=0x7f0200cb;
+        public static final int pa=0x7f0200cc;
+        public static final int pe=0x7f0200cd;
+        public static final int pf=0x7f0200ce;
+        public static final int pg=0x7f0200cf;
+        public static final int ph=0x7f0200d0;
+        public static final int pk=0x7f0200d1;
+        public static final int pl=0x7f0200d2;
+        public static final int pm=0x7f0200d3;
+        public static final int pn=0x7f0200d4;
+        public static final int pr=0x7f0200d5;
+        public static final int ps=0x7f0200d6;
+        public static final int pt=0x7f0200d7;
+        public static final int pw=0x7f0200d8;
+        public static final int py=0x7f0200d9;
+        public static final int qa=0x7f0200da;
+        public static final int re=0x7f0200db;
+        public static final int ro=0x7f0200dc;
+        public static final int rs=0x7f0200dd;
+        public static final int ru=0x7f0200de;
+        public static final int rw=0x7f0200df;
+        public static final int sa=0x7f0200e0;
+        public static final int sb=0x7f0200e1;
+        public static final int sc=0x7f0200e2;
+        public static final int sd=0x7f0200e3;
+        public static final int se=0x7f0200e4;
+        public static final int sg=0x7f0200e5;
+        public static final int sh=0x7f0200e6;
+        public static final int si=0x7f0200e7;
+        public static final int sj=0x7f0200e8;
+        public static final int sk=0x7f0200e9;
+        public static final int sl=0x7f0200ea;
+        public static final int sm=0x7f0200eb;
+        public static final int sn=0x7f0200ec;
+        public static final int so=0x7f0200ed;
+        public static final int sr=0x7f0200ee;
+        public static final int ss=0x7f0200ef;
+        public static final int st=0x7f0200f0;
+        public static final int sv=0x7f0200f1;
+        public static final int sx=0x7f0200f2;
+        public static final int sy=0x7f0200f3;
+        public static final int sz=0x7f0200f4;
+        public static final int tc=0x7f0200f5;
+        public static final int td=0x7f0200f6;
+        public static final int tf=0x7f0200f7;
+        public static final int tg=0x7f0200f8;
+        public static final int th=0x7f0200f9;
+        public static final int tj=0x7f0200fa;
+        public static final int tk=0x7f0200fb;
+        public static final int tl=0x7f0200fc;
+        public static final int tm=0x7f0200fd;
+        public static final int tn=0x7f0200fe;
+        public static final int to=0x7f0200ff;
+        public static final int tr=0x7f020100;
+        public static final int tt=0x7f020101;
+        public static final int tv=0x7f020102;
+        public static final int tw=0x7f020103;
+        public static final int tz=0x7f020104;
+        public static final int ua=0x7f020105;
+        public static final int ug=0x7f020106;
+        public static final int um=0x7f020107;
+        public static final int us=0x7f020108;
+        public static final int uy=0x7f020109;
+        public static final int uz=0x7f02010a;
+        public static final int va=0x7f02010b;
+        public static final int vc=0x7f02010c;
+        public static final int ve=0x7f02010d;
+        public static final int vg=0x7f02010e;
+        public static final int vi=0x7f02010f;
+        public static final int vn=0x7f020110;
+        public static final int vu=0x7f020111;
+        public static final int wf=0x7f020112;
+        public static final int ws=0x7f020113;
+        public static final int ye=0x7f020114;
+        public static final int yt=0x7f020115;
+        public static final int za=0x7f020116;
+        public static final int zm=0x7f020117;
+        public static final int zw=0x7f020118;
     }
     public static final class id {
         public static final int actionbar_compat=0x7f060000;
@@ -322,29 +323,38 @@ containing a value of this type.
         public static final int edt_password=0x7f060004;
         public static final int edt_username=0x7f060003;
         public static final int header=0x7f060005;
-        public static final int img_ic_header=0x7f060006;
-        public static final int menu_settings=0x7f06000b;
-        public static final int txt_header_left=0x7f060009;
-        public static final int txt_header_right=0x7f06000a;
+        public static final int img_icon=0x7f060006;
+        public static final int lst_menu=0x7f06000b;
+        public static final int menu_settings=0x7f06000c;
+        public static final int txt_left=0x7f060009;
         public static final int txt_password=0x7f060008;
+        public static final int txt_right=0x7f06000a;
         public static final int txt_username=0x7f060007;
     }
     public static final class layout {
         public static final int actionbar_compat=0x7f030000;
         public static final int activity_gate365=0x7f030001;
-        public static final int activity_login=0x7f030002;
-        public static final int header=0x7f030003;
+        public static final int activity_home=0x7f030002;
+        public static final int activity_login=0x7f030003;
+        public static final int header=0x7f030004;
+        public static final int home_menu_item=0x7f030005;
     }
     public static final class menu {
         public static final int activity_gate365=0x7f090000;
     }
     public static final class string {
         public static final int app_name=0x7f070000;
+        public static final int country_risk=0x7f07000a;
         public static final int hello_world=0x7f070001;
+        public static final int journeys=0x7f070007;
         public static final int login_U=0x7f070006;
         public static final int login_l=0x7f070005;
         public static final int menu_settings=0x7f070002;
         public static final int password=0x7f070004;
+        public static final int settings=0x7f07000c;
+        public static final int travel_advices=0x7f070009;
+        public static final int travel_alerts=0x7f070008;
+        public static final int travel_tips=0x7f07000b;
         public static final int username=0x7f070003;
     }
     public static final class style {
@@ -408,7 +418,7 @@ containing a value of this type.
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name android:font
+          @attr name com.travel.gate365:font
         */
         public static final int com_travel_gate365_view_widget_FontableAutoCompleteTextView_font = 0;
         /** Attributes that can be used with a com_travel_gate365_view_widget_FontableButton.
@@ -435,7 +445,7 @@ containing a value of this type.
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name android:font
+          @attr name com.travel.gate365:font
         */
         public static final int com_travel_gate365_view_widget_FontableButton_font = 0;
         /** Attributes that can be used with a com_travel_gate365_view_widget_FontableCheckbox.
@@ -462,7 +472,7 @@ containing a value of this type.
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name android:font
+          @attr name com.travel.gate365:font
         */
         public static final int com_travel_gate365_view_widget_FontableCheckbox_font = 0;
         /** Attributes that can be used with a com_travel_gate365_view_widget_FontableEditText.
@@ -489,7 +499,7 @@ containing a value of this type.
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name android:font
+          @attr name com.travel.gate365:font
         */
         public static final int com_travel_gate365_view_widget_FontableEditText_font = 0;
         /** Attributes that can be used with a com_travel_gate365_view_widget_FontableRadioButton.
@@ -516,7 +526,7 @@ containing a value of this type.
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name android:font
+          @attr name com.travel.gate365:font
         */
         public static final int com_travel_gate365_view_widget_FontableRadioButton_font = 0;
         /** Attributes that can be used with a com_travel_gate365_view_widget_FontableSpinner.
@@ -543,7 +553,7 @@ containing a value of this type.
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name android:font
+          @attr name com.travel.gate365:font
         */
         public static final int com_travel_gate365_view_widget_FontableSpinner_font = 0;
         /** Attributes that can be used with a com_travel_gate365_view_widget_FontableTextView.
@@ -570,7 +580,7 @@ containing a value of this type.
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name android:font
+          @attr name com.travel.gate365:font
         */
         public static final int com_travel_gate365_view_widget_FontableTextView_font = 0;
     };

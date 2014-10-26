@@ -21,10 +21,11 @@
     <item type="id" name="edt_username" />
     <item type="id" name="edt_password" />
     <item type="id" name="header" />    
-    <item type="id" name="img_ic_header" />
+    <item type="id" name="img_icon" />
     <item type="id" name="txt_username" />
     <item type="id" name="txt_password" />
-    <item type="id" name="txt_header_left" />
-    <item type="id" name="txt_header_right" />
+    <item type="id" name="txt_left" />
+    <item type="id" name="txt_right" />
+    <item type="id" name="lst_menu" />
     
 </resources>

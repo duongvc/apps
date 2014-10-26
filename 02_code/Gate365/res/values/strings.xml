@@ -8,5 +8,11 @@
     <string name="password">Password</string>
     <string name="login_l">Login</string>
     <string name="login_U">LOGIN</string>
+    <string name="journeys">JOURNEYS</string>
+    <string name="travel_alerts">TRAVEL ALERTS</string>
+    <string name="travel_advices">TRAVEL ADVICES</string>
+    <string name="country_risk">COUNTRY RISK</string>
+    <string name="travel_tips">TRAVEL TIPS</string>
+    <string name="settings">SETTINGS</string>
     
 </resources>
