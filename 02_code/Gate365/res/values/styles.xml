@@ -77,15 +77,15 @@
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
 		<item name="android:windowNoTitle">true</item>
    		<item name="android:windowFullscreen">true</item>        
-        <item name="android:spinnerStyle">@style/CommonSpinnerStyle</item>
-        <item name="android:textStyle">@style/CommonTextViewStyle</item>
-        <item name="android:textViewStyle">@style/CommonTextViewStyle</item>
+        <!-- <item name="android:spinnerStyle">@style/CommonSpinnerStyle</item>
+        <item name="android:textStyle">@style/CommonTextViewStyle</item> -->
+        <item name="android:textViewStyle">@style/CommonTextViewStyle</item> 
+        <item name="android:editTextStyle">@style/CommonEditTextStyle</item>
         <item name="android:buttonStyle">@style/CommonButtonStyle</item>
         <item name="android:checkboxStyle">@style/CommonCheckboxStyle</item>
-        <item name="android:editTextStyle">@style/CommonEditTextStyle</item>
         <item name="android:radioButtonStyle">@style/CommonRadioButtonStyle</item>
         <item name="android:spinnerDropDownItemStyle">@style/CommonSpinnerDropDownItemStyle</item>
-        <item name="android:spinnerItemStyle">@style/CommonSpinnerItemStyle</item>   
+        <item name="android:spinnerItemStyle">@style/CommonSpinnerItemStyle</item> -->   
     </style>
 
 </resources>

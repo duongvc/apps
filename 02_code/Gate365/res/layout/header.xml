@@ -2,15 +2,15 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@id/header"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content" 
+    android:layout_height="wrap_content"
     android:background="@drawable/header_selector">
     
     <ImageView android:id="@id/img_icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
         style="@style/CommonImageViewStyle"
-        android:contentDescription="@string/login_U"
-        android:src="@drawable/ic_0"/>
+        android:contentDescription="@string/login_U"/>
 
     <com.travel.gate365.view.widget.FontableTextView android:id="@id/txt_left" 
         android:layout_width="wrap_content"

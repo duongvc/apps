@@ -2,6 +2,7 @@ package com.travel.gate365.view;
 
 import com.travel.gate365.R;
 import com.travel.gate365.model.MenuItemInfo;
+import com.travel.gate365.model.Model;
 
 import android.app.Activity;
 import android.content.Context;
@@ -10,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 public class HomeMenuItemAdapter extends BaseAdapter {
@@ -47,6 +49,8 @@ public class HomeMenuItemAdapter extends BaseAdapter {
 	        LayoutInflater inflate = ((Activity) context).getLayoutInflater();
 	        convertView = (View)inflate.inflate(R.layout.home_menu_item, null);  
 			ImageView icon = (ImageView)convertView.findViewById(R.id.img_icon);
+			int maxHeight = Model.getInstance().getScreenHeight() / 5;
+			icon.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, maxHeight));
 			icon.setImageResource(info.getIconResId());
 			TextView text = (TextView)convertView.findViewById(R.id.txt_left);
 			text.setText(info.getTextResId());

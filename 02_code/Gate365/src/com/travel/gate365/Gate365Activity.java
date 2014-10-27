@@ -18,10 +18,11 @@ public class Gate365Activity extends BaseActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		Model.getInstance().init(this);		
 		if(!Model.getInstance().isLogin()){
 			finish();
-			//Intent intent = new Intent(Gate365Activity.this, LoginActivity.class);
-			Intent intent = new Intent(Gate365Activity.this, HomeActivity.class);
+			Intent intent = new Intent(Gate365Activity.this, LoginActivity.class);
+			//Intent intent = new Intent(Gate365Activity.this, HomeActivity.class);
 			startActivity(intent);
 		}
 	}
