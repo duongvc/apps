@@ -2,6 +2,7 @@ package com.travel.gate365.view;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.os.Handler;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -12,7 +13,7 @@ import com.travel.gate365.model.Model;
 
 public abstract class BaseActivity extends Activity {
 
-	private final String id;
+	private String id;
 	protected static ProgressDialog loading;	
 	
 	public BaseActivity(String id) {
@@ -23,20 +24,36 @@ public abstract class BaseActivity extends Activity {
 		ActivityInfo info = Model.getInstance().retrieveActivityInfo(id);
 		if(info != null){
 			ImageView img = (ImageView)findViewById(R.id.img_icon);
-			int maxHeight = Model.getInstance().getScreenHeight() / 8;
-			img.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, maxHeight));
-			img.setImageResource(info.getIconResId());
-			
-			TextView txtLeft = (TextView)findViewById(R.id.txt_left);
-			txtLeft.setText(info.getTitleResId());
-			if(info.getRightTextResId() != 0){
-				TextView txtRight = (TextView)findViewById(R.id.txt_right);
-				txtRight.setText(info.getRightTextResId());			
-			}			
+			if(img != null){
+				int maxHeight = Model.getInstance().getScreenHeight() / 10;
+				img.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, maxHeight));
+				img.setImageResource(info.getIconResId());
+				
+				TextView txtLeft = (TextView)findViewById(R.id.txt_left);
+				txtLeft.setText(info.getTitleResId());
+				if(info.getRightTextResId() != 0){
+					TextView txtRight = (TextView)findViewById(R.id.txt_right);
+					txtRight.setText(info.getRightTextResId());			
+				}							
+			}
 		}
 	}
 
 	public String getId() {
 		return id;
 	}
+	
+	public void setId(String id){
+		this.id = id;
+	}
+	
+	private static final Handler notificationHandler = new Handler(){
+		public void handleMessage(android.os.Message msg) {
+			switch (msg.what) {
+				default: 
+					break;
+			}
+		};		
+	};
+	
 }

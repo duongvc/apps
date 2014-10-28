@@ -3,14 +3,14 @@ import android.app.Activity;
 import android.util.DisplayMetrics;
 import android.view.Display;
 
+import com.travel.gate365.Gate365Activity;
 import com.travel.gate365.R;
-import com.travel.gate365.view.LoginActivity;
 
 public class Model {
 
 	private static Model sInstance;
 	private final ActivityInfo[] arrActivityInfo = {
-		new ActivityInfo(LoginActivity.class.getSimpleName(), R.drawable.ic_0, R.string.login_U, 0)
+		new ActivityInfo(Gate365Activity.class.getSimpleName(), R.drawable.ic_0, R.string.login_U, 0)
 	};
 	private boolean isLogin;
 	

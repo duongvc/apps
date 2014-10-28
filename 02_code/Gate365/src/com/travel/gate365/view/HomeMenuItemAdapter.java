@@ -49,7 +49,7 @@ public class HomeMenuItemAdapter extends BaseAdapter {
 	        LayoutInflater inflate = ((Activity) context).getLayoutInflater();
 	        convertView = (View)inflate.inflate(R.layout.home_menu_item, null);  
 			ImageView icon = (ImageView)convertView.findViewById(R.id.img_icon);
-			int maxHeight = Model.getInstance().getScreenHeight() / 5;
+			int maxHeight = Model.getInstance().getScreenHeight() / 10;
 			icon.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, maxHeight));
 			icon.setImageResource(info.getIconResId());
 			TextView text = (TextView)convertView.findViewById(R.id.txt_left);

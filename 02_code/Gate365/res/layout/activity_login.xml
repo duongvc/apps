@@ -12,7 +12,6 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:padding="5dp"
         android:orientation="vertical">
 
 	    <com.travel.gate365.view.widget.FontableTextView android:id="@id/txt_username" 
@@ -25,14 +24,17 @@
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        style="@style/CommonEditTextStyle"
-	        android:minWidth="@dimen/min_common_edittext_width"/>
+	        android:minWidth="@dimen/min_common_edittext_width"
+	        android:maxLength="100"/>
 	    	    
 	    <com.travel.gate365.view.widget.FontableTextView android:id="@id/txt_password"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_marginTop="5dp"
 	        style="@style/CommonTextViewStyle" 
-	        android:text="@string/password"/>
+	        android:text="@string/password"
+	        android:maxLength="100"
+	        android:inputType="textPassword"/>
 	    	    
 	    <com.travel.gate365.view.widget.FontableEditText android:id="@id/edt_password" 
 	        android:layout_width="wrap_content"
