@@ -1,5 +1,6 @@
 package com.travel.gate365.view.alert;
 
+import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -16,6 +17,15 @@ public class AlertActivity extends BaseActivity implements OnItemClickListener{
 
 	public AlertActivity() {
 		super(AlertActivity.class.getSimpleName());
+	}
+	
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		
+		setContentView(R.layout.activity_alerts);
+		
+		init();
 	}
 
 	@Override

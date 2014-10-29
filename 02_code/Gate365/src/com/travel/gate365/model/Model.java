@@ -16,7 +16,7 @@ public class Model {
 		new ActivityInfo(Gate365Activity.class.getSimpleName(), R.drawable.ic_0, R.string.login_U, 0)
 		, new ActivityInfo(JourneysActivity.class.getSimpleName(), R.drawable.ic_0, R.string.journeys, R.string.destinations)
 		, new ActivityInfo(JourneyDetailActivity.class.getSimpleName(), R.drawable.ic_0, R.string.journey_details, 0)
-		, new ActivityInfo(AlertActivity.class.getSimpleName(), R.drawable.ic_0, R.string.travel_alerts, 0)
+		, new ActivityInfo(AlertActivity.class.getSimpleName(), R.drawable.ic_1, R.string.travel_alerts, 0)
 	};
 	private boolean isLogin;
 	
