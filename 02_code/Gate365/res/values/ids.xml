@@ -22,13 +22,17 @@
     <item type="id" name="edt_password" />
     <item type="id" name="header" />    
     <item type="id" name="img_icon" />
-    <item type="id" name="txt_username" />
+    <item type="id" name="img_arrow" />
+    <item type="id" name="txt_datetime" />
     <item type="id" name="txt_password" />
+    <item type="id" name="txt_username" />
     <item type="id" name="txt_left" />
     <item type="id" name="txt_right" />
     <item type="id" name="lst_menu" />
-    <item type="id" name="menu_logout" />
+    <item type="id" name="lst_journeys" />
     <item type="id" name="menu_close" />
+    <item type="id" name="menu_logout" />    
     <item type="id" name="titlebar" />
+    <item type="id" name="layout_content" />
     
 </resources>

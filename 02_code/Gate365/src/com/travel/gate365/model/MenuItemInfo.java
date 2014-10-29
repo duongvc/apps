@@ -2,6 +2,14 @@ package com.travel.gate365.model;
 
 public class MenuItemInfo {
 
+	public static final byte MENU_ITEM_JOURNEYS 		= 0;
+	public static final byte MENU_ITEM_TRAVEL_ALERTS 	= 1;
+	public static final byte MENU_ITEM_TRAVEL_ADVICES 	= 2;
+	public static final byte MENU_ITEM_COUNTRY_RISK 	= 3;
+	public static final byte MENU_ITEM_TRAVEL_TIPS 		= 4;
+	public static final byte MENU_ITEM_SETTINGS 		= 5;
+	
+	
 	private final int iconResId;
 	private final int textResId;
 	private final int id;

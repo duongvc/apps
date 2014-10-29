@@ -42,7 +42,7 @@
         <activity android:name=".view.LoginActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode">
         </activity>
-        <activity android:name=".view.HomeActivity"
+        <activity android:name="com.travel.gate365.view.home.HomeActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode">
         </activity>
     </application>

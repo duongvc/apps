@@ -5,12 +5,16 @@ import android.view.Display;
 
 import com.travel.gate365.Gate365Activity;
 import com.travel.gate365.R;
+import com.travel.gate365.view.journeys.JourneyDetailActivity;
+import com.travel.gate365.view.journeys.JourneysActivity;
 
 public class Model {
 
 	private static Model sInstance;
 	private final ActivityInfo[] arrActivityInfo = {
 		new ActivityInfo(Gate365Activity.class.getSimpleName(), R.drawable.ic_0, R.string.login_U, 0)
+		, new ActivityInfo(JourneysActivity.class.getSimpleName(), R.drawable.ic_0, R.string.journeys, R.string.destinations)
+		, new ActivityInfo(JourneyDetailActivity.class.getSimpleName(), R.drawable.ic_0, R.string.journey_details, 0)
 	};
 	private boolean isLogin;
 	

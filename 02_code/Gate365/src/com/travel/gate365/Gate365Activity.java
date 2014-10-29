@@ -3,10 +3,12 @@ package com.travel.gate365;
 import org.json.JSONObject;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -18,7 +20,8 @@ import com.travel.gate365.model.Model;
 import com.travel.gate365.service.ServiceManager;
 import com.travel.gate365.util.DialogManager;
 import com.travel.gate365.view.BaseActivity;
-import com.travel.gate365.view.HomeMenuItemAdapter;
+import com.travel.gate365.view.home.HomeMenuItemAdapter;
+import com.travel.gate365.view.journeys.JourneysActivity;
 
 public class Gate365Activity extends BaseActivity implements OnItemClickListener {
 
@@ -48,12 +51,12 @@ public class Gate365Activity extends BaseActivity implements OnItemClickListener
 		
 		if(Model.getInstance().isLogin()){
 			ListView lstMenu = (ListView)findViewById(R.id.lst_menu);
-			final MenuItemInfo[] menuList = {new MenuItemInfo(0, R.drawable.journeys_menuitem_selector, R.string.journeys)
-				, new MenuItemInfo(1, R.drawable.tvalerts_menuitem_selector, R.string.travel_alerts)
-				, new MenuItemInfo(2, R.drawable.tvadvices_menuitem_selector, R.string.travel_advices)
-				, new MenuItemInfo(3, R.drawable.countryrisk_menuitem_selector, R.string.country_risk)
-				, new MenuItemInfo(4, R.drawable.tvtips_menuitem_selector, R.string.travel_tips)
-				, new MenuItemInfo(5, R.drawable.settings_menuitem_selector, R.string.settings)};
+			final MenuItemInfo[] menuList = {new MenuItemInfo(MenuItemInfo.MENU_ITEM_JOURNEYS, R.drawable.journeys_menuitem_selector, R.string.journeys)
+				, new MenuItemInfo(MenuItemInfo.MENU_ITEM_TRAVEL_ALERTS, R.drawable.tvalerts_menuitem_selector, R.string.travel_alerts)
+				, new MenuItemInfo(MenuItemInfo.MENU_ITEM_TRAVEL_ADVICES, R.drawable.tvadvices_menuitem_selector, R.string.travel_advices)
+				, new MenuItemInfo(MenuItemInfo.MENU_ITEM_COUNTRY_RISK, R.drawable.countryrisk_menuitem_selector, R.string.country_risk)
+				, new MenuItemInfo(MenuItemInfo.MENU_ITEM_TRAVEL_TIPS, R.drawable.tvtips_menuitem_selector, R.string.travel_tips)
+				, new MenuItemInfo(MenuItemInfo.MENU_ITEM_SETTINGS, R.drawable.settings_menuitem_selector, R.string.settings)};
 			
 			adapter = new HomeMenuItemAdapter(this, menuList);
 			lstMenu.setAdapter(adapter);
@@ -118,6 +121,36 @@ public class Gate365Activity extends BaseActivity implements OnItemClickListener
 	@Override
 	public void onItemClick(AdapterView<?> adapter, View view, int pos, long id) {
 		Log.i(getId(), "::onItemClick - pos:" + pos + ", id:" + id);
+		Intent intent;
+		switch ((int)id) {
+		case MenuItemInfo.MENU_ITEM_COUNTRY_RISK:
+			
+			break;
+
+		case MenuItemInfo.MENU_ITEM_JOURNEYS:
+			intent = new Intent(this, JourneysActivity.class);
+			startActivity(intent);
+			break;
+
+		case MenuItemInfo.MENU_ITEM_SETTINGS:
+			
+			break;
+
+		case MenuItemInfo.MENU_ITEM_TRAVEL_ADVICES:
+			
+			break;
+
+		case MenuItemInfo.MENU_ITEM_TRAVEL_ALERTS:
+			
+			break;
+
+		case MenuItemInfo.MENU_ITEM_TRAVEL_TIPS:
+			
+			break;
+
+		default:
+			break;
+		}
 	}
 
 	

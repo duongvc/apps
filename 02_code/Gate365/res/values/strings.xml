@@ -22,5 +22,7 @@
     <string name="no_internet_avaialbe">Make sure your internet connection is available</string>
     <string name="no_internet">No Internet Connection</string>
     <string name="login_failed">Login failed</string>
+    <string name="destinations">DESTINATIONS</string>
+    <string name="journey_details">Journey details</string>    
     
 </resources>

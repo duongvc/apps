@@ -1,4 +1,4 @@
-package com.travel.gate365.view;
+package com.travel.gate365.view.journeys;
 
 import com.travel.gate365.R;
 import com.travel.gate365.model.MenuItemInfo;
@@ -14,12 +14,12 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-public class HomeMenuItemAdapter extends BaseAdapter {
+public class JourneyItemAdapter extends BaseAdapter {
 
 	private MenuItemInfo[] list;  
     private Context context;  
 	
-	public HomeMenuItemAdapter(Context context, MenuItemInfo[] list) {
+	public JourneyItemAdapter(Context context, MenuItemInfo[] list) {
 		this.context = context;
 		this.list = list;
 		
