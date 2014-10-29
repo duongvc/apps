@@ -13,11 +13,11 @@
         android:layout_height="wrap_content"
         style="@style/CommonTextViewStyle"
         android:padding="5dp"
-        android:text="@string/you_no_journeys"
+        android:text="@string/there_no_alerts"
         android:background="@drawable/messagebar_selector"
         android:gravity="center"/>
     	
-    <ListView android:id="@id/lst_journeys"
+    <ListView android:id="@id/lst_alerts"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content">
         

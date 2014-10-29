@@ -9,6 +9,7 @@
     <string name="login_l">Login</string>
     <string name="login_U">LOGIN</string>
     <string name="journeys">JOURNEYS</string>
+    <string name="journey_details">JOURNEY DETAILS</string>
     <string name="travel_alerts">TRAVEL ALERTS</string>
     <string name="travel_advices">TRAVEL ADVICES</string>
     <string name="country_risk">COUNTRY RISK</string>
@@ -23,6 +24,8 @@
     <string name="no_internet">No Internet Connection</string>
     <string name="login_failed">Login failed</string>
     <string name="destinations">DESTINATIONS</string>
-    <string name="journey_details">Journey details</string>    
+    <string name="flight_routing">FLIGHT ROUTING</string>    
+    <string name="you_no_journeys">You have no journeys</string>    
+    <string name="there_no_alerts">There is no alerts</string>
     
 </resources>

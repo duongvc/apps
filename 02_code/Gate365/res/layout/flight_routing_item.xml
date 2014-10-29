@@ -12,60 +12,59 @@
         android:paddingLeft="5dp"
         android:paddingRight="5dp"
         android:textSize="10sp"
-        android:text="MON, Jan 14th, 2014"/>
+        android:text="1887 LUFTHANSA"/>
 
-    <RelativeLayout android:id="@id/layout_content"
-        android:layout_width="match_parent"
+    <RelativeLayout android:id="@id/layout_depart"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/txt_datetime">
         
-        <ImageView android:id="@id/img_icon"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
-            android:layout_centerVertical="true"
-	        style="@style/CommonImageViewStyle"
-            android:contentDescription="@string/journeys"
-            android:src="@drawable/_take_off_plane"/>
-        
-        <ImageView android:id="@id/img_arrow"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
-        	android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-        	android:padding="5dp"
-        	style="@style/CommonImageViewStyle"
-        	android:contentDescription="@string/journeys"
-        	android:src="@drawable/_next"/>
-        
-	    <com.travel.gate365.view.widget.FontableButton android:id="@id/btn_type" 
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:layout_toLeftOf="@id/img_arrow"
-            android:layout_centerVertical="true"
-	        android:text="Extreme"
-	        style="@style/CommonButtonStyle"/>
-
 	    <com.travel.gate365.view.widget.FontableTextView android:id="@id/txt_city"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
-	        android:layout_toRightOf="@id/img_icon"
 	        android:padding="5dp"
 	        style="@style/CommonTextViewStyle"
 	        android:text="HANOI"
 	        android:textColor="@color/yellow"/>
 
-	    <com.travel.gate365.view.widget.FontableTextView android:id="@id/txt_country"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:layout_toRightOf="@id/txt_city"
-	        style="@style/CommonTextViewStyle"
-	        android:padding="5dp"
-	        android:text="- VIETNAM"/>
-	    	    	    	    
 	    <com.travel.gate365.view.widget.FontableTextView android:id="@id/txt_codetime"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
-	        android:layout_toRightOf="@id/img_icon"
+	        android:layout_below="@id/txt_city"
+	        style="@style/CommonTextViewStyle"
+	        android:paddingLeft="5dp"
+	        android:paddingRight="5dp"
+	        android:paddingBottom="5dp"
+	        android:textSize="10sp"        
+	        android:text="11:30 AM, PNR Y99H32"/>
+	    	    	    	    
+	</RelativeLayout>
+
+	<ImageView android:id="@id/img_icon"
+	    android:layout_width="36dp"
+	    android:layout_height="36dp"
+	    android:layout_centerInParent="true"
+	    style="@style/CommonImageViewStyle"
+	    android:contentDescription="@string/journey_details"
+	    android:src="@drawable/_airplane"/>
+    
+    <RelativeLayout android:id="@id/layout_arrival"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txt_datetime"
+        android:layout_alignParentRight="true">
+        
+	    <com.travel.gate365.view.widget.FontableTextView android:id="@id/txt_city"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:padding="5dp"
+	        style="@style/CommonTextViewStyle"
+	        android:text="HANOI"
+	        android:textColor="@color/yellow"/>
+
+	    <com.travel.gate365.view.widget.FontableTextView android:id="@id/txt_codetime"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
 	        android:layout_below="@id/txt_city"
 	        style="@style/CommonTextViewStyle"
 	        android:paddingLeft="5dp"

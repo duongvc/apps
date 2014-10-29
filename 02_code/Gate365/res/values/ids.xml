@@ -18,6 +18,7 @@
     <item type="id" name="actionbar_compat" />
     <item type="id" name="actionbar_compat_title" />
     <item type="id" name="btn_login" />
+    <item type="id" name="btn_type" />
     <item type="id" name="edt_username" />
     <item type="id" name="edt_password" />
     <item type="id" name="header" />    
@@ -28,11 +29,19 @@
     <item type="id" name="txt_username" />
     <item type="id" name="txt_left" />
     <item type="id" name="txt_right" />
+    <item type="id" name="txt_city" />
+    <item type="id" name="txt_country" />
+    <item type="id" name="txt_codetime" />
+    <item type="id" name="txt_message" />
     <item type="id" name="lst_menu" />
     <item type="id" name="lst_journeys" />
+    <item type="id" name="lst_flight_routing" />
+    <item type="id" name="lst_alerts" />
     <item type="id" name="menu_close" />
     <item type="id" name="menu_logout" />    
     <item type="id" name="titlebar" />
     <item type="id" name="layout_content" />
+    <item type="id" name="layout_depart" />
+    <item type="id" name="layout_arrival" />
     
 </resources>

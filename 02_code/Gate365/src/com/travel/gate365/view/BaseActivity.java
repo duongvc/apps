@@ -76,7 +76,7 @@ public abstract class BaseActivity extends Activity {
 			view = (View)findViewById(R.id.header);
 			if(view != null){
 				img = (ImageView)view.findViewById(R.id.img_icon);
-				maxHeight = Math.min(Model.getInstance().getScreenHeight() / 10, 128);
+				maxHeight = Math.min(Model.getInstance().getScreenHeight() / 15, 128);
 				img.setLayoutParams(new RelativeLayout.LayoutParams(maxHeight, maxHeight));
 				img.setImageResource(info.getIconResId());
 				
@@ -118,7 +118,7 @@ public abstract class BaseActivity extends Activity {
 
     public synchronized String convertToString(long pDateTime){
     	Date date = new Date(pDateTime);
-    	SimpleDateFormat dateFormat = new SimpleDateFormat("MMM dd, yyyy - hh:mm a");
+    	SimpleDateFormat dateFormat = new SimpleDateFormat("MMM dd - hh:mm a");
 		StringBuilder stDate = new StringBuilder().append(pad(date.getDate()))
 				.append("-").append(pad(date.getYear() + 1900))
 				.append("-").append(date.getMonth() + 1)

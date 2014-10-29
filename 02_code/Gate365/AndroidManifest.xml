@@ -39,12 +39,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".view.LoginActivity"
+        <activity android:name=".view.journeys.JourneysActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode">
         </activity>
-        <activity android:name="com.travel.gate365.view.home.HomeActivity"
+        <activity android:name=".view.journeys.JourneyDetailActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode">
         </activity>
+        <activity android:name=".view.alert.AlertActivity"></activity>
     </application>
 
 </manifest>

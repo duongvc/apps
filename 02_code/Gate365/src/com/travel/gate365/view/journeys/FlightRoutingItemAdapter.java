@@ -11,15 +11,15 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.travel.gate365.R;
-import com.travel.gate365.model.JourneyItemInfo;
+import com.travel.gate365.model.FlightRoutingInfo;
 import com.travel.gate365.model.Model;
 
-public class JourneyItemAdapter extends BaseAdapter {
+public class FlightRoutingItemAdapter extends BaseAdapter {
 
-	private JourneyItemInfo[] list;  
+	private FlightRoutingInfo[] list;  
     private Context context;  
 	
-	public JourneyItemAdapter(Context context, JourneyItemInfo[] list) {
+	public FlightRoutingItemAdapter(Context context, FlightRoutingInfo[] list) {
 		this.context = context;
 		this.list = list;
 		
@@ -43,14 +43,14 @@ public class JourneyItemAdapter extends BaseAdapter {
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		Holder holder = null;
-		JourneyItemInfo info = (JourneyItemInfo)getItem(position);
+		FlightRoutingInfo info = (FlightRoutingInfo)getItem(position);
 		if(convertView == null) {				        
 	        holder = new Holder();
 	        LayoutInflater inflate = ((Activity) context).getLayoutInflater();
-	        convertView = (View)inflate.inflate(R.layout.journey_item, null);  
-			ImageView icon = (ImageView)convertView.findViewById(R.id.img_icon);
-			int maxHeight = Math.min(Model.getInstance().getScreenHeight() / 15, 128);
-			icon.setLayoutParams(new RelativeLayout.LayoutParams(maxHeight, maxHeight));
+	        convertView = (View)inflate.inflate(R.layout.flight_routing_item, null);  
+			//ImageView icon = (ImageView)convertView.findViewById(R.id.img_icon);
+			//int maxHeight = Math.min(Model.getInstance().getScreenHeight() / 15, 128);
+			//icon.setLayoutParams(new RelativeLayout.LayoutParams(maxHeight, maxHeight));
 			
 			//icon = (ImageView)convertView.findViewById(R.id.img_arrow);
 			//icon.setLayoutParams(new RelativeLayout.LayoutParams(maxHeight, maxHeight));

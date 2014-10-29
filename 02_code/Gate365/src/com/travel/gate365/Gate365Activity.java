@@ -20,7 +20,9 @@ import com.travel.gate365.model.Model;
 import com.travel.gate365.service.ServiceManager;
 import com.travel.gate365.util.DialogManager;
 import com.travel.gate365.view.BaseActivity;
+import com.travel.gate365.view.alert.AlertActivity;
 import com.travel.gate365.view.home.HomeMenuItemAdapter;
+import com.travel.gate365.view.journeys.JourneyDetailActivity;
 import com.travel.gate365.view.journeys.JourneysActivity;
 
 public class Gate365Activity extends BaseActivity implements OnItemClickListener {
@@ -75,7 +77,7 @@ public class Gate365Activity extends BaseActivity implements OnItemClickListener
 		
 		edtUsername.setHintTextColor(getResources().getColor(R.color.gray));
 		edtPassword.setHintTextColor(getResources().getColor(R.color.gray));
-		if (edtUsername.getText().length() == 0) {
+		/*if (edtUsername.getText().length() == 0) {
 			Log.i(getId() + " - onLoginButtonHandler", "Please enter username");
 			edtUsername.setHint(R.string.pls_enter_username);
 			edtUsername.setHintTextColor(getResources().getColor(R.color.red));
@@ -86,7 +88,7 @@ public class Gate365Activity extends BaseActivity implements OnItemClickListener
 			edtPassword.setHint(R.string.pls_enter_password);
 			edtPassword.setHintTextColor(getResources().getColor(R.color.red));
 			return;
-		}
+		}*/
 		if(loading == null || (loading != null && !loading.isShowing())){
 			loading = ProgressDialog.show(Gate365Activity.this, "", ""); 
 			loading.show();
@@ -96,8 +98,8 @@ public class Gate365Activity extends BaseActivity implements OnItemClickListener
 			@Override
 			public void run() {
 				try { 
-					//JSONObject res = ServiceManager.login("ux00287", "1");					
-					JSONObject res = ServiceManager.login(edtUsername.getText().toString(), edtPassword.getText().toString());
+					JSONObject res = ServiceManager.login("ux00287", "1");					
+					//JSONObject res = ServiceManager.login(edtUsername.getText().toString(), edtPassword.getText().toString());
 					loading.dismiss();
 					if(res.getString("status").equalsIgnoreCase(ServiceManager.SUCCESS_STATUS)){
 						Model.getInstance().setLogin(true);
@@ -141,7 +143,8 @@ public class Gate365Activity extends BaseActivity implements OnItemClickListener
 			break;
 
 		case MenuItemInfo.MENU_ITEM_TRAVEL_ALERTS:
-			
+			intent = new Intent(this, AlertActivity.class);
+			startActivity(intent);
 			break;
 
 		case MenuItemInfo.MENU_ITEM_TRAVEL_TIPS:

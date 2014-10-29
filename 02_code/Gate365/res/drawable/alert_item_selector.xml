@@ -5,33 +5,33 @@
 		android:state_selected="false"
 		android:state_pressed="false"
 		android:color="@android:color/black" 
-		android:drawable="@drawable/journey_item_inactive">
+		android:drawable="@drawable/alert_item_inactive">
 	</item>
 	<item
 		android:state_focused="false"
 		android:state_selected="true"
 		android:state_pressed="false"
 		android:color="@android:color/black"
-		android:drawable="@drawable/journey_item_active">
+		android:drawable="@drawable/alert_item_active">
 	</item>    
 	<item
 		android:state_focused="true"
 		android:state_selected="true"
 		android:state_pressed="false"
 		android:color="@android:color/black"
-		android:drawable="@drawable/journey_item_active">
+		android:drawable="@drawable/alert_item_active">
 	</item> 
 	<item
 		android:state_focused="true"
 		android:state_selected="false"
 		android:state_pressed="false"
 		android:color="@android:color/black"
-		android:drawable="@drawable/journey_item_active">
+		android:drawable="@drawable/alert_item_active">
 	</item>	
 	<item
 		android:state_pressed="true"
 		android:color="@android:color/black"
-		android:drawable="@drawable/journey_item_active">
+		android:drawable="@drawable/alert_item_active">
     
 	</item>
 </selector>

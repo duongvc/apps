@@ -1,10 +1,10 @@
 package com.travel.gate365.model;
 
-public class JourneyItemInfo {
+public class AlertItemInfo {
 
 	private final int id;
 
-	public JourneyItemInfo(int id) {
+	public AlertItemInfo(int id) {
 		this.id = id;
 	}
 

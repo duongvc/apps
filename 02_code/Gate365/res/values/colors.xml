@@ -2,10 +2,13 @@
 
 	<color name="red">#FF0000</color>
 	<color name="gray">#d0d0d0</color>
+	<color name="yellow">#ffff00</color>
 	<color name="dark_gray">#181c18</color>
 	<color name="bg_button_active_start">#d60400</color>
 	<color name="bg_button_active_end">#FF6163</color>
 	<color name="bg_button_inactive_start">#d0d0d0</color>
 	<color name="bg_button_inactive_end">#ffffff</color>
-			
+	<color name="bg_messagebar_active_start">#0000ff</color>
+	<color name="bg_messagebar_active_end">#00b0ff</color>
+				
 </resources>

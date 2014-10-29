@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" 
+    android:background="@drawable/alert_item_selector">
+
+    <ImageView android:id="@id/img_icon"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_centerVertical="true"
+     	style="@style/CommonImageViewStyle"
+        android:contentDescription="@string/travel_alerts"
+        android:src="@drawable/au"/>
+    
+	<com.travel.gate365.view.widget.FontableTextView android:id="@id/txt_country"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_toRightOf="@id/img_icon"
+	    style="@style/CommonTextViewStyle"
+        android:paddingLeft="5dp"
+        android:paddingTop="5dp"
+        android:paddingRight="5dp"
+	    android:text="VIETNAM"/>
+
+    <com.travel.gate365.view.widget.FontableTextView android:id="@id/txt_message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/img_icon"
+        android:layout_below="@id/txt_country"
+        style="@style/CommonTextViewStyle"
+        android:paddingLeft="5dp"
+        android:paddingBottom="5dp"
+        android:paddingRight="5dp"
+        android:textSize="10sp"
+        android:singleLine="true"
+        android:lines="1"
+        android:text="dawewewae ewae eawe eawe aw eweerererewrewrewr awe waewawae"/>
+			 
+    <com.travel.gate365.view.widget.FontableTextView android:id="@id/txt_datetime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        style="@style/CommonTextViewStyle"
+        android:padding="5dp"
+        android:textSize="10sp"
+        android:text="17-10-2014 06::44 AM"/>
+
+</RelativeLayout>

@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+	
+    <include layout="@layout/titlebar"/>
+    
+    <include layout="@layout/header"/>
+    
+    <RelativeLayout android:id="@id/layout_depart"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        
+        <ImageView android:id="@id/img_icon"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_centerVertical="true"
+	        style="@style/CommonImageViewStyle"
+            android:contentDescription="@string/journeys"
+            android:src="@drawable/_take_off_plane"/>
+        
+	    <com.travel.gate365.view.widget.FontableTextView android:id="@id/txt_country"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_toRightOf="@id/img_icon"
+	        android:padding="5dp"
+	        style="@style/CommonTextViewStyle"
+	        android:text="VIETNAM"
+	        android:textColor="@color/yellow"/>
+
+	    <com.travel.gate365.view.widget.FontableTextView android:id="@id/txt_city"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_toRightOf="@id/txt_country"
+	        style="@style/CommonTextViewStyle"
+	        android:padding="5dp"
+	        android:text="- HANOI"/>
+	    	    	    	    
+	    <com.travel.gate365.view.widget.FontableTextView android:id="@id/txt_codetime"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_toRightOf="@id/img_icon"
+	        android:layout_below="@id/txt_country"
+	        style="@style/CommonTextViewStyle"
+	        android:paddingLeft="5dp"
+	        android:paddingRight="5dp"
+	        android:paddingBottom="5dp"
+	        android:textSize="10sp"        
+	        android:text="Departs: Mon 25 Jul, 2014 - 11:30 AM"/>
+	    	    	    	    
+	</RelativeLayout>
+
+    <RelativeLayout android:id="@id/layout_arrival"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        
+        <ImageView android:id="@id/img_icon"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_centerVertical="true"
+	        style="@style/CommonImageViewStyle"
+            android:contentDescription="@string/journeys"
+            android:src="@drawable/_landing_plane"/>
+        
+	    <com.travel.gate365.view.widget.FontableTextView android:id="@id/txt_country"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_toRightOf="@id/img_icon"
+	        android:padding="5dp"
+	        style="@style/CommonTextViewStyle"
+	        android:text="VIETNAM"
+	        android:textColor="@color/yellow"/>
+
+	    <com.travel.gate365.view.widget.FontableTextView android:id="@id/txt_city"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_toRightOf="@id/txt_country"
+	        style="@style/CommonTextViewStyle"
+	        android:padding="5dp"
+	        android:text="- HANOI"/>
+	    	    	    	    
+	    <com.travel.gate365.view.widget.FontableTextView android:id="@id/txt_codetime"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_toRightOf="@id/img_icon"
+	        android:layout_below="@id/txt_country"
+	        style="@style/CommonTextViewStyle"
+	        android:paddingLeft="5dp"
+	        android:paddingRight="5dp"
+	        android:paddingBottom="5dp"
+	        android:textSize="10sp"        
+	        android:text="Arrives: Mon 25 Jul, 2014 - 1:30 PM"/>
+	    	    	    	    
+	</RelativeLayout>
+    
+    <com.travel.gate365.view.widget.FontableTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/CommonTextViewStyle"
+        android:padding="5dp"
+        android:text="@string/flight_routing" />
+    
+    <ListView android:id="@id/lst_flight_routing"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+        
+    </ListView>
+
+</LinearLayout>

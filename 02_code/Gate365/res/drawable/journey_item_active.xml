@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <gradient
-    	android:startColor="@color/bg_button_active_start"
-        android:endColor="@color/bg_button_active_end"
-        android:angle="90"
-        />    
+    <solid android:color="@android:color/darker_gray"/>
+    
 </shape>
