@@ -9,7 +9,7 @@
         android:layout_height="wrap_content"
         style="@style/CommonImageViewStyle"
         android:contentDescription="@string/login_U"
-        android:src="@drawable/ic_0"/>
+        android:src="@drawable/journeys_menuitem_selector"/>
 
     <com.travel.gate365.view.widget.FontableTextView android:id="@id/txt_left" 
         android:layout_width="wrap_content"

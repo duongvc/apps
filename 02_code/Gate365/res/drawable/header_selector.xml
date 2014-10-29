@@ -5,5 +5,5 @@
         android:endColor="@color/bg_button_inactive_end"
         android:angle="90"
         />    
-    <corners android:radius="2dip"/>
+    <corners android:radius="0dip"/>
 </shape>

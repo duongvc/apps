@@ -5,9 +5,9 @@
     android:layout_height="match_parent"
     tools:context=".Gate365Activity">
     
-    <include layout="@layout/header"/>
+	<include layout="@layout/titlebar"/>
     
-    <LinearLayout 
+	<LinearLayout 
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
@@ -33,14 +33,14 @@
 	        android:layout_marginTop="5dp"
 	        style="@style/CommonTextViewStyle" 
 	        android:text="@string/password"
-	        android:maxLength="100"
-	        android:inputType="textPassword"/>
+	        android:maxLength="100"/>
 	    	    
 	    <com.travel.gate365.view.widget.FontableEditText android:id="@id/edt_password" 
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        style="@style/CommonEditTextStyle" 
-	        android:minWidth="@dimen/min_common_edittext_width"/>
+	        android:minWidth="@dimen/min_common_edittext_width"
+	        android:inputType="textPassword"/>
 
 	    <com.travel.gate365.view.widget.FontableButton android:id="@id/btn_login" 
 	        android:layout_width="wrap_content"
@@ -53,6 +53,7 @@
 	        style="@style/CommonButtonStyle"/>
 	    	    	    	    
 	    </LinearLayout>
-    
 
+	<include layout="@layout/header"/>
+		
 </RelativeLayout>

@@ -27,5 +27,8 @@
     <item type="id" name="txt_left" />
     <item type="id" name="txt_right" />
     <item type="id" name="lst_menu" />
+    <item type="id" name="menu_logout" />
+    <item type="id" name="menu_close" />
+    <item type="id" name="titlebar" />
     
 </resources>

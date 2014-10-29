@@ -3,6 +3,7 @@
     android:id="@id/header"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_below="@id/titlebar"
     android:background="@drawable/header_selector">
     
     <ImageView android:id="@id/img_icon"

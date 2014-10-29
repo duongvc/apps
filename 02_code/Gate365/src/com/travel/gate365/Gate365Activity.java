@@ -4,6 +4,7 @@ import org.json.JSONObject;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.os.Message;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
@@ -15,13 +16,14 @@ import android.widget.AdapterView.OnItemClickListener;
 import com.travel.gate365.model.MenuItemInfo;
 import com.travel.gate365.model.Model;
 import com.travel.gate365.service.ServiceManager;
+import com.travel.gate365.util.DialogManager;
 import com.travel.gate365.view.BaseActivity;
 import com.travel.gate365.view.HomeMenuItemAdapter;
 
 public class Gate365Activity extends BaseActivity implements OnItemClickListener {
 
-	private TextView txtUsername;
-	private TextView txtPassword;
+	private TextView edtUsername;
+	private TextView edtPassword;
 	private HomeMenuItemAdapter adapter;
 	
 	public Gate365Activity() {
@@ -41,42 +43,47 @@ public class Gate365Activity extends BaseActivity implements OnItemClickListener
 	}
 
 	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.activity_gate365, menu);
-		return true;
-	}
-
-	@Override
 	protected void init() {
 		super.init();
 		
 		if(Model.getInstance().isLogin()){
 			ListView lstMenu = (ListView)findViewById(R.id.lst_menu);
-			final MenuItemInfo[] menuList = {new MenuItemInfo(0, R.drawable.ic_0, R.string.journeys)
-				, new MenuItemInfo(1, R.drawable.ic_1, R.string.travel_alerts)
-				, new MenuItemInfo(2, R.drawable.ic_2, R.string.travel_advices)
-				, new MenuItemInfo(3, R.drawable.ic_3, R.string.country_risk)
-				, new MenuItemInfo(4, R.drawable.ic_4, R.string.travel_tips)
-				, new MenuItemInfo(5, R.drawable.ic_5, R.string.settings)};
+			final MenuItemInfo[] menuList = {new MenuItemInfo(0, R.drawable.journeys_menuitem_selector, R.string.journeys)
+				, new MenuItemInfo(1, R.drawable.tvalerts_menuitem_selector, R.string.travel_alerts)
+				, new MenuItemInfo(2, R.drawable.tvadvices_menuitem_selector, R.string.travel_advices)
+				, new MenuItemInfo(3, R.drawable.countryrisk_menuitem_selector, R.string.country_risk)
+				, new MenuItemInfo(4, R.drawable.tvtips_menuitem_selector, R.string.travel_tips)
+				, new MenuItemInfo(5, R.drawable.settings_menuitem_selector, R.string.settings)};
 			
 			adapter = new HomeMenuItemAdapter(this, menuList);
 			lstMenu.setAdapter(adapter);
 			lstMenu.setOnItemClickListener(this);			
 		}else{
-			txtUsername = (TextView)findViewById(R.id.txt_username);
-			txtPassword = (TextView)findViewById(R.id.txt_password);			
+			edtUsername = (TextView)findViewById(R.id.edt_username);
+			edtPassword = (TextView)findViewById(R.id.edt_password);			
 		}
 	}
 	
 	public void onLoginButtonHandler(View view){
-		/*if (txtUsername.getText().length() == 0) {
+		if(!isNetworkAvailable()){
+			DialogManager.alert(this, R.string.no_internet, R.string.no_internet_avaialbe, null);
+			return;
+		}
+		
+		edtUsername.setHintTextColor(getResources().getColor(R.color.gray));
+		edtPassword.setHintTextColor(getResources().getColor(R.color.gray));
+		if (edtUsername.getText().length() == 0) {
 			Log.i(getId() + " - onLoginButtonHandler", "Please enter username");
+			edtUsername.setHint(R.string.pls_enter_username);
+			edtUsername.setHintTextColor(getResources().getColor(R.color.red));
 			return;
-		} else if (txtPassword.getText().length() == 0) {
+		} 
+		if (edtPassword.getText().length() == 0) {
 			Log.i(getId() + " - onLoginButtonHandler", "Please enter password");
+			edtPassword.setHint(R.string.pls_enter_password);
+			edtPassword.setHintTextColor(getResources().getColor(R.color.red));
 			return;
-		}*/
+		}
 		if(loading == null || (loading != null && !loading.isShowing())){
 			loading = ProgressDialog.show(Gate365Activity.this, "", ""); 
 			loading.show();
@@ -86,12 +93,18 @@ public class Gate365Activity extends BaseActivity implements OnItemClickListener
 			@Override
 			public void run() {
 				try { 
-					JSONObject res = ServiceManager.login("ux00287", "1");					
+					//JSONObject res = ServiceManager.login("ux00287", "1");					
+					JSONObject res = ServiceManager.login(edtUsername.getText().toString(), edtPassword.getText().toString());
 					loading.dismiss();
 					if(res.getString("status").equalsIgnoreCase(ServiceManager.SUCCESS_STATUS)){
 						Model.getInstance().setLogin(true);
-						//setContentView(R.layout.activity_home);
-						//init();
+						android.os.Message msg = new Message();
+						msg.what = BaseActivity.NOTE_LOGIN_SUCCESSFULLY;
+						notificationHandler.sendMessage(msg);						
+					}else{
+						android.os.Message msg = new Message();
+						msg.what = BaseActivity.NOTE_LOGIN_FAILED;
+						notificationHandler.sendMessage(msg);												
 					}
 				} catch (Exception e) {
 					e.printStackTrace();
