@@ -1,4 +1,4 @@
-package com.travel.gate365.view.tip;
+package com.travel.gate365.view.travel;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -13,12 +13,12 @@ import com.travel.gate365.model.AdviceItemInfo;
 import com.travel.gate365.view.BaseActivity;
 import com.travel.gate365.view.travel.CountryItemAdapter;
 
-public class TipCountryActivity  extends BaseActivity implements OnItemClickListener {
+public class TravelRisksActivity  extends BaseActivity implements OnItemClickListener {
 
 	private CountryItemAdapter adapter;
 	
-	public TipCountryActivity() {
-		super(TipCountryActivity.class.getSimpleName());
+	public TravelRisksActivity() {
+		super(TravelRisksActivity.class.getSimpleName());
 	}
 
 
@@ -26,7 +26,7 @@ public class TipCountryActivity  extends BaseActivity implements OnItemClickList
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
-		setContentView(R.layout.activity_tips);
+		setContentView(R.layout.activity_risks);
 		
 		init();
 		
@@ -36,7 +36,7 @@ public class TipCountryActivity  extends BaseActivity implements OnItemClickList
 	protected void init() {
 		super.init();
 		
-		ListView lstMenu = (ListView)findViewById(R.id.lst_tips);
+		ListView lstMenu = (ListView)findViewById(R.id.lst_risks);
 		final AdviceItemInfo[] menuList = {new AdviceItemInfo(0)
 			, new AdviceItemInfo(1)
 			, new AdviceItemInfo(2)
@@ -61,7 +61,7 @@ public class TipCountryActivity  extends BaseActivity implements OnItemClickList
 		
 			};
 		
-		adapter = new CountryItemAdapter(this, menuList, R.layout.tip_item);
+		adapter = new CountryItemAdapter(this, menuList, R.layout.risk_item);
 		lstMenu.setAdapter(adapter);
 		lstMenu.setOnItemClickListener(this);			
 		

@@ -395,16 +395,19 @@ containing a value of this type.
         public static final int header=0x7f070006;
         public static final int img_arrow=0x7f070008;
         public static final int img_icon=0x7f070007;
-        public static final int layout_arrival=0x7f07001b;
-        public static final int layout_content=0x7f070019;
-        public static final int layout_depart=0x7f07001a;
-        public static final int lst_alerts=0x7f070015;
-        public static final int lst_flight_routing=0x7f070014;
-        public static final int lst_journeys=0x7f070013;
-        public static final int lst_menu=0x7f070012;
-        public static final int menu_close=0x7f070016;
-        public static final int menu_logout=0x7f070017;
-        public static final int titlebar=0x7f070018;
+        public static final int layout_arrival=0x7f07001f;
+        public static final int layout_content=0x7f07001d;
+        public static final int layout_depart=0x7f07001e;
+        public static final int lst_advices=0x7f070017;
+        public static final int lst_alerts=0x7f070016;
+        public static final int lst_flight_routing=0x7f070015;
+        public static final int lst_journeys=0x7f070014;
+        public static final int lst_menu=0x7f070013;
+        public static final int lst_risks=0x7f070019;
+        public static final int lst_tips=0x7f070018;
+        public static final int menu_close=0x7f07001a;
+        public static final int menu_logout=0x7f07001b;
+        public static final int titlebar=0x7f07001c;
         public static final int txt_city=0x7f07000e;
         public static final int txt_codetime=0x7f070010;
         public static final int txt_country=0x7f07000f;
@@ -413,29 +416,40 @@ containing a value of this type.
         public static final int txt_message=0x7f070011;
         public static final int txt_password=0x7f07000a;
         public static final int txt_right=0x7f07000d;
+        public static final int txt_title=0x7f070012;
         public static final int txt_username=0x7f07000b;
     }
     public static final class layout {
         public static final int actionbar_compat=0x7f030000;
-        public static final int activity_alerts=0x7f030001;
-        public static final int activity_gate365=0x7f030002;
-        public static final int activity_home=0x7f030003;
-        public static final int activity_journey_details=0x7f030004;
-        public static final int activity_journeys=0x7f030005;
-        public static final int activity_login=0x7f030006;
-        public static final int alert_item=0x7f030007;
-        public static final int flight_routing_item=0x7f030008;
-        public static final int header=0x7f030009;
-        public static final int home_menu_item=0x7f03000a;
-        public static final int journey_item=0x7f03000b;
-        public static final int titlebar=0x7f03000c;
+        public static final int activity_advices=0x7f030001;
+        public static final int activity_alert_details=0x7f030002;
+        public static final int activity_alerts=0x7f030003;
+        public static final int activity_gate365=0x7f030004;
+        public static final int activity_home=0x7f030005;
+        public static final int activity_journey_details=0x7f030006;
+        public static final int activity_journeys=0x7f030007;
+        public static final int activity_login=0x7f030008;
+        public static final int activity_risks=0x7f030009;
+        public static final int activity_tips=0x7f03000a;
+        public static final int advice_item=0x7f03000b;
+        public static final int alert_item=0x7f03000c;
+        public static final int flight_routing_item=0x7f03000d;
+        public static final int header=0x7f03000e;
+        public static final int home_menu_item=0x7f03000f;
+        public static final int journey_item=0x7f030010;
+        public static final int risk_item=0x7f030011;
+        public static final int tip_item=0x7f030012;
+        public static final int titlebar=0x7f030013;
     }
     public static final class menu {
         public static final int activity_gate365=0x7f0a0000;
         public static final int activity_gate365_logged=0x7f0a0001;
     }
     public static final class string {
+        public static final int alert_details=0x7f08001b;
+        public static final int alert_details_content_ex=0x7f08001c;
         public static final int app_name=0x7f080000;
+        public static final int could_not_connect_server=0x7f08001a;
         public static final int country_risk=0x7f08000b;
         public static final int destinations=0x7f080016;
         public static final int flight_routing=0x7f080017;
@@ -455,6 +469,7 @@ containing a value of this type.
         public static final int pls_enter_password=0x7f080011;
         public static final int pls_enter_username=0x7f080010;
         public static final int settings=0x7f08000d;
+        public static final int there_no_advices=0x7f08001d;
         public static final int there_no_alerts=0x7f080019;
         public static final int travel_advices=0x7f08000a;
         public static final int travel_alerts=0x7f080009;

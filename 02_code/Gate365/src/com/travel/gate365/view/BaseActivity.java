@@ -25,6 +25,7 @@ public abstract class BaseActivity extends Activity {
 
 	protected static final int NOTE_LOGIN_SUCCESSFULLY = 1;
 	protected static final int NOTE_LOGIN_FAILED = 2;
+	protected static final int NOTE_COULD_NOT_CONNECT_SERVER = 3;
 	
 	private String id;
 	protected static ProgressDialog loading;	
@@ -109,6 +110,12 @@ public abstract class BaseActivity extends Activity {
 			case NOTE_LOGIN_FAILED:
 				DialogManager.alert(BaseActivity.this, R.string.login_failed, R.string.invalid_username_pass, null);
 				break;
+
+			case NOTE_COULD_NOT_CONNECT_SERVER:
+				DialogManager.alert(BaseActivity.this, R.string.login_failed, R.string.could_not_connect_server, null);
+				BaseActivity.this.setContentView(R.layout.activity_home);
+				BaseActivity.this.init();
+				break;				
 				
 			default: 
 				break;

@@ -59,7 +59,7 @@
 	        android:layout_height="wrap_content"
 	        android:padding="5dp"
 	        style="@style/CommonTextViewStyle"
-	        android:text="HANOI"
+	        android:text="LONDON"
 	        android:textColor="@color/yellow"/>
 
 	    <com.travel.gate365.view.widget.FontableTextView android:id="@id/txt_codetime"

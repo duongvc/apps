@@ -5,15 +5,15 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.TextView;
-import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.travel.gate365.R;
 import com.travel.gate365.model.JourneyItemInfo;
 import com.travel.gate365.view.BaseActivity;
 
-public class JourneysActivity extends BaseActivity implements OnItemSelectedListener {
+public class JourneysActivity extends BaseActivity implements OnItemClickListener {
 
 	private JourneyItemAdapter adapter;
 
@@ -51,22 +51,16 @@ public class JourneysActivity extends BaseActivity implements OnItemSelectedList
 		
 		adapter = new JourneyItemAdapter(this, menuList);
 		lstMenu.setAdapter(adapter);
-		lstMenu.setOnItemSelectedListener(this);			
+		lstMenu.setOnItemClickListener(this);			
 		
 		TextView txtMessage = (TextView)findViewById(R.id.txt_message);
 		txtMessage.setVisibility(View.GONE);
 	}
 
 	@Override
-	public void onItemSelected(AdapterView<?> adapter, View view, int itemPos, long itemId) {
+	public void onItemClick(AdapterView<?> adapter, View view, int itemPos, long itemId) {
 		Log.i(getId(), "::onItemSelected - pos:" + itemPos + ", id:" + itemId);
 		Intent intent = new Intent(this, JourneyDetailActivity.class);
 		startActivity(intent);
-	}
-
-	@Override
-	public void onNothingSelected(AdapterView<?> arg0) {
-		// TODO Auto-generated method stub
-		
 	}
 }

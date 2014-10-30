@@ -24,6 +24,9 @@ import com.travel.gate365.view.alert.AlertActivity;
 import com.travel.gate365.view.home.HomeMenuItemAdapter;
 import com.travel.gate365.view.journeys.JourneyDetailActivity;
 import com.travel.gate365.view.journeys.JourneysActivity;
+import com.travel.gate365.view.tip.TipCountryActivity;
+import com.travel.gate365.view.travel.AdvicesActivity;
+import com.travel.gate365.view.travel.TravelRisksActivity;
 
 public class Gate365Activity extends BaseActivity implements OnItemClickListener {
 
@@ -113,6 +116,9 @@ public class Gate365Activity extends BaseActivity implements OnItemClickListener
 					}
 				} catch (Exception e) {
 					e.printStackTrace();
+					android.os.Message msg = new Message();
+					msg.what = BaseActivity.NOTE_COULD_NOT_CONNECT_SERVER;
+					notificationHandler.sendMessage(msg);												
 				}
 			}
 		});
@@ -126,7 +132,8 @@ public class Gate365Activity extends BaseActivity implements OnItemClickListener
 		Intent intent;
 		switch ((int)id) {
 		case MenuItemInfo.MENU_ITEM_COUNTRY_RISK:
-			
+			intent = new Intent(this, TravelRisksActivity.class);
+			startActivity(intent);			
 			break;
 
 		case MenuItemInfo.MENU_ITEM_JOURNEYS:
@@ -139,7 +146,8 @@ public class Gate365Activity extends BaseActivity implements OnItemClickListener
 			break;
 
 		case MenuItemInfo.MENU_ITEM_TRAVEL_ADVICES:
-			
+			intent = new Intent(this, AdvicesActivity.class);
+			startActivity(intent);
 			break;
 
 		case MenuItemInfo.MENU_ITEM_TRAVEL_ALERTS:
@@ -148,7 +156,8 @@ public class Gate365Activity extends BaseActivity implements OnItemClickListener
 			break;
 
 		case MenuItemInfo.MENU_ITEM_TRAVEL_TIPS:
-			
+			intent = new Intent(this, TipCountryActivity.class);
+			startActivity(intent);			
 			break;
 
 		default:

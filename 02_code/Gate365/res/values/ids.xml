@@ -33,15 +33,19 @@
     <item type="id" name="txt_country" />
     <item type="id" name="txt_codetime" />
     <item type="id" name="txt_message" />
+    <item type="id" name="txt_title" />
     <item type="id" name="lst_menu" />
     <item type="id" name="lst_journeys" />
     <item type="id" name="lst_flight_routing" />
     <item type="id" name="lst_alerts" />
+    <item type="id" name="lst_advices" />
+    <item type="id" name="lst_tips" />
+    <item type="id" name="lst_risks" />
     <item type="id" name="menu_close" />
     <item type="id" name="menu_logout" />    
     <item type="id" name="titlebar" />
     <item type="id" name="layout_content" />
     <item type="id" name="layout_depart" />
-    <item type="id" name="layout_arrival" />
+    <item type="id" name="layout_arrival" />    
     
 </resources>

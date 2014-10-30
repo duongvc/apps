@@ -6,8 +6,11 @@ import android.view.Display;
 import com.travel.gate365.Gate365Activity;
 import com.travel.gate365.R;
 import com.travel.gate365.view.alert.AlertActivity;
+import com.travel.gate365.view.alert.AlertDetailActivity;
 import com.travel.gate365.view.journeys.JourneyDetailActivity;
 import com.travel.gate365.view.journeys.JourneysActivity;
+import com.travel.gate365.view.tip.TipCountryActivity;
+import com.travel.gate365.view.travel.AdvicesActivity;
 
 public class Model {
 
@@ -17,6 +20,9 @@ public class Model {
 		, new ActivityInfo(JourneysActivity.class.getSimpleName(), R.drawable.ic_0, R.string.journeys, R.string.destinations)
 		, new ActivityInfo(JourneyDetailActivity.class.getSimpleName(), R.drawable.ic_0, R.string.journey_details, 0)
 		, new ActivityInfo(AlertActivity.class.getSimpleName(), R.drawable.ic_1, R.string.travel_alerts, 0)
+		, new ActivityInfo(AlertDetailActivity.class.getSimpleName(), R.drawable.ic_1, R.string.alert_details, 0)
+		, new ActivityInfo(AdvicesActivity.class.getSimpleName(), R.drawable.ic_2, R.string.travel_advices, 0)
+		, new ActivityInfo(TipCountryActivity.class.getSimpleName(), R.drawable.ic_5, R.string.travel_tips, 0)
 	};
 	private boolean isLogin;
 	

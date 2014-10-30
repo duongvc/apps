@@ -37,13 +37,13 @@
         	android:contentDescription="@string/journeys"
         	android:src="@drawable/_next"/>
         
-	    <com.travel.gate365.view.widget.FontableButton android:id="@id/btn_type" 
+	    <!-- <com.travel.gate365.view.widget.FontableButton android:id="@id/btn_type" 
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_toLeftOf="@id/img_arrow"
             android:layout_centerVertical="true"
 	        android:text="Extreme"
-	        style="@style/CommonButtonStyle"/>
+	        style="@style/CommonButtonStyle"/> -->
 
 	    <com.travel.gate365.view.widget.FontableTextView android:id="@id/txt_city"
 	        android:layout_width="wrap_content"

@@ -38,7 +38,13 @@ public class JourneyDetailActivity extends BaseActivity implements OnItemClickLi
 			, new FlightRoutingInfo(2)
 			, new FlightRoutingInfo(3)
 			, new FlightRoutingInfo(4)
-			, new FlightRoutingInfo(5)};
+			, new FlightRoutingInfo(5)
+			, new FlightRoutingInfo(6)
+			, new FlightRoutingInfo(7)
+			, new FlightRoutingInfo(8)
+			, new FlightRoutingInfo(9)
+			, new FlightRoutingInfo(10)
+		};
 		
 		adapter = new FlightRoutingItemAdapter(this, menuList);
 		lstMenu.setAdapter(adapter);
