@@ -10,5 +10,10 @@
 	<color name="bg_button_inactive_end">#ffffff</color>
 	<color name="bg_messagebar_active_start">#0000ff</color>
 	<color name="bg_messagebar_active_end">#00b0ff</color>
-				
+	<color name="orange">#fba033</color>
+	<color name="dark_yellow">#fad442</color>
+	<color name="while_yellow">#f8e71c</color>
+	<color name="dark_red">#d31e1e</color>
+	<color name="dark_orange">#e56c42</color>
+					
 </resources>

@@ -15,10 +15,10 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
 
+import com.travel.gate365.helper.DialogHelper;
 import com.travel.gate365.model.MenuItemInfo;
 import com.travel.gate365.model.Model;
 import com.travel.gate365.service.ServiceManager;
-import com.travel.gate365.util.DialogManager;
 import com.travel.gate365.view.BaseActivity;
 import com.travel.gate365.view.alert.AlertActivity;
 import com.travel.gate365.view.home.HomeMenuItemAdapter;
@@ -74,7 +74,7 @@ public class Gate365Activity extends BaseActivity implements OnItemClickListener
 	
 	public void onLoginButtonHandler(View view){
 		if(!isNetworkAvailable()){
-			DialogManager.alert(this, R.string.no_internet, R.string.no_internet_avaialbe, null);
+			DialogHelper.alert(this, R.string.no_internet, R.string.no_internet_avaialbe, null);
 			return;
 		}
 		
@@ -104,8 +104,10 @@ public class Gate365Activity extends BaseActivity implements OnItemClickListener
 					JSONObject res = ServiceManager.login("ux00287", "1");					
 					//JSONObject res = ServiceManager.login(edtUsername.getText().toString(), edtPassword.getText().toString());
 					loading.dismiss();
-					if(res.getString("status").equalsIgnoreCase(ServiceManager.SUCCESS_STATUS)){
+					if(res != null && res.getString("status").equalsIgnoreCase(ServiceManager.SUCCESS_STATUS)){
 						Model.getInstance().setLogin(true);
+						//Model.getInstance().paserLoginInfo(edtUsername.getText().toString(), edtPassword.getText().toString());
+						Model.getInstance().paserLoginInfo("ux00287", "1");
 						android.os.Message msg = new Message();
 						msg.what = BaseActivity.NOTE_LOGIN_SUCCESSFULLY;
 						notificationHandler.sendMessage(msg);						
@@ -116,6 +118,7 @@ public class Gate365Activity extends BaseActivity implements OnItemClickListener
 					}
 				} catch (Exception e) {
 					e.printStackTrace();
+					loading.dismiss();
 					android.os.Message msg = new Message();
 					msg.what = BaseActivity.NOTE_COULD_NOT_CONNECT_SERVER;
 					notificationHandler.sendMessage(msg);												

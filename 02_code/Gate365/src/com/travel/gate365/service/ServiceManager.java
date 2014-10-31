@@ -52,6 +52,7 @@ public class ServiceManager {
 
 	public static final String SERVER_URL = IS_TEST_EVR ? "http://archivist.it/gate365/BB/"	: "http://test.gate365.unicredit.eu/BB/";
 	public static final String URL_LOGIN = SERVER_URL + "Login.aspx";
+	public static final String URL_JOURNEYS = SERVER_URL + "GetTravelDestinations.aspx?type=detail";
 	
 	public static final String SUCCESS_STATUS = "success";
 	
@@ -68,6 +69,18 @@ public class ServiceManager {
 		}
 		url += "pax=" + pax;
 		
+		return connect(url, null, TIMEOUT_SOCKET, TIMEOUT_CONNECTION);
+	}
+	
+	public static JSONObject getJourneys(String username, String password){
+		String pax = username.replace('\\', '_');
+		String url = URL_JOURNEYS;
+		if (url.indexOf("=") != -1) {
+			url += "&";
+		} else {
+			url += "?";
+		}
+		url += "pax=" + pax;
 		return connect(url, null, TIMEOUT_SOCKET, TIMEOUT_CONNECTION);
 	}
 	

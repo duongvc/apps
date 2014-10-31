@@ -1,5 +1,7 @@
 package com.travel.gate365.view.journeys;
 
+import java.util.Locale;
+
 import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -11,6 +13,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.travel.gate365.R;
+import com.travel.gate365.helper.DateTimeHelper;
 import com.travel.gate365.model.FlightRoutingInfo;
 import com.travel.gate365.model.Model;
 
@@ -48,30 +51,46 @@ public class FlightRoutingItemAdapter extends BaseAdapter {
 	        holder = new Holder();
 	        LayoutInflater inflate = ((Activity) context).getLayoutInflater();
 	        convertView = (View)inflate.inflate(R.layout.flight_routing_item, null);  
-			//ImageView icon = (ImageView)convertView.findViewById(R.id.img_icon);
+			ImageView icon = (ImageView)convertView.findViewById(R.id.img_icon);
 			//int maxHeight = Math.min(Model.getInstance().getScreenHeight() / 15, 128);
 			//icon.setLayoutParams(new RelativeLayout.LayoutParams(maxHeight, maxHeight));
+			holder.icon = icon;
 			
-			//icon = (ImageView)convertView.findViewById(R.id.img_arrow);
-			//icon.setLayoutParams(new RelativeLayout.LayoutParams(maxHeight, maxHeight));
-			//TextView text = (TextView)convertView.findViewById(R.id.txt_left);
-			//ext.setText(info.getTextResId());
+			TextView text = (TextView)convertView.findViewById(R.id.txt_flight_code);
+			holder.txtFlightCode = text;
 			
-			//holder.icon = icon;
-			//holder.text = text;
+			View layout = convertView.findViewById(R.id.layout_depart);
+			text = (TextView)layout.findViewById(R.id.txt_city);
+			holder.txtDepartCity = text;
+			text = (TextView)layout.findViewById(R.id.txt_datetime);
+			holder.txtDepartDateTime = text;
+			
+			layout = convertView.findViewById(R.id.layout_arrival);
+			text = (TextView)layout.findViewById(R.id.txt_city);
+			holder.txtArrivalCity = text;
+			text = (TextView)layout.findViewById(R.id.txt_datetime);
+			holder.txtArrivalDateTime = text;
+			
 			convertView.setTag(holder);
 		}else{
 			holder = (Holder) convertView.getTag();
-			//holder.icon.setImageResource(info.getIconResId());
-			//holder.text.setText(info.getTextResId());
 		}
 		
+		holder.txtFlightCode.setText(info.getFlightNumber().toUpperCase(Locale.US));
+		holder.txtDepartCity.setText(info.getDepartureAirport().toUpperCase(Locale.US));		
+		holder.txtDepartDateTime.setText(DateTimeHelper.convertDateStringToddMMyyyy(context, info.getDepartureDateTime()));
+		holder.txtArrivalCity.setText(info.getArrivalAirport().toUpperCase(Locale.US));		
+		holder.txtArrivalDateTime.setText(DateTimeHelper.convertDateStringToddMMyyyy(context, info.getArrivalDateTime()));
 		return convertView;
 	}
 
 	private class Holder {
+		TextView txtArrivalDateTime;
+		TextView txtArrivalCity;
 		ImageView icon;
-		TextView text;
+		TextView txtFlightCode;
+		TextView txtDepartCity;
+		TextView txtDepartDateTime;
 	}
 	
 }

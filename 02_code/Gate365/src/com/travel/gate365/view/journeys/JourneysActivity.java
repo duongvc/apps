@@ -1,7 +1,12 @@
 package com.travel.gate365.view.journeys;
 
+import org.json.JSONObject;
+
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -10,7 +15,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.travel.gate365.R;
-import com.travel.gate365.model.JourneyItemInfo;
+import com.travel.gate365.model.Model;
+import com.travel.gate365.service.ServiceManager;
 import com.travel.gate365.view.BaseActivity;
 
 public class JourneysActivity extends BaseActivity implements OnItemClickListener {
@@ -35,32 +41,61 @@ public class JourneysActivity extends BaseActivity implements OnItemClickListene
 	protected void init() {
 		super.init();
 		
-		ListView lstMenu = (ListView)findViewById(R.id.lst_journeys);
-		final JourneyItemInfo[] menuList = {new JourneyItemInfo(0)
-			, new JourneyItemInfo(1)
-			, new JourneyItemInfo(2)
-			, new JourneyItemInfo(3)
-			, new JourneyItemInfo(4)
-			, new JourneyItemInfo(5)
-			, new JourneyItemInfo(6)
-			, new JourneyItemInfo(7)
-			, new JourneyItemInfo(8)
-			, new JourneyItemInfo(9)
-			, new JourneyItemInfo(10)
-			};
-		
-		adapter = new JourneyItemAdapter(this, menuList);
-		lstMenu.setAdapter(adapter);
-		lstMenu.setOnItemClickListener(this);			
-		
 		TextView txtMessage = (TextView)findViewById(R.id.txt_message);
 		txtMessage.setVisibility(View.GONE);
+		
+		if(loading == null || (loading != null && !loading.isShowing())){
+			loading = ProgressDialog.show(this, "", ""); 
+			loading.show();
+		}
+		
+		Thread thread = new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				try { 
+					JSONObject res = ServiceManager.getJourneys(Model.getInstance().getUserInfo().getUsername(), Model.getInstance().getUserInfo().getPassword());					
+					loading.dismiss();
+					Model.getInstance().paserJourney(res);
+					android.os.Message msg = new Message();
+					msg.what = BaseActivity.NOTE_LOAD_JOURNEY_SUCCESSFULLY;
+					notificationHandler.sendMessage(msg);						
+				} catch (Exception e) {
+					loading.dismiss();
+					e.printStackTrace();
+					android.os.Message msg = new Message();
+					msg.what = BaseActivity.NOTE_COULD_NOT_CONNECT_SERVER;
+					notificationHandler.sendMessage(msg);												
+				}
+			}
+		});
+		
+		thread.start();				
+		
 	}
 
 	@Override
 	public void onItemClick(AdapterView<?> adapter, View view, int itemPos, long itemId) {
 		Log.i(getId(), "::onItemSelected - pos:" + itemPos + ", id:" + itemId);
 		Intent intent = new Intent(this, JourneyDetailActivity.class);
+		intent.putExtra(JourneyDetailActivity.JOURNEY_ID, itemId);
 		startActivity(intent);
 	}
+	
+	protected final Handler notificationHandler = new Handler(){
+		public void handleMessage(android.os.Message msg) {
+			switch (msg.what) {
+			case NOTE_LOAD_JOURNEY_SUCCESSFULLY:
+				ListView lstMenu = (ListView)findViewById(R.id.lst_journeys);
+				adapter = new JourneyItemAdapter(JourneysActivity.this, Model.getInstance().getJourneys());
+				lstMenu.setAdapter(adapter);
+				lstMenu.setOnItemClickListener(JourneysActivity.this);			
+				break;
+				
+			default: 
+				break;
+			}
+		};		
+	};
+	
 }

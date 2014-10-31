@@ -17,15 +17,17 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.travel.gate365.R;
+import com.travel.gate365.helper.DialogHelper;
 import com.travel.gate365.model.ActivityInfo;
 import com.travel.gate365.model.Model;
-import com.travel.gate365.util.DialogManager;
 
 public abstract class BaseActivity extends Activity {
 
 	protected static final int NOTE_LOGIN_SUCCESSFULLY = 1;
 	protected static final int NOTE_LOGIN_FAILED = 2;
 	protected static final int NOTE_COULD_NOT_CONNECT_SERVER = 3;
+	protected static final int NOTE_LOAD_JOURNEY_SUCCESSFULLY = 4;
+	protected static final int NOTE_LOAD_JOURNEY_FAILED = 5;
 	
 	private String id;
 	protected static ProgressDialog loading;	
@@ -108,14 +110,20 @@ public abstract class BaseActivity extends Activity {
 				break;
 				
 			case NOTE_LOGIN_FAILED:
-				DialogManager.alert(BaseActivity.this, R.string.login_failed, R.string.invalid_username_pass, null);
+				DialogHelper.alert(BaseActivity.this, R.string.login_failed, R.string.invalid_username_pass, null);
 				break;
 
 			case NOTE_COULD_NOT_CONNECT_SERVER:
-				DialogManager.alert(BaseActivity.this, R.string.login_failed, R.string.could_not_connect_server, null);
+				DialogHelper.alert(BaseActivity.this, R.string.login_failed, R.string.could_not_connect_server, null);
 				BaseActivity.this.setContentView(R.layout.activity_home);
 				BaseActivity.this.init();
 				break;				
+				
+			case NOTE_LOAD_JOURNEY_SUCCESSFULLY:
+				break;
+				
+			case NOTE_LOAD_JOURNEY_FAILED:
+				break;
 				
 			default: 
 				break;
@@ -126,11 +134,11 @@ public abstract class BaseActivity extends Activity {
     public synchronized String convertToString(long pDateTime){
     	Date date = new Date(pDateTime);
     	SimpleDateFormat dateFormat = new SimpleDateFormat("MMM dd - hh:mm a");
-		StringBuilder stDate = new StringBuilder().append(pad(date.getDate()))
+		/*StringBuilder stDate = new StringBuilder().append(pad(date.getDate()))
 				.append("-").append(pad(date.getYear() + 1900))
 				.append("-").append(date.getMonth() + 1)
 				.append(" - ").append(pad(date.getHours()))
-				.append(":").append(pad(date.getMinutes()));
+				.append(":").append(pad(date.getMinutes()));*/
 				//.append(":").append(pad(date.getSeconds()));
 		String [] dayOfWeeks = getResources().getStringArray(R.array.daysOfWeek);
 				

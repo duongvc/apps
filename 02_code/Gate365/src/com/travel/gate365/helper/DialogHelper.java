@@ -1,4 +1,4 @@
-package com.travel.gate365.util;
+package com.travel.gate365.helper;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -7,7 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
-public final class DialogManager {
+public final class DialogHelper {
 
 	private static AlertDialog sAlert = null;
 

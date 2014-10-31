@@ -4,7 +4,7 @@
     android:layout_height="wrap_content" 
     android:background="@drawable/journey_item_selector">
     
-    <com.travel.gate365.view.widget.FontableTextView android:id="@id/txt_datetime"
+    <com.travel.gate365.view.widget.FontableTextView android:id="@id/txt_flight_code"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         style="@style/CommonTextViewStyle"
@@ -17,7 +17,7 @@
     <RelativeLayout android:id="@id/layout_depart"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/txt_datetime">
+        android:layout_below="@id/txt_flight_code">
         
 	    <com.travel.gate365.view.widget.FontableTextView android:id="@id/txt_city"
 	        android:layout_width="wrap_content"
@@ -27,7 +27,7 @@
 	        android:text="HANOI"
 	        android:textColor="@color/yellow"/>
 
-	    <com.travel.gate365.view.widget.FontableTextView android:id="@id/txt_codetime"
+	    <com.travel.gate365.view.widget.FontableTextView android:id="@id/txt_datetime"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_below="@id/txt_city"
@@ -51,8 +51,9 @@
     <RelativeLayout android:id="@id/layout_arrival"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/txt_datetime"
-        android:layout_alignParentRight="true">
+        android:layout_below="@id/txt_flight_code"
+        android:layout_alignParentRight="true"
+        android:minWidth="100dp">
         
 	    <com.travel.gate365.view.widget.FontableTextView android:id="@id/txt_city"
 	        android:layout_width="wrap_content"
@@ -62,7 +63,7 @@
 	        android:text="LONDON"
 	        android:textColor="@color/yellow"/>
 
-	    <com.travel.gate365.view.widget.FontableTextView android:id="@id/txt_codetime"
+	    <com.travel.gate365.view.widget.FontableTextView android:id="@id/txt_datetime"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_below="@id/txt_city"
