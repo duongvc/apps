@@ -37,10 +37,13 @@ public class Model {
 	private JourneyItemInfo[] journeys;
 	private AlertItemInfo[] alerts;
 	private AdviceItemInfo[] advices;
+	private PlaceInfo[] places;
 	
 	private Model() {
 		journeys = new JourneyItemInfo[0];
 		alerts = new AlertItemInfo[0];
+		places = new PlaceInfo[0]; 
+		advices = new AdviceItemInfo[0];
 	}
 
 	public static Model getInstance() {
@@ -168,6 +171,22 @@ public class Model {
 		return advices;		
 	}
 	
+	public PlaceInfo[] parserPlaces(JSONObject obj) throws JSONException {
+		JSONArray arr = obj.getJSONArray("ResultSet");
+		PlaceInfo[] places = null;
+		if (arr != null) {
+			Log.i(Model.class.getSimpleName(), "-----getDetinationCountriesGrouped Array lenght: " + arr.length());
+			places = new PlaceInfo[arr.length()];
+			for (int a = 0; a < arr.length(); a++) {
+				JSONObject jsSource = arr.getJSONObject(a);
+				places[a] = new PlaceInfo(jsSource.getString("CountryId"), jsSource.getString("CountryISOCode"),
+						jsSource.getString("CountryName"), jsSource.getString("LocationName"), jsSource.getString("SecurityRisk"));
+			}
+		}
+		this.places = places;
+		return places;
+	}
+	
 	public UserInfo getUserInfo(){
 		return userInfo;
 	}
@@ -216,6 +235,19 @@ public class Model {
 		for (int i = 0; i < advices.length; i++) {
 			if(advices[i].getId() == adviceId){
 				return advices[i];
+			}
+		}
+		return null;
+	}
+
+	public PlaceInfo[] getPlaces() {
+		return places;
+	}
+
+	public PlaceInfo getPlace(String placeId) {
+		for (int i = 0; i < places.length; i++) {
+			if(places[i].getCountryId().equalsIgnoreCase(placeId)){
+				return places[i];
 			}
 		}
 		return null;

@@ -103,9 +103,21 @@ public class ServiceManager {
 		return connect(url, null, TIMEOUT_SOCKET, TIMEOUT_CONNECTION);
 	}
 	
-	public static JSONObject getAdvices(String username, String password) throws Exception {
+	public static JSONObject getAdvices(String username, String password, String countryId) throws Exception {
 		String pax = username.replace('\\', '_');
-		String url = URL_ADVICES;
+		String url = URL_ADVICES + "?cid=" + countryId;
+		if (url.indexOf("=") != -1) {
+			url += "&";
+		} else {
+			url += "?";
+		}
+		url += "pax=" + pax;
+		return connect(url, null, TIMEOUT_SOCKET, TIMEOUT_CONNECTION);
+	}
+	
+	public static JSONObject getDetinationCountriesGrouped(String username, String password) throws Exception {
+		String pax = username.replace('\\', '_');
+		String url = URL_PLACES;
 		if (url.indexOf("=") != -1) {
 			url += "&";
 		} else {

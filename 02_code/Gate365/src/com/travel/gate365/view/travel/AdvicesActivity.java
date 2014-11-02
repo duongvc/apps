@@ -3,27 +3,20 @@ package com.travel.gate365.view.travel;
 import org.json.JSONObject;
 
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.AdapterView.OnItemClickListener;
 
 import com.travel.gate365.R;
-import com.travel.gate365.model.AdviceItemInfo;
-import com.travel.gate365.model.JourneyItemInfo;
 import com.travel.gate365.model.Model;
 import com.travel.gate365.service.ServiceManager;
 import com.travel.gate365.view.BaseActivity;
-import com.travel.gate365.view.alert.AlertActivity;
-import com.travel.gate365.view.alert.AlertItemAdapter;
-import com.travel.gate365.view.journeys.JourneyDetailActivity;
-import com.travel.gate365.view.journeys.JourneyItemAdapter;
 
 public class AdvicesActivity extends BaseActivity implements OnItemClickListener {
 
@@ -70,11 +63,11 @@ public class AdvicesActivity extends BaseActivity implements OnItemClickListener
 			@Override
 			public void run() {
 				try { 
-					JSONObject res = ServiceManager.getAdvices(Model.getInstance().getUserInfo().getUsername(), Model.getInstance().getUserInfo().getPassword());					
+					JSONObject res = ServiceManager.getDetinationCountriesGrouped(Model.getInstance().getUserInfo().getUsername(), Model.getInstance().getUserInfo().getPassword());					
 					loading.dismiss();
-					Model.getInstance().parserTravelAdvices(res);
+					Model.getInstance().parserPlaces(res);
 					android.os.Message msg = new Message();
-					msg.what = BaseActivity.NOTE_LOAD_ADVICE_SUCCESSFULLY;
+					msg.what = BaseActivity.NOTE_LOAD_PLACE_SUCCESSFULLY;
 					notificationHandler.sendMessage(msg);						
 				} catch (Exception e) {
 					loading.dismiss();
@@ -101,10 +94,10 @@ public class AdvicesActivity extends BaseActivity implements OnItemClickListener
 	protected final Handler notificationHandler = new Handler(){
 		public void handleMessage(android.os.Message msg) {
 			switch (msg.what) {
-			case BaseActivity.NOTE_LOAD_ADVICE_SUCCESSFULLY:
-				if(Model.getInstance().getAdvices().length > 0){
+			case BaseActivity.NOTE_LOAD_PLACE_SUCCESSFULLY:
+				if(Model.getInstance().getPlaces().length > 0){
 					txtMessage.setVisibility(View.GONE);
-					adapter = new AdviceItemAdapter(AdvicesActivity.this, Model.getInstance().getAdvices(), R.layout.advice_item);
+					adapter = new AdviceItemAdapter(AdvicesActivity.this, Model.getInstance().getPlaces(), R.layout.advice_item);
 					lstMenu.setAdapter(adapter);
 					lstMenu.setOnItemClickListener(AdvicesActivity.this);								
 				}else{
