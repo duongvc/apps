@@ -26,6 +26,8 @@ public abstract class BaseActivity extends Activity {
 	protected static final int NOTE_COULD_NOT_CONNECT_SERVER = 3;
 	protected static final int NOTE_LOAD_JOURNEY_SUCCESSFULLY = 4;
 	protected static final int NOTE_LOAD_JOURNEY_FAILED = 5;
+	protected static final int NOTE_LOAD_ALERT_SUCCESSFULLY = 6;
+	protected static final int NOTE_LOAD_ADVICE_SUCCESSFULLY = 7;
 	
 	private String id;
 	protected static ProgressDialog loading;	

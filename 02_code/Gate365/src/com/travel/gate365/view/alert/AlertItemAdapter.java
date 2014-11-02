@@ -1,5 +1,8 @@
 package com.travel.gate365.view.alert;
 
+import java.lang.reflect.Field;
+import java.util.Locale;
+
 import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -11,6 +14,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.travel.gate365.R;
+import com.travel.gate365.helper.DateTimeHelper;
+import com.travel.gate365.helper.ResourceHelper;
 import com.travel.gate365.model.AlertItemInfo;
 import com.travel.gate365.model.Model;
 
@@ -49,29 +54,39 @@ public class AlertItemAdapter extends BaseAdapter {
 	        LayoutInflater inflate = ((Activity) context).getLayoutInflater();
 	        convertView = (View)inflate.inflate(R.layout.alert_item, null);  
 			ImageView icon = (ImageView)convertView.findViewById(R.id.img_icon);
-			int maxHeight = Math.min(Model.getInstance().getScreenHeight() / 15, 128);
-			icon.setLayoutParams(new RelativeLayout.LayoutParams(maxHeight, maxHeight));
 			
-			//icon = (ImageView)convertView.findViewById(R.id.img_arrow);
-			//icon.setLayoutParams(new RelativeLayout.LayoutParams(maxHeight, maxHeight));
-			//TextView text = (TextView)convertView.findViewById(R.id.txt_left);
-			//ext.setText(info.getTextResId());
+			holder.icon = icon;
 			
-			//holder.icon = icon;
-			//holder.text = text;
+			TextView text = (TextView)convertView.findViewById(R.id.txt_country);
+			holder.txtCountry = text;
+			
+			text = (TextView)convertView.findViewById(R.id.txt_datetime);
+			holder.txtDatetime = text;
+			
+			text = (TextView)convertView.findViewById(R.id.txt_title);
+			holder.txtTitle = text;
 			convertView.setTag(holder);
 		}else{
 			holder = (Holder) convertView.getTag();
-			//holder.icon.setImageResource(info.getIconResId());
-			//holder.text.setText(info.getTextResId());
 		}
-		
+		holder.txtCountry.setText(info.getPlace().getCountryName().toUpperCase(Locale.US));
+		holder.txtDatetime.setText(DateTimeHelper.convertDateStringToddMMyyyy(info.getDatetime()));
+		holder.txtTitle.setText(info.getTitle());
+				
+		int maxHeight = Math.min(Model.getInstance().getScreenHeight() / 15, 128);
+		holder.icon.setLayoutParams(new RelativeLayout.LayoutParams(maxHeight, maxHeight));		
+		int countryDrawableId = ResourceHelper.getDrawableId(info.getPlace().getCountryISOCode().toLowerCase(Locale.US));
+		if(countryDrawableId != 0){
+			holder.icon.setImageResource(countryDrawableId);
+		}
 		return convertView;
 	}
 
 	private class Holder {
 		ImageView icon;
-		TextView text;
+		TextView txtCountry;
+		TextView txtDatetime;
+		TextView txtTitle;
 	}
 	
 }

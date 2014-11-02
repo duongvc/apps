@@ -22,13 +22,19 @@
         	android:contentDescription="@string/journeys"
         	android:src="@drawable/_next"/>
         
-	    <!-- <com.travel.gate365.view.widget.FontableButton android:id="@id/btn_type" 
+	     <com.travel.gate365.view.widget.FontableTextView android:id="@id/txt_risktype" 
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_toLeftOf="@id/img_arrow"
             android:layout_centerVertical="true"
-	        android:text="Extreme"
-	        style="@style/CommonButtonStyle"/> -->
+            android:background="@drawable/type_insignificant"
+	        android:text="@string/INSIGNIFICANT"
+	        android:textSize="10sp"
+	        android:padding="3dp"
+	        android:textColor="@android:color/black"
+	        android:minWidth="50dp"
+	        android:gravity="center"
+	        style="@style/CommonTextViewStyle"/> 
 
 	    <com.travel.gate365.view.widget.FontableTextView android:id="@id/txt_country"
 	        android:layout_width="wrap_content"

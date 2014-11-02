@@ -24,9 +24,9 @@ public class Model {
 	private final ActivityInfo[] arrActivityInfo = {
 		new ActivityInfo(Gate365Activity.class.getSimpleName(), R.drawable.ic_0, R.string.login_U, 0)
 		, new ActivityInfo(JourneysActivity.class.getSimpleName(), R.drawable.journeys_menuitem_selector, R.string.journeys, R.string.destinations)
-		, new ActivityInfo(JourneyDetailActivity.class.getSimpleName(), R.drawable.ic_0, R.string.journey_details, 0)
-		, new ActivityInfo(AlertActivity.class.getSimpleName(), R.drawable.ic_1, R.string.travel_alerts, 0)
-		, new ActivityInfo(AlertDetailActivity.class.getSimpleName(), R.drawable.ic_1, R.string.alert_details, 0)
+		, new ActivityInfo(JourneyDetailActivity.class.getSimpleName(), R.drawable.journeys_menuitem_selector, R.string.journey_details, 0)
+		, new ActivityInfo(AlertActivity.class.getSimpleName(), R.drawable.alert_item_selector, R.string.travel_alerts, 0)
+		, new ActivityInfo(AlertDetailActivity.class.getSimpleName(), R.drawable.alert_item_selector, R.string.alert_details, 0)
 		, new ActivityInfo(AdvicesActivity.class.getSimpleName(), R.drawable.ic_2, R.string.travel_advices, 0)
 		, new ActivityInfo(TipCountryActivity.class.getSimpleName(), R.drawable.ic_5, R.string.travel_tips, 0)
 	};
@@ -35,8 +35,12 @@ public class Model {
 	
 	private DisplayMetrics metrics;
 	private JourneyItemInfo[] journeys;
+	private AlertItemInfo[] alerts;
+	private AdviceItemInfo[] advices;
 	
 	private Model() {
+		journeys = new JourneyItemInfo[0];
+		alerts = new AlertItemInfo[0];
 	}
 
 	public static Model getInstance() {
@@ -84,7 +88,7 @@ public class Model {
 	 * @param obj
 	 * @throws JSONException
 	 */
-	public void paserJourney(JSONObject obj) throws JSONException{
+	public JourneyItemInfo[] paserJourney(JSONObject obj) throws JSONException{
 		JSONArray arr = obj.getJSONArray("ResultSet");
 		JourneyItemInfo[] journeys = null;
 		if (arr != null) {
@@ -120,6 +124,48 @@ public class Model {
 		}//arr != null
 		
 		this.journeys = journeys;
+		
+		return journeys;
+	}
+	
+	public AlertItemInfo[] parserTravelAlerts(JSONObject obj) throws JSONException{
+		Log.i(Model.class.getSimpleName(), "---------getAlerts status: " + obj.getString("Status"));
+		JSONArray arr = obj.getJSONArray("ResultSet");
+		AlertItemInfo[] alerts = null;
+		if (arr != null) {
+			Log.i(Model.class.getSimpleName(), "-----getAlerts Array lenght: " + arr.length());
+			IntegerGenerator intGenerator = new IntegerGenerator();
+			alerts = new AlertItemInfo[arr.length()];
+			for (int a = 0; a < arr.length(); a++) {
+				JSONObject jsAlert = arr.getJSONObject(a);
+				JSONObject jsSource = jsAlert.getJSONObject("Location");
+				PlaceInfo ldo = new PlaceInfo(jsSource.getString("CountryId"), jsSource.getString("CountryISOCode"),
+						jsSource.getString("CountryName"), jsSource.getString("LocationName"), jsSource.getString("SecurityRisk"));
+				alerts[a] = new AlertItemInfo(intGenerator.generate(), jsAlert.getString("DateTime"), jsAlert.getString("Title"), jsAlert.getString("Detail"), ldo);
+			}
+		}
+		this.alerts = alerts;
+		
+		return alerts;		
+	}
+	
+	public AdviceItemInfo[] parserTravelAdvices(JSONObject obj) throws JSONException {
+		Log.i(Model.class.getSimpleName(), "---------getAdvices status: " + obj.getString("Status"));
+		JSONArray arr = obj.getJSONArray("ResultSet");
+		AdviceItemInfo[] advices = null;
+		if (arr != null) {
+			Log.i(Model.class.getSimpleName(), "-----getAdvices Array lenght: " + arr.length());
+			advices = new AdviceItemInfo[arr.length()];
+			IntegerGenerator intGenerator = new IntegerGenerator();
+			for (int a = 0; a < arr.length(); a++) {
+				JSONObject jsAdvice = arr.getJSONObject(a);
+				advices[a] = new AdviceItemInfo(intGenerator.generate(), jsAdvice.getString("DateTime"), jsAdvice.getString("Title"), jsAdvice.getString("Detail"));
+			}
+		}
+		
+		this.advices = advices;
+		
+		return advices;		
 	}
 	
 	public UserInfo getUserInfo(){
@@ -144,6 +190,32 @@ public class Model {
 		for (int i = 0; i < journeys.length; i++) {
 			if(journeys[i].getId() == journeyId){
 				return journeys[i];
+			}
+		}
+		return null;
+	}
+	
+	public AlertItemInfo[] getAlerts(){
+		return alerts;
+	}
+	
+	public AlertItemInfo getAlert(int alertId) {
+		for (int i = 0; i < alerts.length; i++) {
+			if(alerts[i].getId() == alertId){
+				return alerts[i];
+			}
+		}
+		return null;
+	}
+
+	public AdviceItemInfo[] getAdvices() {
+		return advices;
+	}
+
+	public AdviceItemInfo getAdvice(int adviceId) {
+		for (int i = 0; i < advices.length; i++) {
+			if(advices[i].getId() == adviceId){
+				return advices[i];
 			}
 		}
 		return null;

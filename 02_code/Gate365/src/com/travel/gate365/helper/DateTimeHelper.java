@@ -64,7 +64,7 @@ public class DateTimeHelper {
 		return new String(dayOfWeeks[date.getDay()].toString() + ", " + dateFormat.format(date) + " - " + timeFormat.format(date));
 	}
 
-	public static synchronized String convertDateStringToddMMyyyy(Context context, String dateTime){
+	public static synchronized String convertDateStringToddMMyyyy(String dateTime){
 		Date date = new Date();
 		String[] arr = dateTime.split(" ");
 		String[] arrDate = arr[0].split("/");

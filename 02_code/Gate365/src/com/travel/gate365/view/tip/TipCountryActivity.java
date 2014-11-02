@@ -11,11 +11,11 @@ import android.widget.AdapterView.OnItemClickListener;
 import com.travel.gate365.R;
 import com.travel.gate365.model.AdviceItemInfo;
 import com.travel.gate365.view.BaseActivity;
-import com.travel.gate365.view.travel.CountryItemAdapter;
+import com.travel.gate365.view.travel.AdviceItemAdapter;
 
 public class TipCountryActivity  extends BaseActivity implements OnItemClickListener {
 
-	private CountryItemAdapter adapter;
+	private AdviceItemAdapter adapter;
 	
 	public TipCountryActivity() {
 		super(TipCountryActivity.class.getSimpleName());
@@ -37,33 +37,6 @@ public class TipCountryActivity  extends BaseActivity implements OnItemClickList
 		super.init();
 		
 		ListView lstMenu = (ListView)findViewById(R.id.lst_tips);
-		final AdviceItemInfo[] menuList = {new AdviceItemInfo(0)
-			, new AdviceItemInfo(1)
-			, new AdviceItemInfo(2)
-			, new AdviceItemInfo(3)
-			, new AdviceItemInfo(4)
-			, new AdviceItemInfo(5)
-			, new AdviceItemInfo(6)
-			, new AdviceItemInfo(7)
-			, new AdviceItemInfo(8)
-			, new AdviceItemInfo(9)
-			, new AdviceItemInfo(10)
-			, new AdviceItemInfo(11)
-			, new AdviceItemInfo(12)
-			, new AdviceItemInfo(13)
-			, new AdviceItemInfo(14)
-			, new AdviceItemInfo(15)
-			, new AdviceItemInfo(16)
-			, new AdviceItemInfo(17)
-			, new AdviceItemInfo(18)
-			, new AdviceItemInfo(19)
-			, new AdviceItemInfo(20)
-		
-			};
-		
-		adapter = new CountryItemAdapter(this, menuList, R.layout.tip_item);
-		lstMenu.setAdapter(adapter);
-		lstMenu.setOnItemClickListener(this);			
 		
 		TextView txtMessage = (TextView)findViewById(R.id.txt_message);
 		txtMessage.setVisibility(View.GONE);

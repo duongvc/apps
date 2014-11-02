@@ -78,9 +78,9 @@ public class FlightRoutingItemAdapter extends BaseAdapter {
 		
 		holder.txtFlightCode.setText(info.getFlightNumber().toUpperCase(Locale.US));
 		holder.txtDepartCity.setText(info.getDepartureAirport().toUpperCase(Locale.US));		
-		holder.txtDepartDateTime.setText(DateTimeHelper.convertDateStringToddMMyyyy(context, info.getDepartureDateTime()));
+		holder.txtDepartDateTime.setText(DateTimeHelper.convertDateStringToddMMyyyy(info.getDepartureDateTime()));
 		holder.txtArrivalCity.setText(info.getArrivalAirport().toUpperCase(Locale.US));		
-		holder.txtArrivalDateTime.setText(DateTimeHelper.convertDateStringToddMMyyyy(context, info.getArrivalDateTime()));
+		holder.txtArrivalDateTime.setText(DateTimeHelper.convertDateStringToddMMyyyy(info.getArrivalDateTime()));
 		return convertView;
 	}
 

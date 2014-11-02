@@ -49,6 +49,7 @@
     <item type="id" name="titlebar" />
     <item type="id" name="layout_content" />
     <item type="id" name="layout_depart" />
-    <item type="id" name="layout_arrival" />    
+    <item type="id" name="layout_arrival" />
+    <item type="id" name="line_divider" />    
     
 </resources>

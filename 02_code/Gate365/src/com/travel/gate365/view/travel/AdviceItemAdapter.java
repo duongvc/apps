@@ -15,13 +15,13 @@ import com.travel.gate365.model.AdviceItemInfo;
 import com.travel.gate365.model.AlertItemInfo;
 import com.travel.gate365.model.Model;
 
-public class CountryItemAdapter extends BaseAdapter {
+public class AdviceItemAdapter extends BaseAdapter {
 
 	private AdviceItemInfo[] list;  
     private Context context;  
 	private int layoutResId; 
 	
-	public CountryItemAdapter(Context context, AdviceItemInfo[] list, int layoutResId) {
+	public AdviceItemAdapter(Context context, AdviceItemInfo[] list, int layoutResId) {
 		this.context = context;
 		this.list = list;
 		this.layoutResId = layoutResId;

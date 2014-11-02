@@ -1,8 +1,14 @@
 package com.travel.gate365.view.alert;
 
+import org.json.JSONObject;
+
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
+import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -10,13 +16,16 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.travel.gate365.R;
-import com.travel.gate365.model.AdviceItemInfo;
-import com.travel.gate365.model.AlertItemInfo;
+import com.travel.gate365.model.Model;
+import com.travel.gate365.service.ServiceManager;
 import com.travel.gate365.view.BaseActivity;
+import com.travel.gate365.view.journeys.JourneyDetailActivity;
 
 public class AlertActivity extends BaseActivity implements OnItemClickListener{
 
 	private AlertItemAdapter adapter;
+	private ListView lstMenu;
+	private TextView txtMessage;
 
 	public AlertActivity() {
 		super(AlertActivity.class.getSimpleName());
@@ -29,50 +38,87 @@ public class AlertActivity extends BaseActivity implements OnItemClickListener{
 		setContentView(R.layout.activity_alerts);
 		
 		init();
+		
 	}
 
 	@Override
 	protected void init() {
 		super.init();
 
+		txtMessage = (TextView)findViewById(R.id.txt_message);
+		lstMenu = (ListView)findViewById(R.id.lst_alerts);
 		
-		TextView txtMessage = (TextView)findViewById(R.id.txt_message);
-		txtMessage.setVisibility(View.GONE);
-		
-		ListView lstMenu = (ListView)findViewById(R.id.lst_alerts);
-		final AlertItemInfo[] menuList = {new AlertItemInfo(0)
-			, new AlertItemInfo(1)
-			, new AlertItemInfo(2)
-			, new AlertItemInfo(3)
-			, new AlertItemInfo(4)
-			, new AlertItemInfo(5)
-			, new AlertItemInfo(6)
-			, new AlertItemInfo(7)
-			, new AlertItemInfo(8)
-			, new AlertItemInfo(9)
-			, new AlertItemInfo(10)
-			, new AlertItemInfo(11)
-			, new AlertItemInfo(12)
-			, new AlertItemInfo(13)
-			, new AlertItemInfo(14)
-			, new AlertItemInfo(15)
-			, new AlertItemInfo(16)
-			, new AlertItemInfo(17)
-			, new AlertItemInfo(18)
-			, new AlertItemInfo(19)
-			, new AlertItemInfo(20)
-			};
-		
-		adapter = new AlertItemAdapter(this, menuList);
-		lstMenu.setAdapter(adapter);
-		lstMenu.setOnItemClickListener(this);			
+		load();
 	}
 
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getMenuInflater().inflate(R.menu.activity_refresh, menu);
+		
+		return true;
+	}
+		
 	@Override
 	public void onItemClick(AdapterView<?> adapter, View view, int itemPos, long itemId) {
 		Log.i(getId(), "::onItemClick - pos:" + itemPos + ", id:" + itemId);
 		Intent intent = new Intent(this, AlertDetailActivity.class);
+		intent.putExtra(AlertDetailActivity.ALERT_ID, itemId);
 		startActivity(intent);
 	}
+	
+	@Override
+	protected void load() {
+		super.load();
+		
+		if(loading == null || (loading != null && !loading.isShowing())){
+			loading = ProgressDialog.show(this, "", getString(R.string.loading_pls_wait)); 
+			loading.show();
+		}
+		
+		Thread thread = new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				try { 
+					JSONObject res = ServiceManager.getAlerts(Model.getInstance().getUserInfo().getUsername(), Model.getInstance().getUserInfo().getPassword());					
+					loading.dismiss();
+					Model.getInstance().parserTravelAlerts(res);
+					android.os.Message msg = new Message();
+					msg.what = BaseActivity.NOTE_LOAD_ALERT_SUCCESSFULLY;
+					notificationHandler.sendMessage(msg);						
+				} catch (Exception e) {
+					loading.dismiss();
+					e.printStackTrace();
+					android.os.Message msg = new Message();
+					msg.what = BaseActivity.NOTE_COULD_NOT_CONNECT_SERVER;
+					notificationHandler.sendMessage(msg);												
+				}
+			}
+		});
+		
+		thread.start();				
+		
+	}
+	
+	protected final Handler notificationHandler = new Handler(){
+		public void handleMessage(android.os.Message msg) {
+			switch (msg.what) {
+			case BaseActivity.NOTE_LOAD_ALERT_SUCCESSFULLY:
+				if(Model.getInstance().getAlerts().length > 0){
+					txtMessage.setVisibility(View.GONE);
+					adapter = new AlertItemAdapter(AlertActivity.this, Model.getInstance().getAlerts());
+					lstMenu.setAdapter(adapter);
+					lstMenu.setOnItemClickListener(AlertActivity.this);								
+				}else{
+					txtMessage.setVisibility(View.VISIBLE);
+				}
+				break;
+				
+			default: 
+				break;
+			}
+		};		
+	};
 	
 }

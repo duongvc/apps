@@ -5,6 +5,8 @@ public class PlaceInfo {
 	private String countryName;
 	private String locationName;
 	private String securityRisk;
+	private String countryId;
+	private String countryISOCode;
 
 	public PlaceInfo(String countryName, String locationName, String securityRisk) {
 		this.countryName = countryName;
@@ -12,6 +14,12 @@ public class PlaceInfo {
 		this.securityRisk = securityRisk;
 	}
 
+	public PlaceInfo(String CountryId, String CountryISOCode, String countryName, String locationName, String securityRisk) {
+		this(countryName, locationName, securityRisk);
+		countryId = CountryId;
+		countryISOCode = CountryISOCode;
+	}
+	
 	public String getCountryName() {
 		return countryName;
 	}
@@ -24,4 +32,13 @@ public class PlaceInfo {
 		return securityRisk;
 	}
 
+	public String getCountryId() {
+		return countryId;
+	}
+
+	public String getCountryISOCode() {
+		return countryISOCode;
+	}
+
+	
 }

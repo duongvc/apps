@@ -53,6 +53,13 @@ public class ServiceManager {
 	public static final String SERVER_URL = IS_TEST_EVR ? "http://archivist.it/gate365/BB/"	: "http://test.gate365.unicredit.eu/BB/";
 	public static final String URL_LOGIN = SERVER_URL + "Login.aspx";
 	public static final String URL_JOURNEYS = SERVER_URL + "GetTravelDestinations.aspx?type=detail";
+	public static final String URL_ALERTS = SERVER_URL + "GetTravelAlerts.aspx";
+	public static final String URL_PLACES = SERVER_URL + "GetTravelDestinations.aspx?type=group";
+	public static final String URL_ADVICES = SERVER_URL + "GetTravelAdvices.aspx";
+	public static final String URL_RISKS = SERVER_URL + "GetCountryRisk.aspx";
+	public static final String URL_TIPS = SERVER_URL + "GetTravelTips.aspx";
+	public static final String URL_GET_CONFIGURATIONS = SERVER_URL + "GetConfiguration.aspx";
+	public static final String URL_GET_SEND_LOCATION = SERVER_URL + "UpdatePaxPosition.aspx";
 	
 	public static final String SUCCESS_STATUS = "success";
 	
@@ -75,6 +82,30 @@ public class ServiceManager {
 	public static JSONObject getJourneys(String username, String password){
 		String pax = username.replace('\\', '_');
 		String url = URL_JOURNEYS;
+		if (url.indexOf("=") != -1) {
+			url += "&";
+		} else {
+			url += "?";
+		}
+		url += "pax=" + pax;
+		return connect(url, null, TIMEOUT_SOCKET, TIMEOUT_CONNECTION);
+	}
+	
+	public static JSONObject getAlerts(String username, String password) throws Exception {
+		String pax = username.replace('\\', '_');
+		String url = URL_ALERTS;
+		if (url.indexOf("=") != -1) {
+			url += "&";
+		} else {
+			url += "?";
+		}
+		url += "pax=" + pax;
+		return connect(url, null, TIMEOUT_SOCKET, TIMEOUT_CONNECTION);
+	}
+	
+	public static JSONObject getAdvices(String username, String password) throws Exception {
+		String pax = username.replace('\\', '_');
+		String url = URL_ADVICES;
 		if (url.indexOf("=") != -1) {
 			url += "&";
 		} else {

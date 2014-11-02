@@ -22,7 +22,7 @@
         android:paddingRight="5dp"
 	    android:text="VIETNAM"/>
 
-    <com.travel.gate365.view.widget.FontableTextView android:id="@id/txt_message"
+    <com.travel.gate365.view.widget.FontableTextView android:id="@id/txt_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_toRightOf="@id/img_icon"
@@ -31,7 +31,7 @@
         android:paddingLeft="5dp"
         android:paddingBottom="5dp"
         android:paddingRight="5dp"
-        android:textSize="10sp"
+        android:textSize="12sp"
         android:singleLine="true"
         android:lines="1"
         android:text="dawewewae ewae eawe eawe aw eweerererewrewrewr awe waewawae"/>
@@ -42,7 +42,7 @@
         android:layout_alignParentRight="true"
         style="@style/CommonTextViewStyle"
         android:padding="5dp"
-        android:textSize="10sp"
+        android:textSize="12sp"
         android:text="17-10-2014 06::44 AM"/>
 
 </RelativeLayout>

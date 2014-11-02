@@ -1,7 +1,12 @@
 package com.travel.gate365.view.travel;
 
+import org.json.JSONObject;
+
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -12,13 +17,19 @@ import android.widget.AdapterView.OnItemClickListener;
 import com.travel.gate365.R;
 import com.travel.gate365.model.AdviceItemInfo;
 import com.travel.gate365.model.JourneyItemInfo;
+import com.travel.gate365.model.Model;
+import com.travel.gate365.service.ServiceManager;
 import com.travel.gate365.view.BaseActivity;
+import com.travel.gate365.view.alert.AlertActivity;
+import com.travel.gate365.view.alert.AlertItemAdapter;
 import com.travel.gate365.view.journeys.JourneyDetailActivity;
 import com.travel.gate365.view.journeys.JourneyItemAdapter;
 
 public class AdvicesActivity extends BaseActivity implements OnItemClickListener {
 
-	private CountryItemAdapter adapter;
+	private AdviceItemAdapter adapter;
+	private TextView txtMessage;
+	private ListView lstMenu;
 
 	public AdvicesActivity() {
 		super(AdvicesActivity.class.getSimpleName());
@@ -32,42 +43,52 @@ public class AdvicesActivity extends BaseActivity implements OnItemClickListener
 		
 		init();
 		
+		
 	}
 	
 	@Override
 	protected void init() {
 		super.init();
+
+		txtMessage = (TextView)findViewById(R.id.txt_message);
+		lstMenu = (ListView)findViewById(R.id.lst_advices);
 		
-		ListView lstMenu = (ListView)findViewById(R.id.lst_advices);
-		final AdviceItemInfo[] menuList = {new AdviceItemInfo(0)
-			, new AdviceItemInfo(1)
-			, new AdviceItemInfo(2)
-			, new AdviceItemInfo(3)
-			, new AdviceItemInfo(4)
-			, new AdviceItemInfo(5)
-			, new AdviceItemInfo(6)
-			, new AdviceItemInfo(7)
-			, new AdviceItemInfo(8)
-			, new AdviceItemInfo(9)
-			, new AdviceItemInfo(10)
-			, new AdviceItemInfo(11)
-			, new AdviceItemInfo(12)
-			, new AdviceItemInfo(13)
-			, new AdviceItemInfo(14)
-			, new AdviceItemInfo(15)
-			, new AdviceItemInfo(16)
-			, new AdviceItemInfo(17)
-			, new AdviceItemInfo(18)
-			, new AdviceItemInfo(19)
-			, new AdviceItemInfo(20)
-			};
+		load();
+	}
+	
+	@Override
+	protected void load() {
+		super.load();
 		
-		adapter = new CountryItemAdapter(this, menuList, R.layout.advice_item);
-		lstMenu.setAdapter(adapter);
-		lstMenu.setOnItemClickListener(this);			
+		if(loading == null || (loading != null && !loading.isShowing())){
+			loading = ProgressDialog.show(this, "", getString(R.string.loading_pls_wait)); 
+			loading.show();
+		}
 		
-		TextView txtMessage = (TextView)findViewById(R.id.txt_message);
-		txtMessage.setVisibility(View.GONE);
+		Thread thread = new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				try { 
+					JSONObject res = ServiceManager.getAdvices(Model.getInstance().getUserInfo().getUsername(), Model.getInstance().getUserInfo().getPassword());					
+					loading.dismiss();
+					Model.getInstance().parserTravelAdvices(res);
+					android.os.Message msg = new Message();
+					msg.what = BaseActivity.NOTE_LOAD_ADVICE_SUCCESSFULLY;
+					notificationHandler.sendMessage(msg);						
+				} catch (Exception e) {
+					loading.dismiss();
+					e.printStackTrace();
+					android.os.Message msg = new Message();
+					msg.what = BaseActivity.NOTE_COULD_NOT_CONNECT_SERVER;
+					notificationHandler.sendMessage(msg);												
+				}
+			}
+		});
+		
+		thread.start();				
+		
+		
 	}
 
 	@Override
@@ -76,5 +97,25 @@ public class AdvicesActivity extends BaseActivity implements OnItemClickListener
 		//Intent intent = new Intent(this, JourneyDetailActivity.class);
 		//startActivity(intent);
 	}
+	
+	protected final Handler notificationHandler = new Handler(){
+		public void handleMessage(android.os.Message msg) {
+			switch (msg.what) {
+			case BaseActivity.NOTE_LOAD_ADVICE_SUCCESSFULLY:
+				if(Model.getInstance().getAdvices().length > 0){
+					txtMessage.setVisibility(View.GONE);
+					adapter = new AdviceItemAdapter(AdvicesActivity.this, Model.getInstance().getAdvices(), R.layout.advice_item);
+					lstMenu.setAdapter(adapter);
+					lstMenu.setOnItemClickListener(AdvicesActivity.this);								
+				}else{
+					txtMessage.setVisibility(View.VISIBLE);
+				}
+				break;
+				
+			default: 
+				break;
+			}
+		};		
+	};
 	
 }
