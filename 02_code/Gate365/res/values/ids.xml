@@ -43,6 +43,7 @@
     <item type="id" name="lst_advices" />
     <item type="id" name="lst_tips" />
     <item type="id" name="lst_risks" />
+    <item type="id" name="lst_country" />
     <item type="id" name="menu_close" />
     <item type="id" name="menu_logout" />    
     <item type="id" name="menu_refresh" />

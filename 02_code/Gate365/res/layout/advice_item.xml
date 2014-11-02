@@ -4,15 +4,15 @@
     android:layout_height="wrap_content" 
     android:background="@drawable/journey_item_selector">
     
-        <ImageView android:id="@id/img_icon"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
+	<com.travel.gate365.view.widget.FontableTextView android:id="@id/txt_title"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-	        style="@style/CommonImageViewStyle"
-            android:contentDescription="@string/travel_advices"
-            android:src="@drawable/fr"/>
-        
-        <ImageView android:id="@id/img_arrow"
+	        style="@style/CommonTextViewStyle"
+	        android:padding="5dp"
+	        android:text="FRANCE"/>
+	    	    	    	    
+    <ImageView android:id="@id/img_arrow"
             android:layout_width="36dp"
             android:layout_height="36dp"
         	android:layout_alignParentRight="true"
@@ -22,26 +22,4 @@
         	android:contentDescription="@string/journeys"
         	android:src="@drawable/_next"/>
         
-	     <com.travel.gate365.view.widget.FontableTextView android:id="@id/txt_risktype" 
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:layout_toLeftOf="@id/img_arrow"
-            android:layout_centerVertical="true"
-            android:background="@drawable/type_insignificant"
-	        android:text="@string/INSIGNIFICANT"
-	        android:textSize="10sp"
-	        android:padding="3dp"
-	        android:textColor="@android:color/black"
-	        android:minWidth="50dp"
-	        android:gravity="center"
-	        style="@style/CommonTextViewStyle"/> 
-
-	    <com.travel.gate365.view.widget.FontableTextView android:id="@id/txt_country"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:layout_toRightOf="@id/img_icon"
-	        style="@style/CommonTextViewStyle"
-	        android:padding="5dp"
-	        android:text="FRANCE"/>
-	    	    	    	    
 </RelativeLayout>

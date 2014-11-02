@@ -8,7 +8,7 @@
     
     <include layout="@layout/header"/>
     
-	<RelativeLayout android:id="@id/layout_content"
+	<RelativeLayout
 	    android:layout_width="match_parent"
 	    android:layout_height="wrap_content" 
 	    android:background="@drawable/journey_item_selector">
@@ -47,20 +47,4 @@
 		    	    	    	    
 	</RelativeLayout>
 	
-    <com.travel.gate365.view.widget.FontableTextView android:id="@id/txt_message"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        style="@style/CommonTextViewStyle"
-        android:padding="5dp"
-        android:text="@string/there_no_advices"
-        android:background="@drawable/messagebar_selector"
-        android:gravity="center"
-        android:visibility="gone"/>
-		
-    <ListView android:id="@id/lst_advices"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content">
-        
-    </ListView>
-		
 </LinearLayout>

@@ -16,6 +16,8 @@ import com.travel.gate365.view.alert.AlertDetailActivity;
 import com.travel.gate365.view.journeys.JourneyDetailActivity;
 import com.travel.gate365.view.journeys.JourneysActivity;
 import com.travel.gate365.view.tip.TipCountryActivity;
+import com.travel.gate365.view.travel.AdviceCountriesActivity;
+import com.travel.gate365.view.travel.AdviceDetailActivity;
 import com.travel.gate365.view.travel.AdvicesActivity;
 
 public class Model {
@@ -27,8 +29,10 @@ public class Model {
 		, new ActivityInfo(JourneyDetailActivity.class.getSimpleName(), R.drawable.journeys_menuitem_selector, R.string.journey_details, 0)
 		, new ActivityInfo(AlertActivity.class.getSimpleName(), R.drawable.alert_item_selector, R.string.travel_alerts, 0)
 		, new ActivityInfo(AlertDetailActivity.class.getSimpleName(), R.drawable.alert_item_selector, R.string.alert_details, 0)
-		, new ActivityInfo(AdvicesActivity.class.getSimpleName(), R.drawable.ic_2, R.string.travel_advices, 0)
+		, new ActivityInfo(AdvicesActivity.class.getSimpleName(), R.drawable.tvadvices_menuitem_selector, R.string.travel_advices, 0)
+		, new ActivityInfo(AdviceDetailActivity.class.getSimpleName(), R.drawable.tvadvices_menuitem_selector, R.string.travel_advices, 0)
 		, new ActivityInfo(TipCountryActivity.class.getSimpleName(), R.drawable.ic_5, R.string.travel_tips, 0)
+		, new ActivityInfo(AdviceCountriesActivity.class.getSimpleName(), R.drawable.tvadvices_menuitem_selector, R.string.travel_advices, 0)		
 	};
 	private boolean isLogin;
 	private UserInfo userInfo;
@@ -166,6 +170,7 @@ public class Model {
 			}
 		}
 		
+		Log.i(Model.class.getSimpleName(), "-----this.advices.lenght: " + this.advices.length);
 		this.advices = advices;
 		
 		return advices;		

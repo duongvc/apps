@@ -1,8 +1,11 @@
 package com.travel.gate365.view.travel;
 
+import java.util.Locale;
+
 import org.json.JSONObject;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -10,23 +13,31 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.travel.gate365.R;
+import com.travel.gate365.helper.ResourceHelper;
 import com.travel.gate365.model.Model;
+import com.travel.gate365.model.PlaceInfo;
 import com.travel.gate365.service.ServiceManager;
 import com.travel.gate365.view.BaseActivity;
+import com.travel.gate365.view.journeys.JourneyDetailActivity;
 
 public class AdvicesActivity extends BaseActivity implements OnItemClickListener {
 
+	public static final String COUNTRY_ID = "countryId";
+	
 	private AdviceItemAdapter adapter;
 	private TextView txtMessage;
 	private ListView lstMenu;
 
 	public AdvicesActivity() {
-		super(AdvicesActivity.class.getSimpleName());
+		super(AdviceDetailActivity.class.getSimpleName()); 
 	}
+
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +54,42 @@ public class AdvicesActivity extends BaseActivity implements OnItemClickListener
 	protected void init() {
 		super.init();
 
+		long countryId = getIntent().getExtras().getLong(COUNTRY_ID);
+		PlaceInfo place = Model.getInstance().getPlace(String.valueOf(countryId));
+		
+		View layoutContent = findViewById(R.id.layout_content);
+		((TextView)layoutContent.findViewById(R.id.txt_country)).setText(place.getCountryName().toUpperCase(Locale.US));
+		TextView txtRisktype = (TextView)layoutContent.findViewById(R.id.txt_risktype);
+		
+		int maxHeight = Math.min(Model.getInstance().getScreenHeight() / 15, 128);
+		ImageView icon = (ImageView)layoutContent.findViewById(R.id.img_icon);
+		icon.setLayoutParams(new RelativeLayout.LayoutParams(maxHeight, maxHeight));		
+		int countryDrawableId = ResourceHelper.getDrawableId(place.getCountryISOCode().toLowerCase(Locale.US));
+		if(countryDrawableId != 0){
+			icon.setImageResource(countryDrawableId);
+		}
+		
+		int resId;
+		int bgResId;
+		if(place.getSecurityRisk().equalsIgnoreCase("LOW")){
+			resId = R.string.LOW;
+			bgResId = R.drawable.type_low;
+		}else if(place.getSecurityRisk().equalsIgnoreCase("INSIGNIFICANT")){
+			resId = R.string.INSIGNIFICANT;
+			bgResId = R.drawable.type_insignificant;
+		}else if(place.getSecurityRisk().equalsIgnoreCase("HIGH")){
+			resId = R.string.HIGH;
+			bgResId = R.drawable.type_high;
+		}else if(place.getSecurityRisk().equalsIgnoreCase("EXTREME")){
+			resId = R.string.EXTREME;
+			bgResId = R.drawable.type_extreme;
+		}else{
+			resId = R.string.MEDIUM;
+			bgResId = R.drawable.type_medium;
+		}
+		txtRisktype.setText(getString(resId));
+		txtRisktype.setBackgroundResource(bgResId);
+		
 		txtMessage = (TextView)findViewById(R.id.txt_message);
 		lstMenu = (ListView)findViewById(R.id.lst_advices);
 		
@@ -63,11 +110,14 @@ public class AdvicesActivity extends BaseActivity implements OnItemClickListener
 			@Override
 			public void run() {
 				try { 
-					JSONObject res = ServiceManager.getDetinationCountriesGrouped(Model.getInstance().getUserInfo().getUsername(), Model.getInstance().getUserInfo().getPassword());					
+					JSONObject res = ServiceManager.getAdvices(Model.getInstance().getUserInfo().getUsername()
+							, Model.getInstance().getUserInfo().getPassword()
+							, String.valueOf(getIntent().getExtras().getLong(COUNTRY_ID)));
+					
 					loading.dismiss();
-					Model.getInstance().parserPlaces(res);
+					Model.getInstance().parserTravelAdvices(res);
 					android.os.Message msg = new Message();
-					msg.what = BaseActivity.NOTE_LOAD_PLACE_SUCCESSFULLY;
+					msg.what = BaseActivity.NOTE_LOAD_ADVICE_SUCCESSFULLY;
 					notificationHandler.sendMessage(msg);						
 				} catch (Exception e) {
 					loading.dismiss();
@@ -87,17 +137,18 @@ public class AdvicesActivity extends BaseActivity implements OnItemClickListener
 	@Override
 	public void onItemClick(AdapterView<?> adapter, View view, int itemPos, long itemId) {
 		Log.i(getId(), "::onItemSelected - pos:" + itemPos + ", id:" + itemId);
-		//Intent intent = new Intent(this, JourneyDetailActivity.class);
-		//startActivity(intent);
+		Intent intent = new Intent(this, AdviceDetailActivity.class);
+		intent.putExtra(AdviceDetailActivity.ADVICE_ID, itemId);
+		startActivity(intent);
 	}
 	
 	protected final Handler notificationHandler = new Handler(){
 		public void handleMessage(android.os.Message msg) {
 			switch (msg.what) {
-			case BaseActivity.NOTE_LOAD_PLACE_SUCCESSFULLY:
-				if(Model.getInstance().getPlaces().length > 0){
+			case BaseActivity.NOTE_LOAD_ADVICE_SUCCESSFULLY:
+				if(Model.getInstance().getAdvices().length > 0){
 					txtMessage.setVisibility(View.GONE);
-					adapter = new AdviceItemAdapter(AdvicesActivity.this, Model.getInstance().getPlaces(), R.layout.advice_item);
+					adapter = new AdviceItemAdapter(AdvicesActivity.this, Model.getInstance().getAdvices(), R.layout.advice_item);
 					lstMenu.setAdapter(adapter);
 					lstMenu.setOnItemClickListener(AdvicesActivity.this);								
 				}else{

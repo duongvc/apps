@@ -22,6 +22,7 @@ import com.travel.gate365.view.alert.AlertActivity;
 import com.travel.gate365.view.home.HomeMenuItemAdapter;
 import com.travel.gate365.view.journeys.JourneysActivity;
 import com.travel.gate365.view.tip.TipCountryActivity;
+import com.travel.gate365.view.travel.AdviceCountriesActivity;
 import com.travel.gate365.view.travel.AdvicesActivity;
 import com.travel.gate365.view.travel.TravelRisksActivity;
 
@@ -146,7 +147,7 @@ public class Gate365Activity extends BaseActivity implements OnItemClickListener
 			break;
 
 		case MenuItemInfo.MENU_ITEM_TRAVEL_ADVICES:
-			intent = new Intent(this, AdvicesActivity.class);
+			intent = new Intent(this, AdviceCountriesActivity.class);
 			startActivity(intent);
 			break;
 
