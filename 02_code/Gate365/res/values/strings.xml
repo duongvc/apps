@@ -17,6 +17,7 @@
     <string name="settings">SETTINGS</string>
     <string name="menu_logout">Logout</string>
     <string name="menu_close">Close</string>
+    <string name="menu_refresh">Refresh</string>
     <string name="pls_enter_username">Please enter username</string>
     <string name="pls_enter_password">Please enter password</string>
     <string name="invalid_username_pass">Invalid username or password</string>
@@ -38,5 +39,7 @@
     <string name="EXTREME">Extreme</string>
     <string name="departs">Departs</string>
     <string name="arrives">Arrives</string>
+    <string name="loading_pls_wait">Loading, please wait...</string>
+    <string name="logging_pls_wait">Logging, please wait...</string>
     
 </resources>

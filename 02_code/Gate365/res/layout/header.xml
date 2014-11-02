@@ -11,7 +11,10 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         style="@style/CommonImageViewStyle"
-        android:contentDescription="@string/login_U"/>
+        android:focusable="true"
+        android:clickable="true"
+        android:contentDescription="@string/login_U"
+        android:onClick="onBackIconClickHandler"/>
 
     <com.travel.gate365.view.widget.FontableTextView android:id="@id/txt_left" 
         android:layout_width="wrap_content"

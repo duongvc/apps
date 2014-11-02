@@ -7,13 +7,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.AdapterView.OnItemClickListener;
 
 import com.travel.gate365.helper.DialogHelper;
 import com.travel.gate365.model.MenuItemInfo;
@@ -22,7 +20,6 @@ import com.travel.gate365.service.ServiceManager;
 import com.travel.gate365.view.BaseActivity;
 import com.travel.gate365.view.alert.AlertActivity;
 import com.travel.gate365.view.home.HomeMenuItemAdapter;
-import com.travel.gate365.view.journeys.JourneyDetailActivity;
 import com.travel.gate365.view.journeys.JourneysActivity;
 import com.travel.gate365.view.tip.TipCountryActivity;
 import com.travel.gate365.view.travel.AdvicesActivity;
@@ -93,7 +90,7 @@ public class Gate365Activity extends BaseActivity implements OnItemClickListener
 			return;
 		}*/
 		if(loading == null || (loading != null && !loading.isShowing())){
-			loading = ProgressDialog.show(Gate365Activity.this, "", ""); 
+			loading = ProgressDialog.show(Gate365Activity.this, "", getString(R.string.logging_pls_wait)); 
 			loading.show();
 		}
 		Thread thread = new Thread(new Runnable() {

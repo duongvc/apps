@@ -1,8 +1,5 @@
 package com.travel.gate365.view;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -17,6 +14,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.travel.gate365.R;
+import com.travel.gate365.helper.DateTimeHelper;
 import com.travel.gate365.helper.DialogHelper;
 import com.travel.gate365.model.ActivityInfo;
 import com.travel.gate365.model.Model;
@@ -57,9 +55,13 @@ public abstract class BaseActivity extends Activity {
 			break;
 
 		case R.id.menu_close:
-			finish();
+			moveTaskToBack(true);
 			break;
 
+		case R.id.menu_refresh:
+			load();
+			break;
+		
 		default:
 			break;
 		}		
@@ -74,7 +76,7 @@ public abstract class BaseActivity extends Activity {
 			int maxHeight = Math.min(Model.getInstance().getScreenHeight() / 20, 128);
 			img.setLayoutParams(new RelativeLayout.LayoutParams(maxHeight, maxHeight));
 			TextView txtRight = (TextView)view.findViewById(R.id.txt_right);
-			txtRight.setText(convertToString(System.currentTimeMillis()));
+			txtRight.setText(DateTimeHelper.convertTimeToString(this, System.currentTimeMillis()));
 			
 			view = (View)findViewById(R.id.header);
 			if(view != null){
@@ -93,6 +95,13 @@ public abstract class BaseActivity extends Activity {
 		}
 	}
 
+	protected void load(){
+	}
+	
+	public void onBackIconClickHandler(View view){
+		onBackPressed();
+	}
+	
 	protected String getId() {
 		return id;
 	}
@@ -131,33 +140,6 @@ public abstract class BaseActivity extends Activity {
 		};		
 	};
 
-    public synchronized String convertToString(long pDateTime){
-    	Date date = new Date(pDateTime);
-    	SimpleDateFormat dateFormat = new SimpleDateFormat("MMM dd - hh:mm a");
-		/*StringBuilder stDate = new StringBuilder().append(pad(date.getDate()))
-				.append("-").append(pad(date.getYear() + 1900))
-				.append("-").append(date.getMonth() + 1)
-				.append(" - ").append(pad(date.getHours()))
-				.append(":").append(pad(date.getMinutes()));*/
-				//.append(":").append(pad(date.getSeconds()));
-		String [] dayOfWeeks = getResources().getStringArray(R.array.daysOfWeek);
-				
-		//return stDate.toString();
-		return dayOfWeeks[date.getDay()].toString() + ", " + dateFormat.format(date);
-    }
-
-	/**
-	 * Add padding to numbers less than ten
-	 * @param pC
-	 * @return
-	 */
-    public static synchronized String pad(int pC) {
-        if (pC >= 10)
-            return String.valueOf(pC);
-        else
-            return "0" + String.valueOf(pC);
-    }	
-    
 	/**
 	 * Determines if network is available or not. 
 	 * @return

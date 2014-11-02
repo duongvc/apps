@@ -15,7 +15,8 @@
         android:padding="5dp"
         android:text="@string/you_no_journeys"
         android:background="@drawable/messagebar_selector"
-        android:gravity="center"/>
+        android:gravity="center"
+        android:visibility="gone"/>
     	
     <ListView android:id="@id/lst_journeys"
         android:layout_width="fill_parent"

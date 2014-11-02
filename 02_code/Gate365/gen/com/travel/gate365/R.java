@@ -405,9 +405,9 @@ containing a value of this type.
         public static final int header=0x7f070006;
         public static final int img_arrow=0x7f070008;
         public static final int img_icon=0x7f070007;
-        public static final int layout_arrival=0x7f070021;
-        public static final int layout_content=0x7f07001f;
-        public static final int layout_depart=0x7f070020;
+        public static final int layout_arrival=0x7f070022;
+        public static final int layout_content=0x7f070020;
+        public static final int layout_depart=0x7f070021;
         public static final int lst_advices=0x7f070019;
         public static final int lst_alerts=0x7f070018;
         public static final int lst_flight_routing=0x7f070017;
@@ -417,7 +417,8 @@ containing a value of this type.
         public static final int lst_tips=0x7f07001a;
         public static final int menu_close=0x7f07001c;
         public static final int menu_logout=0x7f07001d;
-        public static final int titlebar=0x7f07001e;
+        public static final int menu_refresh=0x7f07001e;
+        public static final int titlebar=0x7f07001f;
         public static final int txt_city=0x7f07000e;
         public static final int txt_codetime=0x7f070010;
         public static final int txt_country=0x7f07000f;
@@ -456,45 +457,49 @@ containing a value of this type.
     public static final class menu {
         public static final int activity_gate365=0x7f0a0000;
         public static final int activity_gate365_logged=0x7f0a0001;
+        public static final int activity_refresh=0x7f0a0002;
     }
     public static final class string {
-        public static final int EXTREME=0x7f080022;
-        public static final int HIGH=0x7f080021;
-        public static final int INSIGNIFICANT=0x7f08001e;
-        public static final int LOW=0x7f08001f;
-        public static final int MEDIUM=0x7f080020;
-        public static final int alert_details=0x7f08001b;
-        public static final int alert_details_content_ex=0x7f08001c;
+        public static final int EXTREME=0x7f080023;
+        public static final int HIGH=0x7f080022;
+        public static final int INSIGNIFICANT=0x7f08001f;
+        public static final int LOW=0x7f080020;
+        public static final int MEDIUM=0x7f080021;
+        public static final int alert_details=0x7f08001c;
+        public static final int alert_details_content_ex=0x7f08001d;
         public static final int app_name=0x7f080000;
-        public static final int arrives=0x7f080024;
-        public static final int could_not_connect_server=0x7f08001a;
+        public static final int arrives=0x7f080025;
+        public static final int could_not_connect_server=0x7f08001b;
         public static final int country_risk=0x7f08000b;
-        public static final int departs=0x7f080023;
-        public static final int destinations=0x7f080016;
-        public static final int flight_routing=0x7f080017;
+        public static final int departs=0x7f080024;
+        public static final int destinations=0x7f080017;
+        public static final int flight_routing=0x7f080018;
         public static final int hello_world=0x7f080001;
-        public static final int invalid_username_pass=0x7f080012;
+        public static final int invalid_username_pass=0x7f080013;
         public static final int journey_details=0x7f080008;
         public static final int journeys=0x7f080007;
+        public static final int loading_pls_wait=0x7f080026;
+        public static final int logging_pls_wait=0x7f080027;
         public static final int login_U=0x7f080006;
-        public static final int login_failed=0x7f080015;
+        public static final int login_failed=0x7f080016;
         public static final int login_l=0x7f080005;
         public static final int menu_close=0x7f08000f;
         public static final int menu_logout=0x7f08000e;
+        public static final int menu_refresh=0x7f080010;
         public static final int menu_settings=0x7f080002;
-        public static final int no_internet=0x7f080014;
-        public static final int no_internet_avaialbe=0x7f080013;
+        public static final int no_internet=0x7f080015;
+        public static final int no_internet_avaialbe=0x7f080014;
         public static final int password=0x7f080004;
-        public static final int pls_enter_password=0x7f080011;
-        public static final int pls_enter_username=0x7f080010;
+        public static final int pls_enter_password=0x7f080012;
+        public static final int pls_enter_username=0x7f080011;
         public static final int settings=0x7f08000d;
-        public static final int there_no_advices=0x7f08001d;
-        public static final int there_no_alerts=0x7f080019;
+        public static final int there_no_advices=0x7f08001e;
+        public static final int there_no_alerts=0x7f08001a;
         public static final int travel_advices=0x7f08000a;
         public static final int travel_alerts=0x7f080009;
         public static final int travel_tips=0x7f08000c;
         public static final int username=0x7f080003;
-        public static final int you_no_journeys=0x7f080018;
+        public static final int you_no_journeys=0x7f080019;
     }
     public static final class style {
         /** 
@@ -557,7 +562,7 @@ containing a value of this type.
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name com.travel.gate365:font
+          @attr name android:font
         */
         public static final int com_travel_gate365_view_widget_FontableAutoCompleteTextView_font = 0;
         /** Attributes that can be used with a com_travel_gate365_view_widget_FontableButton.
@@ -584,7 +589,7 @@ containing a value of this type.
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name com.travel.gate365:font
+          @attr name android:font
         */
         public static final int com_travel_gate365_view_widget_FontableButton_font = 0;
         /** Attributes that can be used with a com_travel_gate365_view_widget_FontableCheckbox.
@@ -611,7 +616,7 @@ containing a value of this type.
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name com.travel.gate365:font
+          @attr name android:font
         */
         public static final int com_travel_gate365_view_widget_FontableCheckbox_font = 0;
         /** Attributes that can be used with a com_travel_gate365_view_widget_FontableEditText.
@@ -638,7 +643,7 @@ containing a value of this type.
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name com.travel.gate365:font
+          @attr name android:font
         */
         public static final int com_travel_gate365_view_widget_FontableEditText_font = 0;
         /** Attributes that can be used with a com_travel_gate365_view_widget_FontableRadioButton.
@@ -665,7 +670,7 @@ containing a value of this type.
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name com.travel.gate365:font
+          @attr name android:font
         */
         public static final int com_travel_gate365_view_widget_FontableRadioButton_font = 0;
         /** Attributes that can be used with a com_travel_gate365_view_widget_FontableSpinner.
@@ -692,7 +697,7 @@ containing a value of this type.
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name com.travel.gate365:font
+          @attr name android:font
         */
         public static final int com_travel_gate365_view_widget_FontableSpinner_font = 0;
         /** Attributes that can be used with a com_travel_gate365_view_widget_FontableTextView.
@@ -719,7 +724,7 @@ containing a value of this type.
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name com.travel.gate365:font
+          @attr name android:font
         */
         public static final int com_travel_gate365_view_widget_FontableTextView_font = 0;
     };

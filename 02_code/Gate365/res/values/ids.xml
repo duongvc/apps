@@ -45,6 +45,7 @@
     <item type="id" name="lst_risks" />
     <item type="id" name="menu_close" />
     <item type="id" name="menu_logout" />    
+    <item type="id" name="menu_refresh" />
     <item type="id" name="titlebar" />
     <item type="id" name="layout_content" />
     <item type="id" name="layout_depart" />

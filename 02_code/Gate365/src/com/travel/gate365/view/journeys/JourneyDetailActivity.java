@@ -45,7 +45,7 @@ public class JourneyDetailActivity extends BaseActivity implements OnItemClickLi
 		int journeyId = (int)getIntent().getExtras().getLong(JOURNEY_ID);
 		JourneyItemInfo info = Model.getInstance().getJourney(journeyId);
 		
-		View view = (View)findViewById(R.id.titlebar);
+		View view = (View)findViewById(R.id.header);
 		TextView txtRight = (TextView)view.findViewById(R.id.txt_right);
 		txtRight.setText("PRN " + info.getpNRCode());
 		

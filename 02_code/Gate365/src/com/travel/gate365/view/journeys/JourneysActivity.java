@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -22,7 +23,9 @@ import com.travel.gate365.view.BaseActivity;
 public class JourneysActivity extends BaseActivity implements OnItemClickListener {
 
 	private JourneyItemAdapter adapter;
-
+	private TextView txtMessage;
+	private ListView lstMenu;
+	
 	public JourneysActivity() {
 		super(JourneysActivity.class.getSimpleName());
 	}
@@ -38,14 +41,28 @@ public class JourneysActivity extends BaseActivity implements OnItemClickListene
 	}
 	
 	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getMenuInflater().inflate(R.menu.activity_refresh, menu);
+		
+		return true;
+	}
+	
+	@Override
 	protected void init() {
 		super.init();
 		
-		TextView txtMessage = (TextView)findViewById(R.id.txt_message);
-		txtMessage.setVisibility(View.GONE);
+		txtMessage = (TextView)findViewById(R.id.txt_message);
+		lstMenu = (ListView)findViewById(R.id.lst_journeys);
+		
+		load();		
+	}
+
+	@Override
+	protected void load() {
+		super.load();
 		
 		if(loading == null || (loading != null && !loading.isShowing())){
-			loading = ProgressDialog.show(this, "", ""); 
+			loading = ProgressDialog.show(this, "", getString(R.string.loading_pls_wait)); 
 			loading.show();
 		}
 		
@@ -73,7 +90,7 @@ public class JourneysActivity extends BaseActivity implements OnItemClickListene
 		thread.start();				
 		
 	}
-
+	
 	@Override
 	public void onItemClick(AdapterView<?> adapter, View view, int itemPos, long itemId) {
 		Log.i(getId(), "::onItemSelected - pos:" + itemPos + ", id:" + itemId);
@@ -86,10 +103,14 @@ public class JourneysActivity extends BaseActivity implements OnItemClickListene
 		public void handleMessage(android.os.Message msg) {
 			switch (msg.what) {
 			case NOTE_LOAD_JOURNEY_SUCCESSFULLY:
-				ListView lstMenu = (ListView)findViewById(R.id.lst_journeys);
-				adapter = new JourneyItemAdapter(JourneysActivity.this, Model.getInstance().getJourneys());
-				lstMenu.setAdapter(adapter);
-				lstMenu.setOnItemClickListener(JourneysActivity.this);			
+				if(Model.getInstance().getJourneys().length > 0){
+					txtMessage.setVisibility(View.GONE);
+					adapter = new JourneyItemAdapter(JourneysActivity.this, Model.getInstance().getJourneys());
+					lstMenu.setAdapter(adapter);
+					lstMenu.setOnItemClickListener(JourneysActivity.this);								
+				}else{
+					txtMessage.setVisibility(View.VISIBLE);
+				}
 				break;
 				
 			default: 
