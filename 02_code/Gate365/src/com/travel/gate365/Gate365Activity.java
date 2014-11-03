@@ -78,7 +78,7 @@ public class Gate365Activity extends BaseActivity implements OnItemClickListener
 		
 		edtUsername.setHintTextColor(getResources().getColor(R.color.gray));
 		edtPassword.setHintTextColor(getResources().getColor(R.color.gray));
-		/*if (edtUsername.getText().length() == 0) {
+		if (edtUsername.getText().length() == 0) {
 			Log.i(getId() + " - onLoginButtonHandler", "Please enter username");
 			edtUsername.setHint(R.string.pls_enter_username);
 			edtUsername.setHintTextColor(getResources().getColor(R.color.red));
@@ -89,7 +89,7 @@ public class Gate365Activity extends BaseActivity implements OnItemClickListener
 			edtPassword.setHint(R.string.pls_enter_password);
 			edtPassword.setHintTextColor(getResources().getColor(R.color.red));
 			return;
-		}*/
+		}
 		if(loading == null || (loading != null && !loading.isShowing())){
 			loading = ProgressDialog.show(Gate365Activity.this, "", getString(R.string.logging_pls_wait)); 
 			loading.show();

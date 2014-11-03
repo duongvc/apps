@@ -18,12 +18,12 @@ import com.travel.gate365.model.Model;
 import com.travel.gate365.model.PlaceInfo;
 import com.travel.gate365.view.BaseActivity;
 
-public class AdviceDetailActivity extends BaseActivity {
+public class TipDetailActivity extends BaseActivity {
 
-	public static final String ADVICE_ID = "adviceId";
+	public static final String TIP_ID = "tipId";
 	
-	public AdviceDetailActivity() {
-		super(AdviceDetailActivity.class.getSimpleName()); 
+	public TipDetailActivity() {
+		super(TipDetailActivity.class.getSimpleName()); 
 	}
 
 
@@ -31,7 +31,7 @@ public class AdviceDetailActivity extends BaseActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
-		setContentView(R.layout.activity_advice_details);
+		setContentView(R.layout.activity_tip_details);
 		
 		init();
 		
@@ -46,8 +46,8 @@ public class AdviceDetailActivity extends BaseActivity {
 		long countryId = getIntent().getExtras().getLong(DesCountriesActivity.COUNTRY_ID);
 		PlaceInfo place = Model.getInstance().getPlace(String.valueOf(countryId));
 		
-		int adviceId = (int)getIntent().getExtras().getLong(ADVICE_ID);
-		ArticleItemInfo info = Model.getInstance().getAdvice(adviceId);
+		int tipId = (int)getIntent().getExtras().getLong(TIP_ID);
+		ArticleItemInfo info = Model.getInstance().getTip(tipId);
 		
 		((TextView)layoutContent.findViewById(R.id.txt_country)).setText(place.getCountryName().toUpperCase(Locale.US));		
 		

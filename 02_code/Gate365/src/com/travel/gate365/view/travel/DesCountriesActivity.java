@@ -19,7 +19,6 @@ import com.travel.gate365.R;
 import com.travel.gate365.model.Model;
 import com.travel.gate365.service.ServiceManager;
 import com.travel.gate365.view.BaseActivity;
-import com.travel.gate365.view.journeys.JourneyDetailActivity;
 
 public class DesCountriesActivity extends BaseActivity implements OnItemClickListener {
 

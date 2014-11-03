@@ -11,13 +11,12 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.view.View;
-import android.webkit.WebView;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.AdapterView.OnItemClickListener;
 
 import com.travel.gate365.R;
 import com.travel.gate365.helper.ResourceHelper;
@@ -29,7 +28,9 @@ import com.travel.gate365.view.BaseActivity;
 
 public class TipCountryActivity  extends BaseActivity implements OnItemClickListener {
 
+	private TipItemAdapter adapter;
 	private TextView txtMessage;
+	private ListView lstMenu;
 
 	public TipCountryActivity() {
 		super(TipCountryActivity.class.getSimpleName());
@@ -85,6 +86,7 @@ public class TipCountryActivity  extends BaseActivity implements OnItemClickList
 		txtRisktype.setBackgroundResource(bgResId);
 		
 		txtMessage = (TextView)findViewById(R.id.txt_message);
+		lstMenu = (ListView)findViewById(R.id.lst_tips);
 		
 		load();
 	}
@@ -130,8 +132,8 @@ public class TipCountryActivity  extends BaseActivity implements OnItemClickList
 	@Override
 	public void onItemClick(AdapterView<?> adapter, View view, int itemPos, long itemId) {
 		Log.i(getId(), "::onItemSelected - pos:" + itemPos + ", id:" + itemId);
-		Intent intent = new Intent(this, AdviceDetailActivity.class);
-		intent.putExtra(AdviceDetailActivity.ADVICE_ID, itemId);
+		Intent intent = new Intent(this, TipDetailActivity.class);
+		intent.putExtra(TipDetailActivity.TIP_ID, itemId);
 		intent.putExtra(DesCountriesActivity.COUNTRY_ID, getIntent().getExtras().getLong(DesCountriesActivity.COUNTRY_ID));
 		startActivity(intent);
 	}
@@ -144,13 +146,9 @@ public class TipCountryActivity  extends BaseActivity implements OnItemClickList
 					txtMessage.setVisibility(View.GONE);
 					
 					ArticleItemInfo[] info = (ArticleItemInfo[])msg.obj;
-					/*String htmlText = "<html><head>"
-					          + "<style type=\"text/css\">body{color: #fff; background-color: #000;}"
-					          + "</style></head>"
-					          + "<body>"                          
-					          + info.getDetail()
-					          + "</body></html>";
-					((WebView)findViewById(R.id.txt_details)).loadData(htmlText, "text/html", "utf-8");*/
+					adapter = new TipItemAdapter(TipCountryActivity.this, info, R.layout.tip_item);
+					lstMenu.setAdapter(adapter);
+					lstMenu.setOnItemClickListener(TipCountryActivity.this);								
 				}else{					
 					txtMessage.setVisibility(View.VISIBLE);
 				}

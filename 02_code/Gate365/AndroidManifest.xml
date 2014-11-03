@@ -63,6 +63,9 @@
         <activity android:name=".view.travel.TipCountryActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode">
         </activity>
+        <activity android:name=".view.travel.TipDetailActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode">>
+        </activity>
         <activity android:name=".view.travel.RisksCountryActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode">
         </activity>

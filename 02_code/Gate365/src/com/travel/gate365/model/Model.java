@@ -20,6 +20,7 @@ import com.travel.gate365.view.travel.AdvicesActivity;
 import com.travel.gate365.view.travel.DesCountriesActivity;
 import com.travel.gate365.view.travel.RisksCountryActivity;
 import com.travel.gate365.view.travel.TipCountryActivity;
+import com.travel.gate365.view.travel.TipDetailActivity;
 
 public class Model {
 
@@ -34,6 +35,7 @@ public class Model {
 		, new ActivityInfo(DesCountriesActivity.class.getSimpleName(), R.drawable.tvadvices_menuitem_selector, R.string.travel_advices, 0)		
 		, new ActivityInfo(AdviceDetailActivity.class.getSimpleName(), R.drawable.tvadvices_menuitem_selector, R.string.travel_advices, 0)
 		, new ActivityInfo(TipCountryActivity.class.getSimpleName(), R.drawable.tvtips_menuitem_selector, R.string.travel_tips, 0)
+		, new ActivityInfo(TipDetailActivity.class.getSimpleName(), R.drawable.tvtips_menuitem_selector, R.string.travel_tips, 0)
 		, new ActivityInfo(RisksCountryActivity.class.getSimpleName(), R.drawable.countryrisk_menuitem_selector, R.string.country_risk, 0)
 	};
 	private boolean isLogin;
@@ -45,6 +47,7 @@ public class Model {
 	private ArticleItemInfo[] advices;
 	private PlaceInfo[] places;
 	private IntegerGenerator intGenerator;
+	private ArticleItemInfo[] tips;
 	
 	private Model() {
 		journeys = new JourneyItemInfo[0];
@@ -215,6 +218,7 @@ public class Model {
 				tips[a] = new ArticleItemInfo(intGenerator.generate(), jsAdvice.getString("DateTime"), jsAdvice.getString("Title"), jsAdvice.getString("Detail"));
 			}
 		}
+		this.tips = tips;
 		return tips;
 	}
 
@@ -284,4 +288,13 @@ public class Model {
 		return null;
 	}
 
+	public ArticleItemInfo getTip(int tipId){
+		for (int i = 0; i < tips.length; i++) {
+			if(tips[i].getId() == tipId){
+				return tips[i];
+			}
+		}
+		return null;
+	}
+	
 }
