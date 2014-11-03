@@ -44,12 +44,14 @@ public class Model {
 	private AlertItemInfo[] alerts;
 	private ArticleItemInfo[] advices;
 	private PlaceInfo[] places;
+	private IntegerGenerator intGenerator;
 	
 	private Model() {
 		journeys = new JourneyItemInfo[0];
 		alerts = new AlertItemInfo[0];
 		places = new PlaceInfo[0]; 
 		advices = new ArticleItemInfo[0];
+		intGenerator = new IntegerGenerator();
 	}
 
 	public static Model getInstance() {
@@ -101,7 +103,7 @@ public class Model {
 		JSONArray arr = obj.getJSONArray("ResultSet");
 		JourneyItemInfo[] journeys = new JourneyItemInfo[0];
 		if (arr != null) {
-			IntegerGenerator intGenerator = new IntegerGenerator();
+			
 			Log.i(Model.class.getSimpleName(), "-----getJourneys Array lenght: " + arr.length());
 			journeys = new JourneyItemInfo[arr.length()];
 			for (int a = 0; a < arr.length(); a++) {
@@ -143,7 +145,6 @@ public class Model {
 		AlertItemInfo[] alerts = new AlertItemInfo[0];
 		if (arr != null) {
 			Log.i(Model.class.getSimpleName(), "-----getAlerts Array lenght: " + arr.length());
-			IntegerGenerator intGenerator = new IntegerGenerator();
 			alerts = new AlertItemInfo[arr.length()];
 			for (int a = 0; a < arr.length(); a++) {
 				JSONObject jsAlert = arr.getJSONObject(a);
@@ -165,7 +166,6 @@ public class Model {
 		if (arr != null) {
 			Log.i(Model.class.getSimpleName(), "-----getAdvices Array lenght: " + arr.length());
 			advices = new ArticleItemInfo[arr.length()];
-			IntegerGenerator intGenerator = new IntegerGenerator();
 			for (int a = 0; a < arr.length(); a++) {
 				JSONObject jsAdvice = arr.getJSONObject(a);
 				advices[a] = new ArticleItemInfo(intGenerator.generate(), jsAdvice.getString("DateTime"), jsAdvice.getString("Title"), jsAdvice.getString("Detail"));
@@ -198,7 +198,6 @@ public class Model {
 		Log.i(Model.class.getSimpleName(), "---------getRisks status: " + obj.getString("Status"));
 		JSONObject jsArticle = obj.getJSONObject("ResultSet");
 		if (jsArticle != null) {
-			IntegerGenerator intGenerator = new IntegerGenerator();
 			return new ArticleItemInfo(intGenerator.generate(), jsArticle.getString("DateTime"), jsArticle.getString("Title"), jsArticle.getString("Detail"));
 		}
 		return null;
@@ -211,7 +210,6 @@ public class Model {
 		if (arr != null) {
 			Log.i(Model.class.getSimpleName(), "-----getTips Array lenght: " + arr.length());
 			tips = new ArticleItemInfo[arr.length()];
-			IntegerGenerator intGenerator = new IntegerGenerator();
 			for (int a = 0; a < arr.length(); a++) {
 				JSONObject jsAdvice = arr.getJSONObject(a);
 				tips[a] = new ArticleItemInfo(intGenerator.generate(), jsAdvice.getString("DateTime"), jsAdvice.getString("Title"), jsAdvice.getString("Detail"));
