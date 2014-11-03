@@ -4,7 +4,6 @@ import java.util.Locale;
 
 import android.os.Bundle;
 import android.os.Handler;
-import android.text.Html;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.ImageView;

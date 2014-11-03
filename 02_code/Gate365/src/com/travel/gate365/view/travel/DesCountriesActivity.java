@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -52,15 +53,18 @@ public class DesCountriesActivity extends BaseActivity implements OnItemClickLis
 		super.init();
 
 		int resId;
+		int headerIconResId;
 		switch (getIntent().getExtras().getByte(TARGET_TYPE)) {
-			case TARGET_ADVICE: resId = R.string.travel_advices; break;
-			case TARGET_RISK: resId = R.string.country_risk; break;
-			default:  resId = R.string.travel_tips; break;
+			case TARGET_ADVICE: resId = R.string.travel_advices; headerIconResId = R.drawable.tvadvices_menuitem_selector; break;
+			case TARGET_RISK: resId = R.string.country_risk; headerIconResId = R.drawable.countryrisk_menuitem_selector; break;
+			default:  resId = R.string.travel_tips; headerIconResId = R.drawable.tvtips_menuitem_selector; break;
 		}
 		
 		View view = (View)findViewById(R.id.header);
 		TextView txtLeft = (TextView)view.findViewById(R.id.txt_left);
 		txtLeft.setText(resId);
+		ImageView img = (ImageView)view.findViewById(R.id.img_icon);
+		img.setImageResource(headerIconResId);
 		
 		txtMessage = (TextView)findViewById(R.id.txt_message);
 		lstMenu = (ListView)findViewById(R.id.lst_country);

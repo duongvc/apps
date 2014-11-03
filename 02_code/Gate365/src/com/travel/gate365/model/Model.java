@@ -18,6 +18,7 @@ import com.travel.gate365.view.journeys.JourneysActivity;
 import com.travel.gate365.view.travel.AdviceDetailActivity;
 import com.travel.gate365.view.travel.AdvicesActivity;
 import com.travel.gate365.view.travel.DesCountriesActivity;
+import com.travel.gate365.view.travel.RisksCountryActivity;
 import com.travel.gate365.view.travel.TipCountryActivity;
 
 public class Model {
@@ -33,6 +34,7 @@ public class Model {
 		, new ActivityInfo(DesCountriesActivity.class.getSimpleName(), R.drawable.tvadvices_menuitem_selector, R.string.travel_advices, 0)		
 		, new ActivityInfo(AdviceDetailActivity.class.getSimpleName(), R.drawable.tvadvices_menuitem_selector, R.string.travel_advices, 0)
 		, new ActivityInfo(TipCountryActivity.class.getSimpleName(), R.drawable.tvtips_menuitem_selector, R.string.travel_tips, 0)
+		, new ActivityInfo(RisksCountryActivity.class.getSimpleName(), R.drawable.countryrisk_menuitem_selector, R.string.country_risk, 0)
 	};
 	private boolean isLogin;
 	private UserInfo userInfo;

@@ -12,7 +12,9 @@ import java.security.NoSuchAlgorithmException;
 import java.security.UnrecoverableKeyException;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;
@@ -150,6 +152,34 @@ public class ServiceManager {
 		url += "pax=" + pax;
 		return connect(url, null, TIMEOUT_SOCKET, TIMEOUT_CONNECTION);
 	}
+	
+	public static JSONObject getConfiguration(String username, String password, String countryId) {
+		String pax = username.replace('\\', '_');
+		String url = URL_GET_CONFIGURATIONS;
+		if (url.indexOf("=") != -1) {
+			url += "&";
+		} else {
+			url += "?";
+		}
+		url += "pax=" + pax;
+		return connect(url, null, TIMEOUT_SOCKET, TIMEOUT_CONNECTION);
+	}
+
+	public static JSONObject sendLocation(String username, String password, final double latitude, final double longitude) {
+    	//Date date = new Date(System.currentTimeMillis());
+    	//SimpleDateFormat dateFormat = new SimpleDateFormat("MMM dd - hh:mm a");
+    	//final String lastTimeSent = dateFormat.format(date);
+    	
+		String pax = username.replace('\\', '_');
+		String url = URL_GET_SEND_LOCATION + "?lat=" + latitude + "&long=" + longitude;
+		if (url.indexOf("=") != -1) {
+			url += "&";
+		} else {
+			url += "?";
+		}
+		url += "pax=" + pax;
+		return connect(url, null, TIMEOUT_SOCKET, TIMEOUT_CONNECTION);
+	}	
 	
 	/**
 	 * Use this method to perform a HTTP GET request and retrieve a JSON object out of an URL url, and its parameters
