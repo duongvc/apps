@@ -36,6 +36,7 @@
     <item type="id" name="txt_title" />
     <item type="id" name="txt_risktype" />
     <item type="id" name="txt_flight_code" />
+    <item type="id" name="txt_details" />  
     <item type="id" name="lst_menu" />
     <item type="id" name="lst_journeys" />
     <item type="id" name="lst_flight_routing" />
@@ -51,6 +52,6 @@
     <item type="id" name="layout_content" />
     <item type="id" name="layout_depart" />
     <item type="id" name="layout_arrival" />
-    <item type="id" name="line_divider" />    
+    <item type="id" name="line_divider" />  
     
 </resources>

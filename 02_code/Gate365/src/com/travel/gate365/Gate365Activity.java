@@ -21,10 +21,10 @@ import com.travel.gate365.view.BaseActivity;
 import com.travel.gate365.view.alert.AlertActivity;
 import com.travel.gate365.view.home.HomeMenuItemAdapter;
 import com.travel.gate365.view.journeys.JourneysActivity;
-import com.travel.gate365.view.tip.TipCountryActivity;
-import com.travel.gate365.view.travel.AdviceCountriesActivity;
+import com.travel.gate365.view.travel.DesCountriesActivity;
 import com.travel.gate365.view.travel.AdvicesActivity;
-import com.travel.gate365.view.travel.TravelRisksActivity;
+import com.travel.gate365.view.travel.TipCountryActivity;
+import com.travel.gate365.view.travel.RisksCountryActivity;
 
 public class Gate365Activity extends BaseActivity implements OnItemClickListener {
 
@@ -133,7 +133,8 @@ public class Gate365Activity extends BaseActivity implements OnItemClickListener
 		Intent intent;
 		switch ((int)id) {
 		case MenuItemInfo.MENU_ITEM_COUNTRY_RISK:
-			intent = new Intent(this, TravelRisksActivity.class);
+			intent = new Intent(this, DesCountriesActivity.class);
+			intent.putExtra(DesCountriesActivity.TARGET_TYPE, DesCountriesActivity.TARGET_RISK);
 			startActivity(intent);			
 			break;
 
@@ -147,7 +148,8 @@ public class Gate365Activity extends BaseActivity implements OnItemClickListener
 			break;
 
 		case MenuItemInfo.MENU_ITEM_TRAVEL_ADVICES:
-			intent = new Intent(this, AdviceCountriesActivity.class);
+			intent = new Intent(this, DesCountriesActivity.class);
+			intent.putExtra(DesCountriesActivity.TARGET_TYPE, DesCountriesActivity.TARGET_ADVICE);
 			startActivity(intent);
 			break;
 
@@ -157,8 +159,9 @@ public class Gate365Activity extends BaseActivity implements OnItemClickListener
 			break;
 
 		case MenuItemInfo.MENU_ITEM_TRAVEL_TIPS:
-			intent = new Intent(this, TipCountryActivity.class);
-			startActivity(intent);			
+			intent = new Intent(this, DesCountriesActivity.class);
+			intent.putExtra(DesCountriesActivity.TARGET_TYPE, DesCountriesActivity.TARGET_TIP);
+			startActivity(intent);
 			break;
 
 		default:

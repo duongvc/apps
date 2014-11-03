@@ -51,17 +51,16 @@
 	        android:textSize="10sp"
 	        android:text="17-10-2014 06::44 AM"/>
 	
-	    <View android:id="@id/line_divider" 
-	        android:layout_width="match_parent"
-	        android:layout_height="2dp"
-	        android:layout_below="@id/txt_title"
-	        android:paddingTop="5dp"
-	        android:background="@color/dark_gray"/>
-
 	</RelativeLayout>
 
+    <View android:id="@id/line_divider" 
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:paddingTop="5dp"
+        android:background="@color/dark_gray"/>
+		
     <com.travel.gate365.view.widget.FontableTextView android:id="@id/txt_message"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         style="@style/CommonTextViewStyle"
         android:padding="5dp"

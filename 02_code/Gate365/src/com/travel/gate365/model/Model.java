@@ -15,10 +15,10 @@ import com.travel.gate365.view.alert.AlertActivity;
 import com.travel.gate365.view.alert.AlertDetailActivity;
 import com.travel.gate365.view.journeys.JourneyDetailActivity;
 import com.travel.gate365.view.journeys.JourneysActivity;
-import com.travel.gate365.view.tip.TipCountryActivity;
-import com.travel.gate365.view.travel.AdviceCountriesActivity;
 import com.travel.gate365.view.travel.AdviceDetailActivity;
 import com.travel.gate365.view.travel.AdvicesActivity;
+import com.travel.gate365.view.travel.DesCountriesActivity;
+import com.travel.gate365.view.travel.TipCountryActivity;
 
 public class Model {
 
@@ -27,12 +27,12 @@ public class Model {
 		new ActivityInfo(Gate365Activity.class.getSimpleName(), R.drawable.ic_0, R.string.login_U, 0)
 		, new ActivityInfo(JourneysActivity.class.getSimpleName(), R.drawable.journeys_menuitem_selector, R.string.journeys, R.string.destinations)
 		, new ActivityInfo(JourneyDetailActivity.class.getSimpleName(), R.drawable.journeys_menuitem_selector, R.string.journey_details, 0)
-		, new ActivityInfo(AlertActivity.class.getSimpleName(), R.drawable.alert_item_selector, R.string.travel_alerts, 0)
-		, new ActivityInfo(AlertDetailActivity.class.getSimpleName(), R.drawable.alert_item_selector, R.string.alert_details, 0)
+		, new ActivityInfo(AlertActivity.class.getSimpleName(), R.drawable.tvalerts_menuitem_selector, R.string.travel_alerts, 0)
+		, new ActivityInfo(AlertDetailActivity.class.getSimpleName(), R.drawable.tvalerts_menuitem_selector, R.string.alert_details, 0)
 		, new ActivityInfo(AdvicesActivity.class.getSimpleName(), R.drawable.tvadvices_menuitem_selector, R.string.travel_advices, 0)
+		, new ActivityInfo(DesCountriesActivity.class.getSimpleName(), R.drawable.tvadvices_menuitem_selector, R.string.travel_advices, 0)		
 		, new ActivityInfo(AdviceDetailActivity.class.getSimpleName(), R.drawable.tvadvices_menuitem_selector, R.string.travel_advices, 0)
-		, new ActivityInfo(TipCountryActivity.class.getSimpleName(), R.drawable.ic_5, R.string.travel_tips, 0)
-		, new ActivityInfo(AdviceCountriesActivity.class.getSimpleName(), R.drawable.tvadvices_menuitem_selector, R.string.travel_advices, 0)		
+		, new ActivityInfo(TipCountryActivity.class.getSimpleName(), R.drawable.tvtips_menuitem_selector, R.string.travel_tips, 0)
 	};
 	private boolean isLogin;
 	private UserInfo userInfo;
@@ -40,14 +40,14 @@ public class Model {
 	private DisplayMetrics metrics;
 	private JourneyItemInfo[] journeys;
 	private AlertItemInfo[] alerts;
-	private AdviceItemInfo[] advices;
+	private ArticleItemInfo[] advices;
 	private PlaceInfo[] places;
 	
 	private Model() {
 		journeys = new JourneyItemInfo[0];
 		alerts = new AlertItemInfo[0];
 		places = new PlaceInfo[0]; 
-		advices = new AdviceItemInfo[0];
+		advices = new ArticleItemInfo[0];
 	}
 
 	public static Model getInstance() {
@@ -97,7 +97,7 @@ public class Model {
 	 */
 	public JourneyItemInfo[] paserJourney(JSONObject obj) throws JSONException{
 		JSONArray arr = obj.getJSONArray("ResultSet");
-		JourneyItemInfo[] journeys = null;
+		JourneyItemInfo[] journeys = new JourneyItemInfo[0];
 		if (arr != null) {
 			IntegerGenerator intGenerator = new IntegerGenerator();
 			Log.i(Model.class.getSimpleName(), "-----getJourneys Array lenght: " + arr.length());
@@ -138,7 +138,7 @@ public class Model {
 	public AlertItemInfo[] parserTravelAlerts(JSONObject obj) throws JSONException{
 		Log.i(Model.class.getSimpleName(), "---------getAlerts status: " + obj.getString("Status"));
 		JSONArray arr = obj.getJSONArray("ResultSet");
-		AlertItemInfo[] alerts = null;
+		AlertItemInfo[] alerts = new AlertItemInfo[0];
 		if (arr != null) {
 			Log.i(Model.class.getSimpleName(), "-----getAlerts Array lenght: " + arr.length());
 			IntegerGenerator intGenerator = new IntegerGenerator();
@@ -156,17 +156,17 @@ public class Model {
 		return alerts;		
 	}
 	
-	public AdviceItemInfo[] parserTravelAdvices(JSONObject obj) throws JSONException {
+	public ArticleItemInfo[] parserTravelAdvices(JSONObject obj) throws JSONException {
 		Log.i(Model.class.getSimpleName(), "---------getAdvices status: " + obj.getString("Status"));
 		JSONArray arr = obj.getJSONArray("ResultSet");
-		AdviceItemInfo[] advices = null;
+		ArticleItemInfo[] advices = new ArticleItemInfo[0];
 		if (arr != null) {
 			Log.i(Model.class.getSimpleName(), "-----getAdvices Array lenght: " + arr.length());
-			advices = new AdviceItemInfo[arr.length()];
+			advices = new ArticleItemInfo[arr.length()];
 			IntegerGenerator intGenerator = new IntegerGenerator();
 			for (int a = 0; a < arr.length(); a++) {
 				JSONObject jsAdvice = arr.getJSONObject(a);
-				advices[a] = new AdviceItemInfo(intGenerator.generate(), jsAdvice.getString("DateTime"), jsAdvice.getString("Title"), jsAdvice.getString("Detail"));
+				advices[a] = new ArticleItemInfo(intGenerator.generate(), jsAdvice.getString("DateTime"), jsAdvice.getString("Title"), jsAdvice.getString("Detail"));
 			}
 		}
 		
@@ -178,7 +178,7 @@ public class Model {
 	
 	public PlaceInfo[] parserPlaces(JSONObject obj) throws JSONException {
 		JSONArray arr = obj.getJSONArray("ResultSet");
-		PlaceInfo[] places = null;
+		PlaceInfo[] places = new PlaceInfo[0];
 		if (arr != null) {
 			Log.i(Model.class.getSimpleName(), "-----getDetinationCountriesGrouped Array lenght: " + arr.length());
 			places = new PlaceInfo[arr.length()];
@@ -192,6 +192,32 @@ public class Model {
 		return places;
 	}
 	
+	public ArticleItemInfo parserCountryRisks(JSONObject obj) throws JSONException {
+		Log.i(Model.class.getSimpleName(), "---------getRisks status: " + obj.getString("Status"));
+		JSONObject jsArticle = obj.getJSONObject("ResultSet");
+		if (jsArticle != null) {
+			IntegerGenerator intGenerator = new IntegerGenerator();
+			return new ArticleItemInfo(intGenerator.generate(), jsArticle.getString("DateTime"), jsArticle.getString("Title"), jsArticle.getString("Detail"));
+		}
+		return null;
+	}
+	
+	public ArticleItemInfo[] parserCountryTips(JSONObject obj) throws JSONException {
+		Log.i(Model.class.getSimpleName(), "---------getTips status: " + obj.getString("Status"));
+		JSONArray arr = obj.getJSONArray("ResultSet");
+		ArticleItemInfo[] tips = new ArticleItemInfo[0];
+		if (arr != null) {
+			Log.i(Model.class.getSimpleName(), "-----getTips Array lenght: " + arr.length());
+			tips = new ArticleItemInfo[arr.length()];
+			IntegerGenerator intGenerator = new IntegerGenerator();
+			for (int a = 0; a < arr.length(); a++) {
+				JSONObject jsAdvice = arr.getJSONObject(a);
+				tips[a] = new ArticleItemInfo(intGenerator.generate(), jsAdvice.getString("DateTime"), jsAdvice.getString("Title"), jsAdvice.getString("Detail"));
+			}
+		}
+		return tips;
+	}
+
 	public UserInfo getUserInfo(){
 		return userInfo;
 	}
@@ -232,11 +258,11 @@ public class Model {
 		return null;
 	}
 
-	public AdviceItemInfo[] getAdvices() {
+	public ArticleItemInfo[] getAdvices() {
 		return advices;
 	}
 
-	public AdviceItemInfo getAdvice(int adviceId) {
+	public ArticleItemInfo getAdvice(int adviceId) {
 		for (int i = 0; i < advices.length; i++) {
 			if(advices[i].getId() == adviceId){
 				return advices[i];
@@ -257,5 +283,5 @@ public class Model {
 		}
 		return null;
 	}
-	
+
 }

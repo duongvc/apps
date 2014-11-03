@@ -9,15 +9,15 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.travel.gate365.R;
-import com.travel.gate365.model.AdviceItemInfo;
+import com.travel.gate365.model.ArticleItemInfo;
 
 public class AdviceItemAdapter extends BaseAdapter {
 
-	private AdviceItemInfo[] list;  
+	private ArticleItemInfo[] list;  
     private Context context;  
 	private int layoutResId; 
 	
-	public AdviceItemAdapter(Context context, AdviceItemInfo[] list, int layoutResId) {
+	public AdviceItemAdapter(Context context, ArticleItemInfo[] list, int layoutResId) {
 		this.context = context;
 		this.list = list;
 		this.layoutResId = layoutResId;
@@ -41,7 +41,7 @@ public class AdviceItemAdapter extends BaseAdapter {
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		Holder holder = null;
-		AdviceItemInfo info = (AdviceItemInfo)getItem(position);
+		ArticleItemInfo info = (ArticleItemInfo)getItem(position);
 		if(convertView == null) {				        
 	        holder = new Holder();
 	        LayoutInflater inflate = ((Activity) context).getLayoutInflater();

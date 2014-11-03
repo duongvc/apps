@@ -11,6 +11,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.view.View;
+import android.webkit.WebView;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
@@ -19,21 +20,20 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.travel.gate365.R;
+import com.travel.gate365.helper.DateTimeHelper;
 import com.travel.gate365.helper.ResourceHelper;
+import com.travel.gate365.model.ArticleItemInfo;
 import com.travel.gate365.model.Model;
 import com.travel.gate365.model.PlaceInfo;
 import com.travel.gate365.service.ServiceManager;
 import com.travel.gate365.view.BaseActivity;
-import com.travel.gate365.view.journeys.JourneyDetailActivity;
 
-public class AdvicesActivity extends BaseActivity implements OnItemClickListener {
+public class RisksCountryActivity  extends BaseActivity implements OnItemClickListener {
 
-	private AdviceItemAdapter adapter;
 	private TextView txtMessage;
-	private ListView lstMenu;
 
-	public AdvicesActivity() {
-		super(AdvicesActivity.class.getSimpleName()); 
+	public RisksCountryActivity() {
+		super(RisksCountryActivity.class.getSimpleName()); 
 	}
 
 
@@ -41,10 +41,9 @@ public class AdvicesActivity extends BaseActivity implements OnItemClickListener
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
-		setContentView(R.layout.activity_advices);
+		setContentView(R.layout.activity_risks);
 		
 		init();
-		
 		
 	}
 	
@@ -89,7 +88,6 @@ public class AdvicesActivity extends BaseActivity implements OnItemClickListener
 		txtRisktype.setBackgroundResource(bgResId);
 		
 		txtMessage = (TextView)findViewById(R.id.txt_message);
-		lstMenu = (ListView)findViewById(R.id.lst_advices);
 		
 		load();
 	}
@@ -108,14 +106,14 @@ public class AdvicesActivity extends BaseActivity implements OnItemClickListener
 			@Override
 			public void run() {
 				try { 
-					JSONObject res = ServiceManager.getAdvices(Model.getInstance().getUserInfo().getUsername()
+					JSONObject res = ServiceManager.getRisks(Model.getInstance().getUserInfo().getUsername()
 							, Model.getInstance().getUserInfo().getPassword()
 							, String.valueOf(getIntent().getExtras().getLong(DesCountriesActivity.COUNTRY_ID)));
 					
-					loading.dismiss();
-					Model.getInstance().parserTravelAdvices(res);
+					loading.dismiss();					
 					android.os.Message msg = new Message();
-					msg.what = BaseActivity.NOTE_LOAD_ADVICE_SUCCESSFULLY;
+					msg.what = BaseActivity.NOTE_LOAD_RISK_SUCCESSFULLY;
+					msg.obj = Model.getInstance().parserCountryRisks(res);
 					notificationHandler.sendMessage(msg);						
 				} catch (Exception e) {
 					loading.dismiss();
@@ -144,13 +142,20 @@ public class AdvicesActivity extends BaseActivity implements OnItemClickListener
 	protected final Handler notificationHandler = new Handler(){
 		public void handleMessage(android.os.Message msg) {
 			switch (msg.what) {
-			case BaseActivity.NOTE_LOAD_ADVICE_SUCCESSFULLY:
-				if(Model.getInstance().getAdvices().length > 0){
+			case BaseActivity.NOTE_LOAD_RISK_SUCCESSFULLY:
+				if(msg.obj != null){
 					txtMessage.setVisibility(View.GONE);
-					adapter = new AdviceItemAdapter(AdvicesActivity.this, Model.getInstance().getAdvices(), R.layout.advice_item);
-					lstMenu.setAdapter(adapter);
-					lstMenu.setOnItemClickListener(AdvicesActivity.this);								
-				}else{
+					
+					ArticleItemInfo info = (ArticleItemInfo)msg.obj;
+					String htmlText = "<html><head>"
+					          + "<style type=\"text/css\">body{color: #fff; background-color: #000;}"
+					          + "</style></head>"
+					          + "<body>"                          
+					          + info.getDetail()
+					          + "</body></html>";
+					((WebView)findViewById(R.id.txt_details)).loadData(htmlText, "text/html", "utf-8");
+					
+				}else{					
 					txtMessage.setVisibility(View.VISIBLE);
 				}
 				break;
@@ -160,5 +165,5 @@ public class AdvicesActivity extends BaseActivity implements OnItemClickListener
 			}
 		};		
 	};
-	
+
 }

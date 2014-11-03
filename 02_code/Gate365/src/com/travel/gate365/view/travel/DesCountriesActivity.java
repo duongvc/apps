@@ -20,14 +20,21 @@ import com.travel.gate365.service.ServiceManager;
 import com.travel.gate365.view.BaseActivity;
 import com.travel.gate365.view.journeys.JourneyDetailActivity;
 
-public class AdviceCountriesActivity extends BaseActivity implements OnItemClickListener {
+public class DesCountriesActivity extends BaseActivity implements OnItemClickListener {
 
+	public static final String TARGET_TYPE = "target_type";
+	public static final String COUNTRY_ID = "countryId";
+	
+	public static final byte TARGET_ADVICE = 0;
+	public static final byte TARGET_RISK = 1;
+	public static final byte TARGET_TIP = 2;
+	
 	private PlaceItemAdapter adapter;
 	private TextView txtMessage;
 	private ListView lstMenu;
 
-	public AdviceCountriesActivity() {
-		super(AdviceCountriesActivity.class.getSimpleName());
+	public DesCountriesActivity() {
+		super(DesCountriesActivity.class.getSimpleName());
 	}
 
 	@Override
@@ -38,17 +45,33 @@ public class AdviceCountriesActivity extends BaseActivity implements OnItemClick
 		
 		init();
 		
-		
 	}
 	
 	@Override
 	protected void init() {
 		super.init();
 
+		int resId;
+		switch (getIntent().getExtras().getByte(TARGET_TYPE)) {
+			case TARGET_ADVICE: resId = R.string.travel_advices; break;
+			case TARGET_RISK: resId = R.string.country_risk; break;
+			default:  resId = R.string.travel_tips; break;
+		}
+		
+		View view = (View)findViewById(R.id.header);
+		TextView txtLeft = (TextView)view.findViewById(R.id.txt_left);
+		txtLeft.setText(resId);
+		
 		txtMessage = (TextView)findViewById(R.id.txt_message);
 		lstMenu = (ListView)findViewById(R.id.lst_country);
 		
-		load();
+		if(Model.getInstance().getPlaces().length > 0){
+			android.os.Message msg = new Message();
+			msg.what = BaseActivity.NOTE_LOAD_PLACE_SUCCESSFULLY;
+			notificationHandler.sendMessage(msg);									
+		}else{
+			load();
+		}
 	}
 	
 	@Override
@@ -89,8 +112,14 @@ public class AdviceCountriesActivity extends BaseActivity implements OnItemClick
 	@Override
 	public void onItemClick(AdapterView<?> adapter, View view, int itemPos, long itemId) {
 		Log.i(getId(), "::onItemSelected - pos:" + itemPos + ", id:" + itemId);
-		Intent intent = new Intent(this, AdvicesActivity.class);
-		intent.putExtra(AdvicesActivity.COUNTRY_ID, itemId);
+		Intent intent;
+		switch (getIntent().getExtras().getByte(TARGET_TYPE)) {
+			case TARGET_ADVICE: intent = new Intent(this, AdvicesActivity.class); break;
+			case TARGET_RISK: intent = new Intent(this, RisksCountryActivity.class); break;
+			case TARGET_TIP: intent = new Intent(this, TipCountryActivity.class); break;
+			default:return;
+		}
+		intent.putExtra(DesCountriesActivity.COUNTRY_ID, itemId);
 		startActivity(intent);
 	}
 	
@@ -100,9 +129,9 @@ public class AdviceCountriesActivity extends BaseActivity implements OnItemClick
 			case BaseActivity.NOTE_LOAD_PLACE_SUCCESSFULLY:
 				if(Model.getInstance().getPlaces().length > 0){
 					txtMessage.setVisibility(View.GONE);
-					adapter = new PlaceItemAdapter(AdviceCountriesActivity.this, Model.getInstance().getPlaces(), R.layout.place_item);
+					adapter = new PlaceItemAdapter(DesCountriesActivity.this, Model.getInstance().getPlaces(), R.layout.place_item);
 					lstMenu.setAdapter(adapter);
-					lstMenu.setOnItemClickListener(AdviceCountriesActivity.this);								
+					lstMenu.setOnItemClickListener(DesCountriesActivity.this);								
 				}else{
 					txtMessage.setVisibility(View.VISIBLE);
 				}
@@ -113,5 +142,6 @@ public class AdviceCountriesActivity extends BaseActivity implements OnItemClick
 			}
 		};		
 	};
+
 	
 }

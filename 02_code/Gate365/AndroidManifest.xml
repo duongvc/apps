@@ -51,19 +51,19 @@
         <activity android:name=".view.alert.AlertDetailActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode">
         </activity>
-        <activity android:name="com.travel.gate365.view.travel.AdviceCountriesActivity"
+        <activity android:name=".view.travel.DesCountriesActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode">
         </activity>
-        <activity android:name="com.travel.gate365.view.travel.AdvicesActivity"
+        <activity android:name=".view.travel.AdvicesActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode">
         </activity>
         <activity android:name=".view.travel.AdviceDetailActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode">
         </activity>
-        <activity android:name=".view.tip.TipCountryActivity"
+        <activity android:name=".view.travel.TipCountryActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode">
         </activity>
-        <activity android:name=".view.travel.TravelRisksActivity"
+        <activity android:name=".view.travel.RisksCountryActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode">
         </activity>
 	</application>

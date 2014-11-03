@@ -23,5 +23,9 @@
     <declare-styleable name="com.travel.gate365.view.widget.FontableSpinner">
         <attr name="font" />
     </declare-styleable>
+    <declare-styleable name="com.travel.gate365.view.widget.FontableWebView">
+        <attr name="font" />
+    </declare-styleable>
+    
     
 </resources>

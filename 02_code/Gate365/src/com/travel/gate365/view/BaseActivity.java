@@ -29,6 +29,8 @@ public abstract class BaseActivity extends Activity {
 	protected static final int NOTE_LOAD_ALERT_SUCCESSFULLY = 6;
 	protected static final int NOTE_LOAD_ADVICE_SUCCESSFULLY = 7;
 	protected static final int NOTE_LOAD_PLACE_SUCCESSFULLY = 8;
+	protected static final int NOTE_LOAD_RISK_SUCCESSFULLY = 9;
+	protected static final int NOTE_LOAD_TIP_SUCCESSFULLY = 10;
 	
 	private String id;
 	protected static ProgressDialog loading;	

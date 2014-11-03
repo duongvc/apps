@@ -25,7 +25,7 @@
 	        android:padding="5dp"
 	        style="@style/CommonTextViewStyle"
 	        android:text="HANOI"
-	        android:textColor="@color/yellow"/>
+	        android:textColor="@color/light_green"/>
 
 	    <com.travel.gate365.view.widget.FontableTextView android:id="@id/txt_datetime"
 	        android:layout_width="wrap_content"
@@ -62,7 +62,7 @@
 	        android:padding="5dp"
 	        style="@style/CommonTextViewStyle"
 	        android:text="LONDON"
-	        android:textColor="@color/yellow"/>
+	        android:textColor="@color/light_green"/>
 
 	    <com.travel.gate365.view.widget.FontableTextView android:id="@id/txt_datetime"
 	        android:layout_width="wrap_content"

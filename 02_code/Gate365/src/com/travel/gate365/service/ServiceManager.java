@@ -127,6 +127,30 @@ public class ServiceManager {
 		return connect(url, null, TIMEOUT_SOCKET, TIMEOUT_CONNECTION);
 	}
 	
+	public static JSONObject getRisks(String username, String password, String countryId) throws Exception {
+		String pax = username.replace('\\', '_');
+		String url = URL_RISKS + "?cid=" + countryId;
+		if (url.indexOf("=") != -1) {
+			url += "&";
+		} else {
+			url += "?";
+		}
+		url += "pax=" + pax;
+		return connect(url, null, TIMEOUT_SOCKET, TIMEOUT_CONNECTION);
+	}
+
+	public static JSONObject getTips(String username, String password, String countryId) throws Exception {
+		String pax = username.replace('\\', '_');
+		String url = URL_TIPS + "?cid=" + countryId;
+		if (url.indexOf("=") != -1) {
+			url += "&";
+		} else {
+			url += "?";
+		}
+		url += "pax=" + pax;
+		return connect(url, null, TIMEOUT_SOCKET, TIMEOUT_CONNECTION);
+	}
+	
 	/**
 	 * Use this method to perform a HTTP GET request and retrieve a JSON object out of an URL url, and its parameters
 	 * params.<br/>

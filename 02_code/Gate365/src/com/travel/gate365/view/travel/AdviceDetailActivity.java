@@ -2,28 +2,21 @@ package com.travel.gate365.view.travel;
 
 import java.util.Locale;
 
-import org.json.JSONObject;
-
-import android.app.ProgressDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Message;
-import android.util.Log;
+import android.text.Html;
 import android.view.View;
-import android.widget.AdapterView;
+import android.webkit.WebView;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.AdapterView.OnItemClickListener;
 
 import com.travel.gate365.R;
+import com.travel.gate365.helper.DateTimeHelper;
 import com.travel.gate365.helper.ResourceHelper;
-import com.travel.gate365.model.AdviceItemInfo;
+import com.travel.gate365.model.ArticleItemInfo;
 import com.travel.gate365.model.Model;
 import com.travel.gate365.model.PlaceInfo;
-import com.travel.gate365.service.ServiceManager;
 import com.travel.gate365.view.BaseActivity;
 
 public class AdviceDetailActivity extends BaseActivity {
@@ -50,17 +43,17 @@ public class AdviceDetailActivity extends BaseActivity {
 	protected void init() {
 		super.init();
 
-		long countryId = getIntent().getExtras().getLong(AdvicesActivity.COUNTRY_ID);
+		View layoutContent = findViewById(R.id.layout_content);
+		long countryId = getIntent().getExtras().getLong(DesCountriesActivity.COUNTRY_ID);
 		PlaceInfo place = Model.getInstance().getPlace(String.valueOf(countryId));
 		
 		int adviceId = (int)getIntent().getExtras().getLong(ADVICE_ID);
-		AdviceItemInfo info = Model.getInstance().getAdvice(adviceId);
+		ArticleItemInfo info = Model.getInstance().getAdvice(adviceId);
 		
-		((TextView)findViewById(R.id.txt_country)).setText(place.getCountryName().toUpperCase(Locale.US));
-		TextView txtRisktype = (TextView)findViewById(R.id.txt_risktype);
+		((TextView)layoutContent.findViewById(R.id.txt_country)).setText(place.getCountryName().toUpperCase(Locale.US));		
 		
 		int maxHeight = Math.min(Model.getInstance().getScreenHeight() / 15, 128);
-		ImageView icon = (ImageView)findViewById(R.id.img_icon);
+		ImageView icon = (ImageView)layoutContent.findViewById(R.id.img_icon);
 		icon.setLayoutParams(new RelativeLayout.LayoutParams(maxHeight, maxHeight));		
 		int countryDrawableId = ResourceHelper.getDrawableId(place.getCountryISOCode().toLowerCase(Locale.US));
 		if(countryDrawableId != 0){
@@ -76,7 +69,7 @@ public class AdviceDetailActivity extends BaseActivity {
 			resId = R.string.INSIGNIFICANT;
 			bgResId = R.drawable.type_insignificant;
 		}else if(place.getSecurityRisk().equalsIgnoreCase("HIGH")){
-			resId = R.string.HIGH;
+			resId = R.string.HIGH; 
 			bgResId = R.drawable.type_high;
 		}else if(place.getSecurityRisk().equalsIgnoreCase("EXTREME")){
 			resId = R.string.EXTREME;
@@ -85,9 +78,19 @@ public class AdviceDetailActivity extends BaseActivity {
 			resId = R.string.MEDIUM;
 			bgResId = R.drawable.type_medium;
 		}
+		TextView txtRisktype = (TextView)layoutContent.findViewById(R.id.txt_risktype);
 		txtRisktype.setText(getString(resId));
 		txtRisktype.setBackgroundResource(bgResId);
 		
+		((TextView)findViewById(R.id.txt_datetime)).setText(DateTimeHelper.convertDateStringToddMMyyyy(info.getDateTime()));
+		((TextView)findViewById(R.id.txt_title)).setText(info.getTitle());
+		String htmlText = "<html><head>"
+		          + "<style type=\"text/css\">body{color: #fff; background-color: #000;}"
+		          + "</style></head>"
+		          + "<body>"                          
+		          + info.getDetail()
+		          + "</body></html>";
+		((WebView)findViewById(R.id.txt_message)).loadData(htmlText, "text/html", "utf-8");
 	}
 	
 	protected final Handler notificationHandler = new Handler(){
