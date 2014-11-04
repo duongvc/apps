@@ -1,6 +1,6 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
-	<style name="CommonEditTextStyle" parent="@android:style/TextAppearance.Widget.EditText">
+	<style name="CommonEditTextStyle" parent="@android:style/Widget.EditText">
 		<item name="font">Context-Condensed-SSi-Condensed.ttf</item>
         <item name="android:focusable">true</item>
         <item name="android:focusableInTouchMode">true</item>
@@ -33,7 +33,7 @@
 		<item name="android:paddingRight">3dp</item>
 	</style>
 		
-	<style name="CommonButtonStyle" parent="@android:style/TextAppearance.Widget.Button">
+	<style name="CommonButtonStyle" parent="@android:style/Widget.Button">
 		<item name="font">Context-Condensed-SSi-Condensed.ttf</item>
 		<item name="android:background">@drawable/button_selector</item>
 		<item name="android:padding">5dp</item>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+	
+    <include layout="@layout/titlebar"/>
+
+    <GridView
+        android:id="@id/layout_content"
+	    android:layout_width="fill_parent"
+	    android:layout_height="fill_parent"
+	    android:layout_below="@id/titlebar"
+        android:numColumns="2">
+
+        <!-- <include layout="@layout/home_menu_item"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@id/homeitem_journeys"/>
+
+        <include layout="@layout/home_menu_item" 
+            android:id="@id/homeitem_advices"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" /> -->
+        
+    </GridView>
+    
+</RelativeLayout>

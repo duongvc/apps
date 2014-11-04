@@ -43,5 +43,10 @@
     <string name="arrives">Arrives</string>
     <string name="loading_pls_wait">Loading, please wait...</string>
     <string name="logging_pls_wait">Logging, please wait...</string>
+    <string name="enable_location_tracking">Enable location tracking</string>
+    <string name="frequency">Frequency</string>
+    <string name="last_time">Last time</string>
+    <string name="last_lattitude">Last lattitude</string>
+    <string name="last_longtitude">Last longtitude</string>
     
 </resources>

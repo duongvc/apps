@@ -36,7 +36,11 @@
     <item type="id" name="txt_title" />
     <item type="id" name="txt_risktype" />
     <item type="id" name="txt_flight_code" />
-    <item type="id" name="txt_details" />  
+    <item type="id" name="txt_details" />
+    <item type="id" name="txt_frequency" />  
+    <item type="id" name="txt_last_time" />
+    <item type="id" name="txt_last_latitude" />
+    <item type="id" name="txt_last_longtitude" />
     <item type="id" name="lst_menu" />
     <item type="id" name="lst_journeys" />
     <item type="id" name="lst_flight_routing" />
@@ -53,5 +57,12 @@
     <item type="id" name="layout_depart" />
     <item type="id" name="layout_arrival" />
     <item type="id" name="line_divider" />  
+    <item type="id" name="chk_gpstracking" />
+    <item type="id" name="homeitem_alerts" />
+    <item type="id" name="homeitem_advices" />
+    <item type="id" name="homeitem_risks" />
+    <item type="id" name="homeitem_settings" />
+    <item type="id" name="homeitem_tips" />
+    <item type="id" name="homeitem_journeys" />
     
 </resources>
