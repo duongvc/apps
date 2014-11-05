@@ -153,7 +153,7 @@ public class ServiceManager {
 		return connect(url, null, TIMEOUT_SOCKET, TIMEOUT_CONNECTION);
 	}
 	
-	public static JSONObject getConfiguration(String username, String password, String countryId) {
+	public static JSONObject getConfiguration(String username, String password) {
 		String pax = username.replace('\\', '_');
 		String url = URL_GET_CONFIGURATIONS;
 		if (url.indexOf("=") != -1) {

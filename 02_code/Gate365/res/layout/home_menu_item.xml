@@ -18,6 +18,7 @@
         android:layout_centerVertical="true"
         style="@style/CommonTextViewStyle" 
         android:textColor="@android:color/black"
+        android:textSize="24sp"
         android:text="@string/login_U"/>
 
 </RelativeLayout>

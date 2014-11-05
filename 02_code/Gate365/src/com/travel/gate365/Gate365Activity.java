@@ -4,6 +4,7 @@ import org.json.JSONObject;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Message;
 import android.util.Log;
@@ -55,26 +56,13 @@ public class Gate365Activity extends BaseActivity implements OnItemClickListener
 		super.init();
 		
 		if(Model.getInstance().isLogin()){
-			/*ListView lstMenu = (ListView)findViewById(R.id.lst_menu);
-			final MenuItemInfo[] menuList = {new MenuItemInfo(MenuItemInfo.MENU_ITEM_JOURNEYS, R.drawable.journeys_menuitem_selector, R.string.journeys)
-				, new MenuItemInfo(MenuItemInfo.MENU_ITEM_TRAVEL_ALERTS, R.drawable.tvalerts_menuitem_selector, R.string.travel_alerts)
-				, new MenuItemInfo(MenuItemInfo.MENU_ITEM_TRAVEL_ADVICES, R.drawable.tvadvices_menuitem_selector, R.string.travel_advices)
-				, new MenuItemInfo(MenuItemInfo.MENU_ITEM_COUNTRY_RISK, R.drawable.countryrisk_menuitem_selector, R.string.country_risk)
-				, new MenuItemInfo(MenuItemInfo.MENU_ITEM_TRAVEL_TIPS, R.drawable.tvtips_menuitem_selector, R.string.travel_tips)
-				, new MenuItemInfo(MenuItemInfo.MENU_ITEM_SETTINGS, R.drawable.settings_menuitem_selector, R.string.settings)};
-			
-			adapter = new HomeMenuItemAdapter(this, menuList);
-			lstMenu.setAdapter(adapter);
-			lstMenu.setOnItemClickListener(this);*/
 			GridView grdMenu = (GridView)findViewById(R.id.layout_content);
-			final MenuItemInfo[] menuList = {new MenuItemInfo(MenuItemInfo.MENU_ITEM_JOURNEYS, R.drawable.journeys_menuitem_selector, R.string.journeys)
-			, new MenuItemInfo(MenuItemInfo.MENU_ITEM_TRAVEL_ALERTS, R.drawable.tvalerts_menuitem_selector, R.string.travel_alerts)
-			, new MenuItemInfo(MenuItemInfo.MENU_ITEM_TRAVEL_ADVICES, R.drawable.tvadvices_menuitem_selector, R.string.travel_advices)
-			, new MenuItemInfo(MenuItemInfo.MENU_ITEM_COUNTRY_RISK, R.drawable.countryrisk_menuitem_selector, R.string.country_risk)
-			, new MenuItemInfo(MenuItemInfo.MENU_ITEM_TRAVEL_TIPS, R.drawable.tvtips_menuitem_selector, R.string.travel_tips)
-			, new MenuItemInfo(MenuItemInfo.MENU_ITEM_SETTINGS, R.drawable.settings_menuitem_selector, R.string.settings)};
-		
-			adapter = new HomeMenuItemAdapter(this, menuList);
+			adapter = new HomeMenuItemAdapter(this, Model.MENU_LIST);
+			if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT){
+				grdMenu.setNumColumns(1);
+			}else{
+				grdMenu.setNumColumns(2);
+			}
 			grdMenu.setAdapter(adapter);
 			grdMenu.setOnItemClickListener(this);
 			
@@ -120,9 +108,11 @@ public class Gate365Activity extends BaseActivity implements OnItemClickListener
 						Model.getInstance().setLogin(true);
 						//Model.getInstance().paserLoginInfo(edtUsername.getText().toString(), edtPassword.getText().toString());
 						Model.getInstance().paserLoginInfo("ux00287", "1");
+						Model.getInstance().paserConfiguration(ServiceManager.getConfiguration(Model.getInstance().getUserInfo().getUsername(), Model.getInstance().getUserInfo().getPassword()));
+						
 						android.os.Message msg = new Message();
 						msg.what = BaseActivity.NOTE_LOGIN_SUCCESSFULLY;
-						notificationHandler.sendMessage(msg);						
+						notificationHandler.sendMessage(msg);					
 					}else{
 						android.os.Message msg = new Message();
 						msg.what = BaseActivity.NOTE_LOGIN_FAILED;

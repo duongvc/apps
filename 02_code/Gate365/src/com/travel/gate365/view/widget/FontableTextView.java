@@ -25,4 +25,10 @@ public class FontableTextView extends TextView {
                 R.styleable.com_travel_gate365_view_widget_FontableTextView,
                 R.styleable.com_travel_gate365_view_widget_FontableTextView_font);
     }
+    
+    @Override
+    public void setText(CharSequence text, BufferType type) {
+    	String endText = text.toString() + "\u00A0\u00A0";
+    	super.setText(endText, type);
+    }
 }

@@ -6,6 +6,7 @@ import com.travel.gate365.model.Model;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.res.Configuration;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,10 +17,10 @@ import android.widget.TextView;
 
 public class HomeMenuItemAdapter extends BaseAdapter {
 
-	private MenuItemInfo[] list;  
-    private Context context;  
+	private final MenuItemInfo[] list;  
+    private final Context context;
 	
-	public HomeMenuItemAdapter(Context context, MenuItemInfo[] list) {
+	public HomeMenuItemAdapter(final Context context, final MenuItemInfo[] list) {
 		this.context = context;
 		this.list = list;
 		
@@ -49,12 +50,18 @@ public class HomeMenuItemAdapter extends BaseAdapter {
 	        LayoutInflater inflate = ((Activity) context).getLayoutInflater();
 	        convertView = (View)inflate.inflate(R.layout.home_menu_item, null);  
 			ImageView icon = (ImageView)convertView.findViewById(R.id.img_icon);
-			int maxHeight = Math.min(Model.getInstance().getScreenHeight() / 10, 128);
+			int numRows; 
+			if(context.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT){
+				numRows = 6;
+			}else{
+				numRows = 3; 
+			}
+			int maxHeight = (Model.getInstance().getScreenHeight() - context.getResources().getDimensionPixelSize(R.dimen.titlebar_height)) / numRows;
 			icon.setLayoutParams(new RelativeLayout.LayoutParams(maxHeight, maxHeight));
 			icon.setImageResource(info.getIconResId());
 			TextView text = (TextView)convertView.findViewById(R.id.txt_left);
 			text.setText(info.getTextResId());
-			
+						
 			holder.icon = icon;
 			holder.text = text;
 			convertView.setTag(holder);

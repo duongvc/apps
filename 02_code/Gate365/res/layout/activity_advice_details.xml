@@ -33,8 +33,8 @@
 		        android:layout_marginRight="5dp"
 		        android:textColor="@android:color/black"
 		        android:minWidth="50dp"
-		        android:gravity="center"
-		        style="@style/CommonTextViewStyle"/> 
+		        style="@style/CommonTextViewStyle"
+		        android:gravity="center"/> 
 	
 		    <com.travel.gate365.view.widget.FontableTextView android:id="@id/txt_country"
 		        android:layout_width="wrap_content"

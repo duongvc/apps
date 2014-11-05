@@ -15,8 +15,6 @@
   -->
 
 <resources>
-    <dimen name="actionbar_compat_height">97dp</dimen>
-    <dimen name="actionbar_compat_arrows_height">133dp</dimen>
     <dimen name="min_common_edittext_width">240dp</dimen>
     <dimen name="min_common_button_width">120dp</dimen>
     <dimen name="titlebar_height">36dp</dimen>

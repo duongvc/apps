@@ -40,6 +40,14 @@ public class Model {
 		, new ActivityInfo(RisksCountryActivity.class.getSimpleName(), R.drawable.countryrisk_menuitem_selector, R.string.country_risk, 0)
 		, new ActivityInfo(SettingsActivity.class.getSimpleName(), R.drawable.settings_menuitem_selector, R.string.settings, 0)
 	};
+	
+	public final static MenuItemInfo[] MENU_LIST = {new MenuItemInfo(MenuItemInfo.MENU_ITEM_JOURNEYS, R.drawable.journeys_menuitem_selector, R.string.journeys)
+		, new MenuItemInfo(MenuItemInfo.MENU_ITEM_TRAVEL_ALERTS, R.drawable.tvalerts_menuitem_selector, R.string.travel_alerts)
+		, new MenuItemInfo(MenuItemInfo.MENU_ITEM_TRAVEL_ADVICES, R.drawable.tvadvices_menuitem_selector, R.string.travel_advices)
+		, new MenuItemInfo(MenuItemInfo.MENU_ITEM_COUNTRY_RISK, R.drawable.countryrisk_menuitem_selector, R.string.country_risk)
+		, new MenuItemInfo(MenuItemInfo.MENU_ITEM_TRAVEL_TIPS, R.drawable.tvtips_menuitem_selector, R.string.travel_tips)
+		, new MenuItemInfo(MenuItemInfo.MENU_ITEM_SETTINGS, R.drawable.settings_menuitem_selector, R.string.settings)};
+	
 	private boolean isLogin;
 	private UserInfo userInfo;
 	
@@ -50,6 +58,11 @@ public class Model {
 	private PlaceInfo[] places;
 	private IntegerGenerator intGenerator;
 	private ArticleItemInfo[] tips;
+	private int locationTrackingInterval;
+	private String lastTimeSent;
+	private String lastLattitude;
+	private String lastLongtitude;
+	
 	
 	private Model() {
 		journeys = new JourneyItemInfo[0];
@@ -224,6 +237,20 @@ public class Model {
 		return tips;
 	}
 
+	public void paserConfiguration(JSONObject obj) throws JSONException {
+		final int frequency = Integer.parseInt(obj.getString("gps_duration")) / 1000;
+		if (frequency != locationTrackingInterval) {
+			locationTrackingInterval = frequency;
+			if (isLocationTrackingEnabled()) {
+				//post a global event to restart the tracking
+			}
+		}
+	}
+	
+	private boolean isLocationTrackingEnabled() {
+		return true;
+	}
+
 	public UserInfo getUserInfo(){
 		return userInfo;
 	}
@@ -298,5 +325,33 @@ public class Model {
 		}
 		return null;
 	}
-	
+
+	public int getLocationTrackingInterval() {
+		return locationTrackingInterval;
+	}
+
+	public String getLastTimeSent() {
+		return lastTimeSent;
+	}
+
+	public void setLastTimeSent(String lastTimeSent) {
+		this.lastTimeSent = lastTimeSent;
+	}
+
+	public String getLastLattitude() {
+		return lastLattitude;
+	}
+
+	public void setLastLattitude(String lastLattitude) {
+		this.lastLattitude = lastLattitude;
+	}
+
+	public String getLastLongtitude() {
+		return lastLongtitude;
+	}
+
+	public void setLastLongtitude(String lastLongtitude) {
+		this.lastLongtitude = lastLongtitude;
+	}
+
 }
