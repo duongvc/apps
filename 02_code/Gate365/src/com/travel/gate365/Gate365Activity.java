@@ -4,6 +4,7 @@ import org.json.JSONObject;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Message;
@@ -54,6 +55,10 @@ public class Gate365Activity extends BaseActivity implements OnItemClickListener
 	@Override
 	protected void init() {
 		super.init();
+		
+		SharedPreferences pref = getSharedPreferences("gpstracking", MODE_PRIVATE);
+		boolean gpstracking = pref.getBoolean("value", false);
+		Model.getInstance().setLocationTrackingEnabled(gpstracking);
 		
 		if(Model.getInstance().isLogin()){
 			GridView grdMenu = (GridView)findViewById(R.id.layout_content);
