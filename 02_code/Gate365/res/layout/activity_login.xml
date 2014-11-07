@@ -18,14 +18,17 @@
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        style="@style/CommonTextViewStyle" 
-	        android:text="@string/username"/>
+	        android:text="@string/username"
+	        android:textAppearance="?android:attr/textAppearanceLarge"/>
 
 	    <com.travel.gate365.view.widget.FontableEditText android:id="@id/edt_username" 
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        style="@style/CommonEditTextStyle"
 	        android:minWidth="@dimen/min_common_edittext_width"
-	        android:maxLength="100"/>
+	        android:maxLength="100"
+	        android:inputType="textNoSuggestions"
+	        android:textAppearance="?android:attr/textAppearanceLargeInverse"/>
 	    	    
 	    <com.travel.gate365.view.widget.FontableTextView android:id="@id/txt_password"
 	        android:layout_width="wrap_content"
@@ -33,14 +36,17 @@
 	        android:layout_marginTop="5dp"
 	        style="@style/CommonTextViewStyle" 
 	        android:text="@string/password"
-	        android:maxLength="100"/>
+	        android:maxLength="100"
+	        android:imeActionLabel="@string/login_l"
+	        android:textAppearance="?android:attr/textAppearanceLarge"/>
 	    	    
 	    <com.travel.gate365.view.widget.FontableEditText android:id="@id/edt_password" 
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        style="@style/CommonEditTextStyle" 
 	        android:minWidth="@dimen/min_common_edittext_width"
-	        android:inputType="textPassword"/>
+	        android:inputType="textPassword|textNoSuggestions"
+	        android:textAppearance="?android:attr/textAppearanceLargeInverse"/>
 
 	    <com.travel.gate365.view.widget.FontableButton android:id="@id/btn_login" 
 	        android:layout_width="wrap_content"
@@ -50,7 +56,8 @@
 	        android:minWidth="@dimen/min_common_button_width"
 	        android:text="@string/login_l"
 	        android:onClick="onLoginButtonHandler"
-	        style="@style/CommonButtonStyle"/>
+	        style="@style/CommonButtonStyle"
+	        android:textAppearance="?android:attr/textAppearanceMediumInverse"/>
 	    	    	    	    
 	    </LinearLayout>
 

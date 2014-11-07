@@ -77,6 +77,7 @@ containing a value of this type.
         public static final int dark_red=0x7f05000d;
         public static final int dark_yellow=0x7f05000b;
         public static final int gray=0x7f050001;
+        public static final int home_menuitem_text_selector=0x7f050010;
         public static final int light_green=0x7f05000f;
         public static final int orange=0x7f05000a;
         public static final int red=0x7f050000;

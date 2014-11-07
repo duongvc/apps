@@ -31,7 +31,7 @@ public class Gate365Activity extends BaseActivity implements OnItemClickListener
 	private TextView edtUsername;
 	private TextView edtPassword;
 	private HomeMenuItemAdapter adapter;
-	private boolean fakeMode = false;
+	private boolean fakeMode = true;
 	
 	public Gate365Activity() {
 		super(Gate365Activity.class.getSimpleName());

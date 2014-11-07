@@ -17,8 +17,9 @@
         android:layout_toRightOf="@id/img_icon"
         android:layout_centerVertical="true"
         style="@style/CommonTextViewStyle" 
-        android:textColor="@android:color/black"
-        android:textSize="24sp"
+        android:textColor="@color/home_menuitem_text_selector"
+        android:textSize="20sp"
+        android:padding="10dp"
         android:text="@string/login_U"/>
 
 </RelativeLayout>
