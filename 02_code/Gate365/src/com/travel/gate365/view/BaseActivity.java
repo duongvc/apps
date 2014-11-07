@@ -124,7 +124,7 @@ public abstract class BaseActivity extends Activity {
 		if(info != null){
 			View view = (View)findViewById(R.id.titlebar);
 			ImageView img = (ImageView)view.findViewById(R.id.img_icon);
-			int maxHeight = Math.min(Model.getInstance().getScreenHeight() / 20, 128);
+			int maxHeight = Math.min(Model.getInstance().getScreenHeight() / 18, 128);
 			img.setLayoutParams(new RelativeLayout.LayoutParams(maxHeight, maxHeight));
 			TextView txtRight = (TextView)view.findViewById(R.id.txt_right);
 			txtRight.setText(DateTimeHelper.convertTimeToString(this, System.currentTimeMillis()));

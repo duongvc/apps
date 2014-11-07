@@ -9,6 +9,7 @@
         android:layout_width="@dimen/titlebar_width"
         android:layout_height="@dimen/titlebar_height"
         android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
         style="@style/CommonImageViewStyle"
         android:contentDescription="@string/app_name"
         android:src="@drawable/_unicredit_icon"/>
