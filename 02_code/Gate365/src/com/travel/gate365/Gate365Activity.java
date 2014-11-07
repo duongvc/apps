@@ -13,7 +13,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.travel.gate365.helper.DialogHelper;
@@ -26,15 +25,13 @@ import com.travel.gate365.view.alert.AlertActivity;
 import com.travel.gate365.view.home.HomeMenuItemAdapter;
 import com.travel.gate365.view.journeys.JourneysActivity;
 import com.travel.gate365.view.travel.DesCountriesActivity;
-import com.travel.gate365.view.travel.AdvicesActivity;
-import com.travel.gate365.view.travel.TipCountryActivity;
-import com.travel.gate365.view.travel.RisksCountryActivity;
 
 public class Gate365Activity extends BaseActivity implements OnItemClickListener {
 
 	private TextView edtUsername;
 	private TextView edtPassword;
 	private HomeMenuItemAdapter adapter;
+	private boolean fakeMode = false;
 	
 	public Gate365Activity() {
 		super(Gate365Activity.class.getSimpleName());
@@ -85,18 +82,20 @@ public class Gate365Activity extends BaseActivity implements OnItemClickListener
 		
 		edtUsername.setHintTextColor(getResources().getColor(R.color.gray));
 		edtPassword.setHintTextColor(getResources().getColor(R.color.gray));
-		/*if (edtUsername.getText().length() == 0) {
-			Log.i(getId() + " - onLoginButtonHandler", "Please enter username");
-			edtUsername.setHint(R.string.pls_enter_username);
-			edtUsername.setHintTextColor(getResources().getColor(R.color.red));
-			return;
-		} 
-		if (edtPassword.getText().length() == 0) {
-			Log.i(getId() + " - onLoginButtonHandler", "Please enter password");
-			edtPassword.setHint(R.string.pls_enter_password);
-			edtPassword.setHintTextColor(getResources().getColor(R.color.red));
-			return;
-		}*/
+		if(!fakeMode){
+			if (edtUsername.getText().length() == 0) {
+				Log.i(getId() + " - onLoginButtonHandler", "Please enter username");
+				edtUsername.setHint(R.string.pls_enter_username);
+				edtUsername.setHintTextColor(getResources().getColor(R.color.red));
+				return;
+			} 
+			if (edtPassword.getText().length() == 0) {
+				Log.i(getId() + " - onLoginButtonHandler", "Please enter password");
+				edtPassword.setHint(R.string.pls_enter_password);
+				edtPassword.setHintTextColor(getResources().getColor(R.color.red));
+				return;
+			}			
+		}
 		if(loading == null || (loading != null && !loading.isShowing())){
 			loading = ProgressDialog.show(Gate365Activity.this, "", getString(R.string.logging_pls_wait)); 
 			loading.show();
@@ -106,13 +105,20 @@ public class Gate365Activity extends BaseActivity implements OnItemClickListener
 			@Override
 			public void run() {
 				try { 
-					JSONObject res = ServiceManager.login("ux00287", "1");					
-					//JSONObject res = ServiceManager.login(edtUsername.getText().toString(), edtPassword.getText().toString());
+					JSONObject res;
+					if(fakeMode){
+						res = ServiceManager.login("ux00287", "1");
+					}else{
+						res = ServiceManager.login(edtUsername.getText().toString(), edtPassword.getText().toString());
+					}
 					loading.dismiss();
 					if(res != null && res.getString("status").equalsIgnoreCase(ServiceManager.SUCCESS_STATUS)){
 						Model.getInstance().setLogin(true);
-						//Model.getInstance().paserLoginInfo(edtUsername.getText().toString(), edtPassword.getText().toString());
-						Model.getInstance().paserLoginInfo("ux00287", "1");
+						if(fakeMode){
+							Model.getInstance().paserLoginInfo("ux00287", "1");
+						}else{
+							Model.getInstance().paserLoginInfo(edtUsername.getText().toString(), edtPassword.getText().toString());	
+						}
 						Model.getInstance().paserConfiguration(ServiceManager.getConfiguration(Model.getInstance().getUserInfo().getUsername(), Model.getInstance().getUserInfo().getPassword()));
 						
 						android.os.Message msg = new Message();
