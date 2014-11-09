@@ -37,6 +37,7 @@
 	        style="@style/CommonTextViewStyle" 
 	        android:text="@string/password"
 	        android:maxLength="100"
+	        android:imeOptions="actionDone"
 	        android:imeActionLabel="@string/login_l"
 	        android:textAppearance="?android:attr/textAppearanceLarge"/>
 	    	    

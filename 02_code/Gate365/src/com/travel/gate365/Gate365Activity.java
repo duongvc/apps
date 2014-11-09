@@ -1,5 +1,6 @@
 package com.travel.gate365;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.ProgressDialog;
@@ -9,11 +10,14 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Message;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
 import android.widget.TextView;
+import android.widget.TextView.OnEditorActionListener;
 
 import com.travel.gate365.helper.DialogHelper;
 import com.travel.gate365.model.MenuItemInfo;
@@ -70,7 +74,9 @@ public class Gate365Activity extends BaseActivity implements OnItemClickListener
 			
 		}else{
 			edtUsername = (TextView)findViewById(R.id.edt_username);
-			edtPassword = (TextView)findViewById(R.id.edt_password);			
+			edtPassword = (TextView)findViewById(R.id.edt_password);	
+			edtPassword.setImeActionLabel(getString(R.string.login_l), EditorInfo.IME_ACTION_GO);	
+			edtPassword.setOnEditorActionListener(onEditorActionListener);			
 		}
 	}
 	
@@ -119,7 +125,11 @@ public class Gate365Activity extends BaseActivity implements OnItemClickListener
 						}else{
 							Model.getInstance().paserLoginInfo(edtUsername.getText().toString(), edtPassword.getText().toString());	
 						}
-						Model.getInstance().paserConfiguration(ServiceManager.getConfiguration(Model.getInstance().getUserInfo().getUsername(), Model.getInstance().getUserInfo().getPassword()));
+						try{
+							Model.getInstance().paserConfiguration(ServiceManager.getConfiguration(Model.getInstance().getUserInfo().getUsername(), Model.getInstance().getUserInfo().getPassword()));
+						}catch(JSONException jsonEx){
+							jsonEx.printStackTrace();
+						}						
 						
 						android.os.Message msg = new Message();
 						msg.what = BaseActivity.NOTE_LOGIN_SUCCESSFULLY;
@@ -131,7 +141,9 @@ public class Gate365Activity extends BaseActivity implements OnItemClickListener
 					}
 				} catch (Exception e) {
 					e.printStackTrace();
-					loading.dismiss();
+					if(loading.isShowing()){
+						loading.dismiss();
+					}
 					android.os.Message msg = new Message();
 					msg.what = BaseActivity.NOTE_COULD_NOT_CONNECT_SERVER;
 					notificationHandler.sendMessage(msg);												
@@ -185,5 +197,14 @@ public class Gate365Activity extends BaseActivity implements OnItemClickListener
 		}
 	}
 
-	
+	private OnEditorActionListener onEditorActionListener = new TextView.OnEditorActionListener() {
+	    @Override
+	    public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+	        if (actionId == EditorInfo.IME_ACTION_DONE) {
+	        	onLoginButtonHandler(null);
+	            return true;
+	        }
+	        return false;
+	    }
+	};
 }
