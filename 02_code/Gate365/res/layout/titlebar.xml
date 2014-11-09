@@ -12,7 +12,8 @@
         android:layout_centerVertical="true"
         style="@style/CommonImageViewStyle"
         android:contentDescription="@string/app_name"
-        android:src="@drawable/_unicredit_icon"/>
+        android:src="@drawable/_unicredit_icon"
+        android:padding="2dp"/>
 
     <com.travel.gate365.view.widget.FontableTextView android:id="@id/txt_left" 
         android:layout_width="wrap_content"
