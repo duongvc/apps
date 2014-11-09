@@ -164,6 +164,24 @@ public final class DialogHelper {
 		sAlert.show();	
 		return sAlert;
 	}
+
+	public static AlertDialog yesNoAlert(Context pContext, String pTitle, String pMessage, String pPositivebutton, 
+			String pNegativeButton, DialogInterface.OnClickListener pPositiveHandler, DialogInterface.OnClickListener pNegativeHandler) {
+		sAlert = new AlertDialog(pContext){
+		    protected void onCreate(Bundle savedInstanceState){
+		        super.onCreate(savedInstanceState);
+		    }			
+		};
+		
+		sAlert.setIcon(0);
+		sAlert.setTitle(pTitle);
+		sAlert.setMessage(pMessage);
+		sAlert.setButton(pPositivebutton, pPositiveHandler);
+		sAlert.setButton2(pNegativeButton, pNegativeHandler);
+		sAlert.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+		sAlert.show();	
+		return sAlert;
+	}
 	
 	public static void hide(){
 		if(sAlert != null){

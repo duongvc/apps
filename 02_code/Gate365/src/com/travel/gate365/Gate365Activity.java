@@ -5,6 +5,7 @@ import org.json.JSONObject;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
@@ -61,16 +62,14 @@ public class Gate365Activity extends BaseActivity implements OnItemClickListener
 	public void onConfigurationChanged(Configuration newConfig) {
 		super.onConfigurationChanged(newConfig);
 		
-		GridView grdMenu = (GridView)findViewById(R.id.layout_content);			
-		if(newConfig.orientation == Configuration.ORIENTATION_PORTRAIT){
-			adapter = new HomeMenuItemAdapter(this, Model.MENU_LIST);
+		GridView grdMenu = (GridView)findViewById(R.id.layout_content);
+		adapter = new HomeMenuItemAdapter(this, Model.MENU_LIST);
+		if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT){
 			grdMenu.setNumColumns(1);
-			grdMenu.setAdapter(adapter);
-		}else if(newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE){
-			adapter = new HomeMenuItemAdapter(this, Model.MENU_LIST);
+		}else{
 			grdMenu.setNumColumns(2);
-			grdMenu.setAdapter(adapter);
-		}			
+		}	
+		grdMenu.setAdapter(adapter);
 	}
 	
 	@Override
@@ -97,6 +96,12 @@ public class Gate365Activity extends BaseActivity implements OnItemClickListener
 			edtPassword.setImeActionLabel(getString(R.string.login_l), EditorInfo.IME_ACTION_GO);	
 			edtPassword.setOnEditorActionListener(onEditorActionListener);			
 		}
+	}
+	
+	@Override
+	public void onBackPressed() {
+		DialogHelper.yesNoAlert(this, getString(R.string.exit_app), getString(R.string.are_you_sure_exit_app)
+				, R.drawable.ic_launcher, getString(android.R.string.yes), getString(android.R.string.no), exitPositiveHandler, exitNegativeHandler);
 	}
 	
 	public void onLoginButtonHandler(View view){
@@ -151,11 +156,11 @@ public class Gate365Activity extends BaseActivity implements OnItemClickListener
 						}else{
 							Model.getInstance().paserLoginInfo(edtUsername.getText().toString(), edtPassword.getText().toString());	
 						}
-						try{
+						/*try{
 							Model.getInstance().paserConfiguration(ServiceManager.getConfiguration(Model.getInstance().getUserInfo().getUsername(), Model.getInstance().getUserInfo().getPassword()));
 						}catch(JSONException jsonEx){
 							jsonEx.printStackTrace();
-						}						
+						}*/						
 						
 						android.os.Message msg = new Message();
 						msg.what = BaseActivity.NOTE_LOGIN_SUCCESSFULLY;
@@ -233,4 +238,27 @@ public class Gate365Activity extends BaseActivity implements OnItemClickListener
 	        return false;
 	    }
 	};
+	
+	private DialogInterface.OnClickListener exitPositiveHandler = new DialogInterface.OnClickListener(){
+
+		@Override
+		public void onClick(DialogInterface dialog, int which) {
+			Gate365Activity.this.exitApp();
+		}
+		
+	};
+	private DialogInterface.OnClickListener exitNegativeHandler = new DialogInterface.OnClickListener(){
+
+		@Override
+		public void onClick(DialogInterface dialog, int which) {
+			
+		}
+		
+	};
+
+	protected void exitApp() {
+		super.onBackPressed();
+		
+	}
+	
 }

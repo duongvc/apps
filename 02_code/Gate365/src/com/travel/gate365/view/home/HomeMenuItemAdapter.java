@@ -56,7 +56,7 @@ public class HomeMenuItemAdapter extends BaseAdapter {
 			}else{
 				numRows = 3; 
 			}
-			int maxHeight = (Model.getInstance().getScreenHeight() - context.getResources().getDimensionPixelSize(R.dimen.titlebar_height)) / numRows;
+			int maxHeight = Math.round((Model.getInstance().getScreenHeight() - context.getResources().getDimensionPixelSize(R.dimen.titlebar_height)) / numRows);
 			icon.setLayoutParams(new RelativeLayout.LayoutParams(maxHeight, maxHeight));
 			icon.setImageResource(info.getIconResId());
 			TextView text = (TextView)convertView.findViewById(R.id.txt_left);
