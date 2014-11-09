@@ -9,6 +9,7 @@
         android:layout_height="wrap_content"
         style="@style/CommonImageViewStyle"
         android:contentDescription="@string/login_U"
+        android:padding="15dp"
         android:src="@drawable/journeys_menuitem_selector"/>
 
     <com.travel.gate365.view.widget.FontableTextView android:id="@id/txt_left" 
@@ -19,7 +20,6 @@
         style="@style/CommonTextViewStyle" 
         android:textColor="@color/home_menuitem_text_selector"
         android:textSize="20sp"
-        android:padding="10dp"
         android:text="@string/login_U"/>
 
 </RelativeLayout>

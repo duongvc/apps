@@ -4,6 +4,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
@@ -13,6 +14,7 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
@@ -45,6 +47,8 @@ public class Gate365Activity extends BaseActivity implements OnItemClickListener
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		Model.getInstance().init(this);		
+		SharedPreferences pref = getSharedPreferences(CONFIG_NAME, MODE_PRIVATE);
+		Model.getInstance().setLogin(pref.getBoolean(IS_LOGIN, false));
 		if(Model.getInstance().isLogin()){
 			setContentView(R.layout.activity_home);
 		}else{
@@ -54,11 +58,27 @@ public class Gate365Activity extends BaseActivity implements OnItemClickListener
 	}
 
 	@Override
+	public void onConfigurationChanged(Configuration newConfig) {
+		super.onConfigurationChanged(newConfig);
+		
+		GridView grdMenu = (GridView)findViewById(R.id.layout_content);			
+		if(newConfig.orientation == Configuration.ORIENTATION_PORTRAIT){
+			adapter = new HomeMenuItemAdapter(this, Model.MENU_LIST);
+			grdMenu.setNumColumns(1);
+			grdMenu.setAdapter(adapter);
+		}else if(newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE){
+			adapter = new HomeMenuItemAdapter(this, Model.MENU_LIST);
+			grdMenu.setNumColumns(2);
+			grdMenu.setAdapter(adapter);
+		}			
+	}
+	
+	@Override
 	protected void init() {
 		super.init();
 		
-		SharedPreferences pref = getSharedPreferences("gpstracking", MODE_PRIVATE);
-		boolean gpstracking = pref.getBoolean("value", false);
+		SharedPreferences pref = getSharedPreferences(CONFIG_NAME, MODE_PRIVATE);
+		boolean gpstracking = pref.getBoolean(IS_GPS_TRACKING, false);
 		Model.getInstance().setLocationTrackingEnabled(gpstracking);
 		
 		if(Model.getInstance().isLogin()){
@@ -71,7 +91,6 @@ public class Gate365Activity extends BaseActivity implements OnItemClickListener
 			}
 			grdMenu.setAdapter(adapter);
 			grdMenu.setOnItemClickListener(this);
-			
 		}else{
 			edtUsername = (TextView)findViewById(R.id.edt_username);
 			edtPassword = (TextView)findViewById(R.id.edt_password);	
@@ -81,6 +100,13 @@ public class Gate365Activity extends BaseActivity implements OnItemClickListener
 	}
 	
 	public void onLoginButtonHandler(View view){
+		final InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(edtPassword.getWindowToken(), 0);
+        View viewTmp = getCurrentFocus();
+        if(viewTmp != null){ 
+        	viewTmp.clearFocus();
+        }
+        
 		if(!isNetworkAvailable()){
 			DialogHelper.alert(this, R.string.no_internet, R.string.no_internet_avaialbe, null);
 			return;

@@ -3,6 +3,7 @@ package com.travel.gate365.view;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Rect;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -35,6 +36,9 @@ public abstract class BaseActivity extends Activity {
 	protected static final int NOTE_LOAD_PLACE_SUCCESSFULLY = 8;
 	protected static final int NOTE_LOAD_RISK_SUCCESSFULLY = 9;
 	protected static final int NOTE_LOAD_TIP_SUCCESSFULLY = 10;
+	protected static final String CONFIG_NAME = "config";
+	protected static final String IS_LOGIN = "isLogin";
+	protected static final String IS_GPS_TRACKING = "isGpsTracking";
 	
 	private String id;
 	protected static ProgressDialog loading;	
@@ -59,6 +63,10 @@ public abstract class BaseActivity extends Activity {
 		switch (item.getItemId()) {
 		case R.id.menu_logout:
 			Model.getInstance().setLogin(false);
+			SharedPreferences pref = getSharedPreferences(CONFIG_NAME, MODE_PRIVATE);
+			SharedPreferences.Editor editor = pref.edit();
+			editor.putBoolean(IS_LOGIN, false);
+			editor.commit();	            				
 			BaseActivity.this.setContentView(R.layout.activity_login);
 			BaseActivity.this.init();			
 			break;
@@ -165,6 +173,11 @@ public abstract class BaseActivity extends Activity {
 		public void handleMessage(android.os.Message msg) {
 			switch (msg.what) {
 			case NOTE_LOGIN_SUCCESSFULLY:
+				SharedPreferences pref = getSharedPreferences(CONFIG_NAME, MODE_PRIVATE);
+				SharedPreferences.Editor editor = pref.edit();
+				editor.putBoolean(IS_LOGIN, true);
+				editor.commit();	            				
+				
 				BaseActivity.this.setContentView(R.layout.activity_home);
 				BaseActivity.this.init();
 				break;
