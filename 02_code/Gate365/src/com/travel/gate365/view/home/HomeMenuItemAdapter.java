@@ -10,6 +10,7 @@ import android.content.res.Configuration;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -58,22 +59,49 @@ public class HomeMenuItemAdapter extends BaseAdapter {
 			}
 			int maxHeight = Math.round((Model.getInstance().getScreenHeight() - context.getResources().getDimensionPixelSize(R.dimen.titlebar_height)) / numRows);
 			icon.setLayoutParams(new RelativeLayout.LayoutParams(maxHeight, maxHeight));
-			icon.setImageResource(info.getIconResId());
 			TextView text = (TextView)convertView.findViewById(R.id.txt_left);
-			text.setText(info.getTextResId());
 						
 			holder.icon = icon;
 			holder.text = text;
 			convertView.setTag(holder);
 		}else{
 			holder = (Holder) convertView.getTag();
-			holder.icon.setImageResource(info.getIconResId());
-			holder.text.setText(info.getTextResId());
 		}
+		setEnabled(convertView, info.isActive());
+		
+		holder.icon.setImageResource(info.getIconResId());
+		holder.text.setText(info.getTextResId());
 		
 		return convertView;
 	}
 
+	@Override
+	public boolean isEnabled(int position) {
+		MenuItemInfo info = (MenuItemInfo)getItem(position);
+		return info.isActive();
+	}
+	
+	@Override
+	public boolean areAllItemsEnabled() {
+		return false;
+	}
+	
+	public void setEnabled(View view, boolean enabled) {
+		if(view.isEnabled() == enabled)
+	        return;
+
+	    /*float from = enabled ? .8f : 1.0f;
+	    float to = enabled ? 1.0f : .8f;
+
+	    AlphaAnimation a = new AlphaAnimation(from, to);
+
+	    a.setDuration(500);
+	    a.setFillAfter(true);*/
+
+	    view.setEnabled(enabled);
+	    //view.startAnimation(a);		
+	    view.setClickable(enabled);
+	}     	
 	private class Holder {
 		ImageView icon;
 		TextView text;

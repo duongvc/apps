@@ -10,7 +10,6 @@ import com.travel.gate365.R;
 public class FontableWebView extends WebView {
 
 	private boolean isPageLoaded = false;
-	private boolean isShowLoading = true;
 	
 	public FontableWebView(Context context) {
 		super(context);
@@ -46,10 +45,6 @@ public class FontableWebView extends WebView {
 		}
 	}
 	
-	public void setShowLoading(boolean isShowLoading) {
-		this.isShowLoading = isShowLoading;
-	}
-
 	private WebViewClient webClient = new WebViewClient(){
 		
 		@Override
