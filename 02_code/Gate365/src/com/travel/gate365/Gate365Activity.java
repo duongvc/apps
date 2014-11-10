@@ -1,6 +1,5 @@
 package com.travel.gate365;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.ProgressDialog;
@@ -38,7 +37,7 @@ public class Gate365Activity extends BaseActivity implements OnItemClickListener
 	private TextView edtUsername;
 	private TextView edtPassword;
 	private HomeMenuItemAdapter adapter;
-	private boolean fakeMode = true;
+	private boolean fakeMode = false;
 	
 	public Gate365Activity() {
 		super(Gate365Activity.class.getSimpleName());
@@ -58,7 +57,7 @@ public class Gate365Activity extends BaseActivity implements OnItemClickListener
 		init();
 	}
 
-	@Override
+	/*@Override
 	public void onConfigurationChanged(Configuration newConfig) {
 		super.onConfigurationChanged(newConfig);
 		
@@ -70,7 +69,7 @@ public class Gate365Activity extends BaseActivity implements OnItemClickListener
 			grdMenu.setNumColumns(2);
 		}	
 		grdMenu.setAdapter(adapter);
-	}
+	}*/
 	
 	@Override
 	protected void init() {
@@ -95,13 +94,13 @@ public class Gate365Activity extends BaseActivity implements OnItemClickListener
 			edtPassword = (TextView)findViewById(R.id.edt_password);	
 			edtPassword.setImeActionLabel(getString(R.string.login_l), EditorInfo.IME_ACTION_GO);	
 			edtPassword.setOnEditorActionListener(onEditorActionListener);			
-		}
+		}		
 	}
 	
 	@Override
 	public void onBackPressed() {
 		DialogHelper.yesNoAlert(this, getString(R.string.exit_app), getString(R.string.are_you_sure_exit_app)
-				, R.drawable.ic_launcher, getString(android.R.string.yes), getString(android.R.string.no), exitPositiveHandler, exitNegativeHandler);
+				, getString(android.R.string.yes), getString(android.R.string.no), exitPositiveHandler, exitNegativeHandler);
 	}
 	
 	public void onLoginButtonHandler(View view){
@@ -191,9 +190,9 @@ public class Gate365Activity extends BaseActivity implements OnItemClickListener
 		Intent intent;
 		switch ((int)id) {
 		case MenuItemInfo.MENU_ITEM_COUNTRY_RISK:
-			intent = new Intent(this, DesCountriesActivity.class);
+			/*intent = new Intent(this, DesCountriesActivity.class);
 			intent.putExtra(DesCountriesActivity.TARGET_TYPE, DesCountriesActivity.TARGET_RISK);
-			startActivity(intent);			
+			startActivity(intent);*/			
 			break;
 
 		case MenuItemInfo.MENU_ITEM_JOURNEYS:
@@ -202,25 +201,25 @@ public class Gate365Activity extends BaseActivity implements OnItemClickListener
 			break;
 
 		case MenuItemInfo.MENU_ITEM_SETTINGS:
-			intent = new Intent(this, SettingsActivity.class);
-			startActivity(intent);
+			/*intent = new Intent(this, SettingsActivity.class);
+			startActivity(intent);*/
 			break;
 
 		case MenuItemInfo.MENU_ITEM_TRAVEL_ADVICES:
-			intent = new Intent(this, DesCountriesActivity.class);
+			/*intent = new Intent(this, DesCountriesActivity.class);
 			intent.putExtra(DesCountriesActivity.TARGET_TYPE, DesCountriesActivity.TARGET_ADVICE);
-			startActivity(intent);
+			startActivity(intent);*/
 			break;
 
 		case MenuItemInfo.MENU_ITEM_TRAVEL_ALERTS:
-			intent = new Intent(this, AlertActivity.class);
-			startActivity(intent);
+			/*intent = new Intent(this, AlertActivity.class);
+			startActivity(intent);*/
 			break;
 
 		case MenuItemInfo.MENU_ITEM_TRAVEL_TIPS:
-			intent = new Intent(this, DesCountriesActivity.class);
+			/*intent = new Intent(this, DesCountriesActivity.class);
 			intent.putExtra(DesCountriesActivity.TARGET_TYPE, DesCountriesActivity.TARGET_TIP);
-			startActivity(intent);
+			startActivity(intent);*/
 			break;
 
 		default:
@@ -231,7 +230,7 @@ public class Gate365Activity extends BaseActivity implements OnItemClickListener
 	private OnEditorActionListener onEditorActionListener = new TextView.OnEditorActionListener() {
 	    @Override
 	    public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-	        if (actionId == EditorInfo.IME_ACTION_DONE) {
+	        if (actionId == EditorInfo.IME_ACTION_GO) {
 	        	onLoginButtonHandler(null);
 	            return true;
 	        }

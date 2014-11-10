@@ -41,12 +41,12 @@ public class Model {
 		, new ActivityInfo(SettingsActivity.class.getSimpleName(), R.drawable.settings_menuitem_selector, R.string.settings, 0)
 	};
 	
-	public final static MenuItemInfo[] MENU_LIST = {new MenuItemInfo(MenuItemInfo.MENU_ITEM_JOURNEYS, R.drawable.journeys_menuitem_selector, R.string.journeys)
-		, new MenuItemInfo(MenuItemInfo.MENU_ITEM_TRAVEL_ALERTS, R.drawable.tvalerts_menuitem_selector, R.string.travel_alerts)
-		, new MenuItemInfo(MenuItemInfo.MENU_ITEM_TRAVEL_ADVICES, R.drawable.tvadvices_menuitem_selector, R.string.travel_advices)
-		, new MenuItemInfo(MenuItemInfo.MENU_ITEM_COUNTRY_RISK, R.drawable.countryrisk_menuitem_selector, R.string.country_risk)
-		, new MenuItemInfo(MenuItemInfo.MENU_ITEM_TRAVEL_TIPS, R.drawable.tvtips_menuitem_selector, R.string.travel_tips)
-		, new MenuItemInfo(MenuItemInfo.MENU_ITEM_SETTINGS, R.drawable.settings_menuitem_selector, R.string.settings)};
+	public final static MenuItemInfo[] MENU_LIST = {new MenuItemInfo(MenuItemInfo.MENU_ITEM_JOURNEYS, R.drawable.journeys_menuitem_selector, R.string.journeys, true)
+		, new MenuItemInfo(MenuItemInfo.MENU_ITEM_TRAVEL_ALERTS, R.drawable.tvalerts_menuitem_selector, R.string.travel_alerts, false)
+		, new MenuItemInfo(MenuItemInfo.MENU_ITEM_TRAVEL_ADVICES, R.drawable.tvadvices_menuitem_selector, R.string.travel_advices, false)
+		, new MenuItemInfo(MenuItemInfo.MENU_ITEM_COUNTRY_RISK, R.drawable.countryrisk_menuitem_selector, R.string.country_risk, false)
+		, new MenuItemInfo(MenuItemInfo.MENU_ITEM_TRAVEL_TIPS, R.drawable.tvtips_menuitem_selector, R.string.travel_tips, false)
+		, new MenuItemInfo(MenuItemInfo.MENU_ITEM_SETTINGS, R.drawable.settings_menuitem_selector, R.string.settings, false)};
 	
 	private boolean isLogin;
 	private UserInfo userInfo;
@@ -70,6 +70,7 @@ public class Model {
 		places = new PlaceInfo[0]; 
 		advices = new ArticleItemInfo[0];
 		intGenerator = new IntegerGenerator();
+		tips = new ArticleItemInfo[0];
 	}
 
 	public static Model getInstance() {
@@ -119,9 +120,8 @@ public class Model {
 	 */
 	public JourneyItemInfo[] paserJourney(JSONObject obj) throws JSONException{
 		JSONArray arr = obj.getJSONArray("ResultSet");
-		JourneyItemInfo[] journeys = new JourneyItemInfo[0];
+		JourneyItemInfo[] journeys;
 		if (arr != null) {
-			
 			Log.i(Model.class.getSimpleName(), "-----getJourneys Array lenght: " + arr.length());
 			journeys = new JourneyItemInfo[arr.length()];
 			for (int a = 0; a < arr.length(); a++) {
@@ -150,17 +150,17 @@ public class Model {
 				}
 				journeys[a] = j;
 			}//for loop
+			this.journeys = journeys;
 		}//arr != null
 		
-		this.journeys = journeys;
 		
-		return journeys;
+		return this.journeys;
 	}
 	
 	public AlertItemInfo[] parserTravelAlerts(JSONObject obj) throws JSONException{
 		Log.i(Model.class.getSimpleName(), "---------getAlerts status: " + obj.getString("Status"));
 		JSONArray arr = obj.getJSONArray("ResultSet");
-		AlertItemInfo[] alerts = new AlertItemInfo[0];
+		AlertItemInfo[] alerts;
 		if (arr != null) {
 			Log.i(Model.class.getSimpleName(), "-----getAlerts Array lenght: " + arr.length());
 			alerts = new AlertItemInfo[arr.length()];
@@ -171,16 +171,16 @@ public class Model {
 						jsSource.getString("CountryName"), jsSource.getString("LocationName"), jsSource.getString("SecurityRisk"));
 				alerts[a] = new AlertItemInfo(intGenerator.generate(), jsAlert.getString("DateTime"), jsAlert.getString("Title"), jsAlert.getString("Detail"), ldo);
 			}
+			this.alerts = alerts;
 		}
-		this.alerts = alerts;
 		
-		return alerts;		
+		return this.alerts;		
 	}
 	
 	public ArticleItemInfo[] parserTravelAdvices(JSONObject obj) throws JSONException {
 		Log.i(Model.class.getSimpleName(), "---------getAdvices status: " + obj.getString("Status"));
 		JSONArray arr = obj.getJSONArray("ResultSet");
-		ArticleItemInfo[] advices = new ArticleItemInfo[0];
+		ArticleItemInfo[] advices;
 		if (arr != null) {
 			Log.i(Model.class.getSimpleName(), "-----getAdvices Array lenght: " + arr.length());
 			advices = new ArticleItemInfo[arr.length()];
@@ -188,17 +188,16 @@ public class Model {
 				JSONObject jsAdvice = arr.getJSONObject(a);
 				advices[a] = new ArticleItemInfo(intGenerator.generate(), jsAdvice.getString("DateTime"), jsAdvice.getString("Title"), jsAdvice.getString("Detail"));
 			}
+			Log.i(Model.class.getSimpleName(), "-----this.advices.lenght: " + this.advices.length);
+			this.advices = advices;
 		}
 		
-		Log.i(Model.class.getSimpleName(), "-----this.advices.lenght: " + this.advices.length);
-		this.advices = advices;
-		
-		return advices;		
+		return this.advices;		
 	}
 	
 	public PlaceInfo[] parserPlaces(JSONObject obj) throws JSONException {
 		JSONArray arr = obj.getJSONArray("ResultSet");
-		PlaceInfo[] places = new PlaceInfo[0];
+		PlaceInfo[] places;
 		if (arr != null) {
 			Log.i(Model.class.getSimpleName(), "-----getDetinationCountriesGrouped Array lenght: " + arr.length());
 			places = new PlaceInfo[arr.length()];
@@ -207,9 +206,9 @@ public class Model {
 				places[a] = new PlaceInfo(jsSource.getString("CountryId"), jsSource.getString("CountryISOCode"),
 						jsSource.getString("CountryName"), jsSource.getString("LocationName"), jsSource.getString("SecurityRisk"));
 			}
+			this.places = places;
 		}
-		this.places = places;
-		return places;
+		return this.places;
 	}
 	
 	public ArticleItemInfo parserCountryRisks(JSONObject obj) throws JSONException {
@@ -224,7 +223,7 @@ public class Model {
 	public ArticleItemInfo[] parserCountryTips(JSONObject obj) throws JSONException {
 		Log.i(Model.class.getSimpleName(), "---------getTips status: " + obj.getString("Status"));
 		JSONArray arr = obj.getJSONArray("ResultSet");
-		ArticleItemInfo[] tips = new ArticleItemInfo[0];
+		ArticleItemInfo[] tips;
 		if (arr != null) {
 			Log.i(Model.class.getSimpleName(), "-----getTips Array lenght: " + arr.length());
 			tips = new ArticleItemInfo[arr.length()];
@@ -232,9 +231,9 @@ public class Model {
 				JSONObject jsAdvice = arr.getJSONObject(a);
 				tips[a] = new ArticleItemInfo(intGenerator.generate(), jsAdvice.getString("DateTime"), jsAdvice.getString("Title"), jsAdvice.getString("Detail"));
 			}
+			this.tips = tips;
 		}
-		this.tips = tips;
-		return tips;
+		return this.tips;
 	}
 
 	public void paserConfiguration(JSONObject obj) throws JSONException {

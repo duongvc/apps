@@ -67,34 +67,39 @@ public class JourneysActivity extends BaseActivity implements OnItemClickListene
 	protected void load() {
 		super.load();
 		
-		if(loading == null || (loading != null && !loading.isShowing())){
-			loading = ProgressDialog.show(this, "", getString(R.string.loading_pls_wait)); 
-			loading.show();
-		}
-		
-		Thread thread = new Thread(new Runnable() {
-			
-			@Override
-			public void run() {
-				try { 
-					JSONObject res = ServiceManager.getJourneys(Model.getInstance().getUserInfo().getUsername(), Model.getInstance().getUserInfo().getPassword());					
-					loading.dismiss();
-					Model.getInstance().paserJourney(res);
-					android.os.Message msg = new Message();
-					msg.what = BaseActivity.NOTE_LOAD_JOURNEY_SUCCESSFULLY;
-					notificationHandler.sendMessage(msg);						
-				} catch (Exception e) {
-					loading.dismiss();
-					e.printStackTrace();
-					android.os.Message msg = new Message();
-					msg.what = BaseActivity.NOTE_COULD_NOT_CONNECT_SERVER;
-					notificationHandler.sendMessage(msg);												
-				}
+		if(Model.getInstance().getJourneys().length == 0){
+			if(loading == null || (loading != null && !loading.isShowing())){
+				loading = ProgressDialog.show(this, "", getString(R.string.loading_pls_wait)); 
+				loading.show();
 			}
-		});
-		
-		thread.start();				
-		
+			
+			Thread thread = new Thread(new Runnable() {
+				
+				@Override
+				public void run() {
+					try { 
+						JSONObject res = ServiceManager.getJourneys(Model.getInstance().getUserInfo().getUsername(), Model.getInstance().getUserInfo().getPassword());					
+						loading.dismiss();
+						Model.getInstance().paserJourney(res);
+						android.os.Message msg = new Message();
+						msg.what = BaseActivity.NOTE_LOAD_JOURNEY_SUCCESSFULLY;
+						notificationHandler.sendMessage(msg);						
+					} catch (Exception e) {
+						loading.dismiss();
+						e.printStackTrace();
+						android.os.Message msg = new Message();
+						msg.what = BaseActivity.NOTE_COULD_NOT_CONNECT_SERVER;
+						notificationHandler.sendMessage(msg);												
+					}
+				}
+			});
+			
+			thread.start();				
+		}else{
+			android.os.Message msg = new Message();
+			msg.what = BaseActivity.NOTE_LOAD_JOURNEY_SUCCESSFULLY;
+			notificationHandler.sendMessage(msg);									
+		}
 	}
 	
 	@Override

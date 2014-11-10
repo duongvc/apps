@@ -27,7 +27,7 @@
 	        style="@style/CommonEditTextStyle"
 	        android:minWidth="@dimen/min_common_edittext_width"
 	        android:maxLength="100"
-	        android:inputType="textNoSuggestions"
+	        android:inputType="textNoSuggestions|textFilter"
 	        android:textAppearance="?android:attr/textAppearanceLargeInverse"/>
 	    	    
 	    <com.travel.gate365.view.widget.FontableTextView android:id="@id/txt_password"
@@ -36,9 +36,6 @@
 	        android:layout_marginTop="5dp"
 	        style="@style/CommonTextViewStyle" 
 	        android:text="@string/password"
-	        android:maxLength="100"
-	        android:imeOptions="actionDone"
-	        android:imeActionLabel="@string/login_l"
 	        android:textAppearance="?android:attr/textAppearanceLarge"/>
 	    	    
 	    <com.travel.gate365.view.widget.FontableEditText android:id="@id/edt_password" 
@@ -47,6 +44,9 @@
 	        style="@style/CommonEditTextStyle" 
 	        android:minWidth="@dimen/min_common_edittext_width"
 	        android:inputType="textPassword|textNoSuggestions"
+	        android:maxLength="100"
+	        android:imeOptions="actionGo"
+	        android:imeActionLabel="@string/login_l"
 	        android:textAppearance="?android:attr/textAppearanceLargeInverse"/>
 
 	    <com.travel.gate365.view.widget.FontableButton android:id="@id/btn_login" 

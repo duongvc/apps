@@ -13,14 +13,19 @@ public class MenuItemInfo {
 	private final int iconResId;
 	private final int textResId;
 	private final int id;
+	private final boolean isActive;
 
 	public MenuItemInfo(final int id, final int iconResId, final int textResId) {
+		this(id, iconResId, textResId, true);
+	}
+
+	public MenuItemInfo(final int id, final int iconResId, final int textResId, final boolean isActive) {
 		this.id = id;
 		this.iconResId = iconResId;
 		this.textResId = textResId;
-		
+		this.isActive = isActive;
 	}
-
+	
 	public int getIconResId() {
 		return iconResId;
 	}
@@ -31,6 +36,10 @@ public class MenuItemInfo {
 
 	public int getId() {
 		return id;
+	}
+
+	public boolean isActive() {
+		return isActive;
 	}
 
 }
