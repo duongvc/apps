@@ -28,7 +28,7 @@ public class FontableTextView extends TextView {
     
     @Override
     public void setText(CharSequence text, BufferType type) {
-    	String endText = text.toString() + "\u00A0\u00A0";
+    	String endText = text.toString() + "\u00A0";
     	super.setText(endText, type);
     }
 }

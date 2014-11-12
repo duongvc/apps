@@ -17,6 +17,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.travel.gate365.R;
+import com.travel.gate365.helper.DialogHelper;
 import com.travel.gate365.model.Model;
 import com.travel.gate365.service.ServiceManager;
 import com.travel.gate365.view.BaseActivity;
@@ -64,8 +65,13 @@ public class JourneysActivity extends BaseActivity implements OnItemClickListene
 	}
 
 	@Override
-	protected void load() {
+	protected void load() {		
 		super.load();
+		
+		if(!isNetworkAvailable()){
+			DialogHelper.alert(this, R.string.no_internet, R.string.no_internet_avaialbe, null);
+			return;
+		}
 		
 		if(Model.getInstance().getJourneys().length == 0){
 			if(loading == null || (loading != null && !loading.isShowing())){

@@ -7,6 +7,7 @@
     <string name="username">Username</string>
     <string name="password">Password</string>
     <string name="login_l">Login</string>
+    <string name="go">Go</string>
     <string name="login_U">LOGIN</string>
     <string name="journeys">JOURNEYS</string>
     <string name="journey_details">JOURNEY DETAILS</string>
@@ -51,5 +52,6 @@
     <string name="seconds">seconds</string>
     <string name="exit_app">Exit application</string>
     <string name="are_you_sure_exit_app">Are you sure you want to exit the application?</string>
+    <string name="logout">Logout</string>
     
 </resources>

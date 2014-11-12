@@ -39,6 +39,10 @@ public abstract class BaseActivity extends Activity {
 	protected static final String CONFIG_NAME = "config";
 	protected static final String IS_LOGIN = "isLogin";
 	protected static final String IS_GPS_TRACKING = "isGpsTracking";
+	protected static final String USERNAME = "username";
+	protected static final String PASSWORD = "password";
+	
+	protected static final int RESULT_LOGOUT = 99;
 	
 	private String id;
 	protected static ProgressDialog loading;	
@@ -62,13 +66,8 @@ public abstract class BaseActivity extends Activity {
 	public boolean onMenuItemSelected(int featureId, MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.menu_logout:
-			Model.getInstance().setLogin(false);
-			SharedPreferences pref = getSharedPreferences(CONFIG_NAME, MODE_PRIVATE);
-			SharedPreferences.Editor editor = pref.edit();
-			editor.putBoolean(IS_LOGIN, false);
-			editor.commit();	            				
-			BaseActivity.this.setContentView(R.layout.activity_login);
-			BaseActivity.this.init();			
+			setResult(RESULT_LOGOUT);
+			finish();
 			break;
 
 		case R.id.menu_close:
@@ -159,6 +158,10 @@ public abstract class BaseActivity extends Activity {
 	
 	public void onBackIconClickHandler(View view){
 		onBackPressed();
+	}
+	
+	public void onRefreshIconClickHandler(View view){
+		load();
 	}
 	
 	protected String getId() {

@@ -12,12 +12,14 @@ import android.os.Bundle;
 import android.os.Message;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 
@@ -27,17 +29,16 @@ import com.travel.gate365.model.Model;
 import com.travel.gate365.service.ServiceManager;
 import com.travel.gate365.view.BaseActivity;
 import com.travel.gate365.view.SettingsActivity;
-import com.travel.gate365.view.alert.AlertActivity;
 import com.travel.gate365.view.home.HomeMenuItemAdapter;
 import com.travel.gate365.view.journeys.JourneysActivity;
-import com.travel.gate365.view.travel.DesCountriesActivity;
 
 public class Gate365Activity extends BaseActivity implements OnItemClickListener {
 
+	private static final int FINISH_CODE = 0;
 	private TextView edtUsername;
 	private TextView edtPassword;
 	private HomeMenuItemAdapter adapter;
-	private boolean fakeMode = false;
+	private boolean fakeMode = true;
 	
 	public Gate365Activity() {
 		super(Gate365Activity.class.getSimpleName());
@@ -48,7 +49,13 @@ public class Gate365Activity extends BaseActivity implements OnItemClickListener
 		super.onCreate(savedInstanceState);
 		Model.getInstance().init(this);		
 		SharedPreferences pref = getSharedPreferences(CONFIG_NAME, MODE_PRIVATE);
-		Model.getInstance().setLogin(pref.getBoolean(IS_LOGIN, false));
+		boolean gpstracking = pref.getBoolean(IS_GPS_TRACKING, false);
+		String username = pref.getString(USERNAME, "");
+		String password = pref.getString(PASSWORD, "");
+		
+		Model.getInstance().setLogin(pref.getBoolean(IS_LOGIN, false) && username.length() > 0 && password.length() > 0);
+		Model.getInstance().setLocationTrackingEnabled(gpstracking);
+		
 		if(Model.getInstance().isLogin()){
 			setContentView(R.layout.activity_home);
 		}else{
@@ -75,10 +82,6 @@ public class Gate365Activity extends BaseActivity implements OnItemClickListener
 	protected void init() {
 		super.init();
 		
-		SharedPreferences pref = getSharedPreferences(CONFIG_NAME, MODE_PRIVATE);
-		boolean gpstracking = pref.getBoolean(IS_GPS_TRACKING, false);
-		Model.getInstance().setLocationTrackingEnabled(gpstracking);
-		
 		if(Model.getInstance().isLogin()){
 			GridView grdMenu = (GridView)findViewById(R.id.layout_content);
 			adapter = new HomeMenuItemAdapter(this, Model.MENU_LIST);
@@ -93,7 +96,10 @@ public class Gate365Activity extends BaseActivity implements OnItemClickListener
 			edtUsername = (TextView)findViewById(R.id.edt_username);
 			edtPassword = (TextView)findViewById(R.id.edt_password);	
 			edtPassword.setImeActionLabel(getString(R.string.login_l), EditorInfo.IME_ACTION_GO);	
-			edtPassword.setOnEditorActionListener(onEditorActionListener);			
+			edtPassword.setOnEditorActionListener(onEditorActionListener);	
+			
+			ImageView icRefresh = (ImageView)findViewById(R.id.img_refresh);
+			icRefresh.setVisibility(View.GONE);
 		}		
 	}
 	
@@ -101,6 +107,46 @@ public class Gate365Activity extends BaseActivity implements OnItemClickListener
 	public void onBackPressed() {
 		DialogHelper.yesNoAlert(this, getString(R.string.exit_app), getString(R.string.are_you_sure_exit_app)
 				, getString(android.R.string.yes), getString(android.R.string.no), exitPositiveHandler, exitNegativeHandler);
+	}
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		switch (requestCode) {
+		case FINISH_CODE:
+			if(resultCode == RESULT_LOGOUT){
+				Model.getInstance().setLogin(false);
+				SharedPreferences pref = getSharedPreferences(CONFIG_NAME, MODE_PRIVATE);
+				SharedPreferences.Editor editor = pref.edit();
+				editor.putBoolean(IS_LOGIN, false);
+				editor.commit();	            				
+				setContentView(R.layout.activity_login);
+				init();			
+			}
+			break;
+
+		default:
+			break;
+		}
+		super.onActivityResult(requestCode, resultCode, data);
+	}
+	
+	@Override
+	public boolean onMenuItemSelected(int featureId, MenuItem item) {
+		switch (item.getItemId()) {
+		case R.id.menu_logout:
+			Model.getInstance().setLogin(false);
+			SharedPreferences pref = getSharedPreferences(CONFIG_NAME, MODE_PRIVATE);
+			SharedPreferences.Editor editor = pref.edit();
+			editor.putBoolean(IS_LOGIN, false);
+			editor.commit();	            				
+			setContentView(R.layout.activity_login);
+			init();			
+			return true;
+
+		default:
+			return super.onMenuItemSelected(featureId, item);
+		}		
+		
 	}
 	
 	public void onLoginButtonHandler(View view){
@@ -197,12 +243,12 @@ public class Gate365Activity extends BaseActivity implements OnItemClickListener
 
 		case MenuItemInfo.MENU_ITEM_JOURNEYS:
 			intent = new Intent(this, JourneysActivity.class);
-			startActivity(intent);
+			startActivityForResult(intent, FINISH_CODE);
 			break;
 
 		case MenuItemInfo.MENU_ITEM_SETTINGS:
-			/*intent = new Intent(this, SettingsActivity.class);
-			startActivity(intent);*/
+			intent = new Intent(this, SettingsActivity.class);
+			startActivityForResult(intent, FINISH_CODE);
 			break;
 
 		case MenuItemInfo.MENU_ITEM_TRAVEL_ADVICES:

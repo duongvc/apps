@@ -46,7 +46,7 @@ public class Model {
 		, new MenuItemInfo(MenuItemInfo.MENU_ITEM_TRAVEL_ADVICES, R.drawable.tvadvices_menuitem_selector, R.string.travel_advices, false)
 		, new MenuItemInfo(MenuItemInfo.MENU_ITEM_COUNTRY_RISK, R.drawable.countryrisk_menuitem_selector, R.string.country_risk, false)
 		, new MenuItemInfo(MenuItemInfo.MENU_ITEM_TRAVEL_TIPS, R.drawable.tvtips_menuitem_selector, R.string.travel_tips, false)
-		, new MenuItemInfo(MenuItemInfo.MENU_ITEM_SETTINGS, R.drawable.settings_menuitem_selector, R.string.settings, false)};
+		, new MenuItemInfo(MenuItemInfo.MENU_ITEM_SETTINGS, R.drawable.settings_menuitem_selector, R.string.settings, true)};
 	
 	private boolean isLogin;
 	private UserInfo userInfo;
