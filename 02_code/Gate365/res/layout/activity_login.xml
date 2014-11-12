@@ -55,7 +55,7 @@
 	        android:layout_gravity="center_horizontal"
 	        android:layout_marginTop="10dp"
 	        android:minWidth="@dimen/min_common_button_width"
-	        android:text="@string/login_l"
+	        android:text="@string/go"
 	        android:onClick="onLoginButtonHandler"
 	        style="@style/CommonButtonStyle"
 	        android:textAppearance="?android:attr/textAppearanceMediumInverse"/>
