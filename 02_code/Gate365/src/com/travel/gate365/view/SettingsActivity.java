@@ -1,14 +1,15 @@
 package com.travel.gate365.view;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.travel.gate365.R;
 import com.travel.gate365.model.Model;
 
 public class SettingsActivity extends BaseActivity {
-
 
 	public SettingsActivity() {
 		super(SettingsActivity.class.getSimpleName()); 
@@ -22,7 +23,6 @@ public class SettingsActivity extends BaseActivity {
 		setContentView(R.layout.activity_settings);
 		
 		init();
-		
 		
 	}
 	
@@ -39,6 +39,14 @@ public class SettingsActivity extends BaseActivity {
 		text = ((TextView)findViewById(R.id.txt_last_time));
 		text = ((TextView)findViewById(R.id.txt_last_latitude));
 		text = ((TextView)findViewById(R.id.txt_last_longtitude));
+		
+		ImageView icRefresh = (ImageView)findViewById(R.id.img_refresh);
+		icRefresh.setVisibility(View.GONE);
+	}
+	
+	public void onLogoutButtonHandler(View view){
+		setResult(RESULT_LOGOUT);
+		finish();
 	}
 	
 }
