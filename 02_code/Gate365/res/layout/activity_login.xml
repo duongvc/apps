@@ -46,7 +46,7 @@
 	        android:inputType="textPassword|textNoSuggestions"
 	        android:maxLength="100"
 	        android:imeOptions="actionGo"
-	        android:imeActionLabel="@string/login_l"
+	        android:imeActionLabel="@string/go"
 	        android:textAppearance="?android:attr/textAppearanceLargeInverse"/>
 
 	    <com.travel.gate365.view.widget.FontableButton android:id="@id/btn_login" 
@@ -55,7 +55,7 @@
 	        android:layout_gravity="center_horizontal"
 	        android:layout_marginTop="10dp"
 	        android:minWidth="@dimen/min_common_button_width"
-	        android:text="@string/go"
+	        android:text="@string/login_l"
 	        android:onClick="onLoginButtonHandler"
 	        style="@style/CommonButtonStyle"
 	        android:textAppearance="?android:attr/textAppearanceMediumInverse"/>

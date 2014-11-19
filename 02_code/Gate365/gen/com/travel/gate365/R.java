@@ -557,6 +557,11 @@ containing a value of this type.
          */
         public static final int AppTheme=0x7f09000b;
         public static final int CommonButtonStyle=0x7f090003;
+        /**  <item name="android:padding">5dp</item>
+		<item name="android:focusable">true</item>
+		<item name="android:clickable">true</item>
+		<item name="android:gravity">center_vertical|left</item> 
+         */
         public static final int CommonCheckboxStyle=0x7f090005;
         public static final int CommonEditTextStyle=0x7f090000;
         public static final int CommonImageViewStyle=0x7f090009;

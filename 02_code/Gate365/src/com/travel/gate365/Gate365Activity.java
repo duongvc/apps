@@ -38,7 +38,7 @@ public class Gate365Activity extends BaseActivity implements OnItemClickListener
 	private TextView edtUsername;
 	private TextView edtPassword;
 	private HomeMenuItemAdapter adapter;
-	private boolean fakeMode = false;
+	private boolean fakeMode = true;
 	
 	public Gate365Activity() {
 		super(Gate365Activity.class.getSimpleName());
@@ -47,7 +47,9 @@ public class Gate365Activity extends BaseActivity implements OnItemClickListener
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		Model.getInstance().init(this);		
+		
+		Model.getInstance().init(this);			
+		
 		SharedPreferences pref = getSharedPreferences(CONFIG_NAME, MODE_PRIVATE);
 		boolean gpstracking = pref.getBoolean(IS_GPS_TRACKING, false);
 		String username = pref.getString(USERNAME, "");
