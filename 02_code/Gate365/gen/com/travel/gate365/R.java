@@ -597,7 +597,7 @@ containing a value of this type.
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name android:font
+          @attr name com.travel.gate365:font
         */
         public static final int com_travel_gate365_view_widget_FontableAutoCompleteTextView_font = 0;
         /** Attributes that can be used with a com_travel_gate365_view_widget_FontableButton.
@@ -624,7 +624,7 @@ containing a value of this type.
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name android:font
+          @attr name com.travel.gate365:font
         */
         public static final int com_travel_gate365_view_widget_FontableButton_font = 0;
         /** Attributes that can be used with a com_travel_gate365_view_widget_FontableCheckbox.
@@ -651,7 +651,7 @@ containing a value of this type.
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name android:font
+          @attr name com.travel.gate365:font
         */
         public static final int com_travel_gate365_view_widget_FontableCheckbox_font = 0;
         /** Attributes that can be used with a com_travel_gate365_view_widget_FontableEditText.
@@ -678,7 +678,7 @@ containing a value of this type.
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name android:font
+          @attr name com.travel.gate365:font
         */
         public static final int com_travel_gate365_view_widget_FontableEditText_font = 0;
         /** Attributes that can be used with a com_travel_gate365_view_widget_FontableRadioButton.
@@ -705,7 +705,7 @@ containing a value of this type.
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name android:font
+          @attr name com.travel.gate365:font
         */
         public static final int com_travel_gate365_view_widget_FontableRadioButton_font = 0;
         /** Attributes that can be used with a com_travel_gate365_view_widget_FontableSpinner.
@@ -732,7 +732,7 @@ containing a value of this type.
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name android:font
+          @attr name com.travel.gate365:font
         */
         public static final int com_travel_gate365_view_widget_FontableSpinner_font = 0;
         /** Attributes that can be used with a com_travel_gate365_view_widget_FontableTextView.
@@ -759,7 +759,7 @@ containing a value of this type.
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name android:font
+          @attr name com.travel.gate365:font
         */
         public static final int com_travel_gate365_view_widget_FontableTextView_font = 0;
         /** Attributes that can be used with a com_travel_gate365_view_widget_FontableWebView.
@@ -786,7 +786,7 @@ containing a value of this type.
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name android:font
+          @attr name com.travel.gate365:font
         */
         public static final int com_travel_gate365_view_widget_FontableWebView_font = 0;
     };
