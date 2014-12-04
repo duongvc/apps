@@ -112,13 +112,11 @@ public class AdvicesActivity extends BaseActivity implements OnItemClickListener
 							, Model.getInstance().getUserInfo().getPassword()
 							, String.valueOf(getIntent().getExtras().getLong(DesCountriesActivity.COUNTRY_ID)));
 					
-					loading.dismiss();
 					Model.getInstance().parserTravelAdvices(res);
 					android.os.Message msg = new Message();
 					msg.what = BaseActivity.NOTE_LOAD_ADVICE_SUCCESSFULLY;
 					notificationHandler.sendMessage(msg);						
 				} catch (Exception e) {
-					loading.dismiss();
 					e.printStackTrace();
 					android.os.Message msg = new Message();
 					msg.what = BaseActivity.NOTE_COULD_NOT_CONNECT_SERVER;
@@ -153,6 +151,7 @@ public class AdvicesActivity extends BaseActivity implements OnItemClickListener
 				}else{
 					txtMessage.setVisibility(View.VISIBLE);
 				}
+				loading.dismiss();					
 				break;
 				
 			default: 

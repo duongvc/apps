@@ -92,13 +92,11 @@ public class DesCountriesActivity extends BaseActivity implements OnItemClickLis
 			public void run() {
 				try { 
 					JSONObject res = ServiceManager.getDetinationCountriesGrouped(Model.getInstance().getUserInfo().getUsername(), Model.getInstance().getUserInfo().getPassword());					
-					loading.dismiss();
 					Model.getInstance().parserPlaces(res);
 					android.os.Message msg = new Message();
 					msg.what = BaseActivity.NOTE_LOAD_PLACE_SUCCESSFULLY;
 					notificationHandler.sendMessage(msg);						
 				} catch (Exception e) {
-					loading.dismiss();
 					e.printStackTrace();
 					android.os.Message msg = new Message();
 					msg.what = BaseActivity.NOTE_COULD_NOT_CONNECT_SERVER;
@@ -138,6 +136,7 @@ public class DesCountriesActivity extends BaseActivity implements OnItemClickLis
 				}else{
 					txtMessage.setVisibility(View.VISIBLE);
 				}
+				loading.dismiss();					
 				break;
 				
 			default: 

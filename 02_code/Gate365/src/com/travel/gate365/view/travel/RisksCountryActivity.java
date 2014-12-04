@@ -110,13 +110,11 @@ public class RisksCountryActivity  extends BaseActivity implements OnItemClickLi
 							, Model.getInstance().getUserInfo().getPassword()
 							, String.valueOf(getIntent().getExtras().getLong(DesCountriesActivity.COUNTRY_ID)));
 					
-					loading.dismiss();					
 					android.os.Message msg = new Message();
 					msg.what = BaseActivity.NOTE_LOAD_RISK_SUCCESSFULLY;
 					msg.obj = Model.getInstance().parserCountryRisks(res);
 					notificationHandler.sendMessage(msg);						
 				} catch (Exception e) {
-					loading.dismiss();
 					e.printStackTrace();
 					android.os.Message msg = new Message();
 					msg.what = BaseActivity.NOTE_COULD_NOT_CONNECT_SERVER;
@@ -158,6 +156,7 @@ public class RisksCountryActivity  extends BaseActivity implements OnItemClickLi
 				}else{					
 					txtMessage.setVisibility(View.VISIBLE);
 				}
+				loading.dismiss();					
 				break;
 				
 			default: 

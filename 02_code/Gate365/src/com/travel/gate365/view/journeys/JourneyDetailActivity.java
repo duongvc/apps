@@ -59,7 +59,7 @@ public class JourneyDetailActivity extends BaseActivity implements OnItemClickLi
 		TextView textView = (TextView)layout.findViewById(R.id.txt_country);
 		textView.setText(info.getSrc().getCountryName().toUpperCase(Locale.US));
 		textView = (TextView)layout.findViewById(R.id.txt_city);
-		textView.setText("- " + info.getSrc().getLocationName().toUpperCase(Locale.US));
+		textView.setText(info.getSrc().getLocationName().toUpperCase(Locale.US));
 		textView = (TextView)layout.findViewById(R.id.txt_codetime);
 		String dateTime = DateTimeHelper.convertDateStringToWWW_ddMMMyyyy(this, info.getFlightRoutings()[0].getDepartureDateTime());
 		textView.setText(getString(R.string.departs) + ":" + dateTime);
@@ -71,7 +71,7 @@ public class JourneyDetailActivity extends BaseActivity implements OnItemClickLi
 		textView = (TextView)layout.findViewById(R.id.txt_country);
 		textView.setText(info.getDes().getCountryName().toUpperCase(Locale.US));
 		textView = (TextView)layout.findViewById(R.id.txt_city);
-		textView.setText("- " + info.getDes().getLocationName().toUpperCase(Locale.US));
+		textView.setText(info.getDes().getLocationName().toUpperCase(Locale.US));
 		textView = (TextView)layout.findViewById(R.id.txt_codetime);
 		dateTime = DateTimeHelper.convertDateStringToWWW_ddMMMyyyy(this, info.getFlightRoutings()[info.getFlightRoutings().length - 1].getArrivalDateTime());
 		textView.setText(getString(R.string.arrives) + ":" + dateTime);

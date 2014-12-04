@@ -82,13 +82,11 @@ public class AlertActivity extends BaseActivity implements OnItemClickListener{
 			public void run() {
 				try { 
 					JSONObject res = ServiceManager.getAlerts(Model.getInstance().getUserInfo().getUsername(), Model.getInstance().getUserInfo().getPassword());					
-					loading.dismiss();
 					Model.getInstance().parserTravelAlerts(res);
 					android.os.Message msg = new Message();
 					msg.what = BaseActivity.NOTE_LOAD_ALERT_SUCCESSFULLY;
 					notificationHandler.sendMessage(msg);						
 				} catch (Exception e) {
-					loading.dismiss();
 					e.printStackTrace();
 					android.os.Message msg = new Message();
 					msg.what = BaseActivity.NOTE_COULD_NOT_CONNECT_SERVER;
@@ -105,6 +103,7 @@ public class AlertActivity extends BaseActivity implements OnItemClickListener{
 		public void handleMessage(android.os.Message msg) {
 			switch (msg.what) {
 			case BaseActivity.NOTE_LOAD_ALERT_SUCCESSFULLY:
+				loading.dismiss();					
 				if(Model.getInstance().getAlerts().length > 0){
 					txtMessage.setVisibility(View.GONE);
 					adapter = new AlertItemAdapter(AlertActivity.this, Model.getInstance().getAlerts());

@@ -85,13 +85,11 @@ public class JourneysActivity extends BaseActivity implements OnItemClickListene
 				public void run() {
 					try { 
 						JSONObject res = ServiceManager.getJourneys(Model.getInstance().getUserInfo().getUsername(), Model.getInstance().getUserInfo().getPassword());					
-						loading.dismiss();
 						Model.getInstance().paserJourney(res);
 						android.os.Message msg = new Message();
 						msg.what = BaseActivity.NOTE_LOAD_JOURNEY_SUCCESSFULLY;
 						notificationHandler.sendMessage(msg);						
 					} catch (Exception e) {
-						loading.dismiss();
 						e.printStackTrace();
 						android.os.Message msg = new Message();
 						msg.what = BaseActivity.NOTE_COULD_NOT_CONNECT_SERVER;
@@ -128,6 +126,7 @@ public class JourneysActivity extends BaseActivity implements OnItemClickListene
 				}else{
 					txtMessage.setVisibility(View.VISIBLE);
 				}
+				loading.dismiss();
 				break;
 				
 			default: 

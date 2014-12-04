@@ -109,7 +109,6 @@ public class TipCountryActivity  extends BaseActivity implements OnItemClickList
 							, Model.getInstance().getUserInfo().getPassword()
 							, String.valueOf(getIntent().getExtras().getLong(DesCountriesActivity.COUNTRY_ID)));
 					
-					loading.dismiss();					
 					android.os.Message msg = new Message();
 					msg.what = BaseActivity.NOTE_LOAD_TIP_SUCCESSFULLY;
 					msg.obj = Model.getInstance().parserCountryTips(res);
@@ -152,6 +151,7 @@ public class TipCountryActivity  extends BaseActivity implements OnItemClickList
 				}else{					
 					txtMessage.setVisibility(View.VISIBLE);
 				}
+				loading.dismiss();					
 				break;
 				
 			default: 

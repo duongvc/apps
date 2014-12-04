@@ -13,7 +13,9 @@ import android.os.Message;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnTouchListener;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
@@ -96,6 +98,7 @@ public class Gate365Activity extends BaseActivity implements OnItemClickListener
 			}
 			grdMenu.setAdapter(adapter);
 			grdMenu.setOnItemClickListener(this);
+			grdMenu.setOnTouchListener(onTouchListener);			
 		}else{
 			edtUsername = (TextView)findViewById(R.id.edt_username);
 			edtPassword = (TextView)findViewById(R.id.edt_password);	
@@ -225,9 +228,6 @@ public class Gate365Activity extends BaseActivity implements OnItemClickListener
 					}
 				} catch (Exception e) {
 					e.printStackTrace();
-					if(loading.isShowing()){
-						loading.dismiss();
-					}
 					android.os.Message msg = new Message();
 					msg.what = BaseActivity.NOTE_COULD_NOT_CONNECT_SERVER;
 					notificationHandler.sendMessage(msg);												
@@ -313,5 +313,17 @@ public class Gate365Activity extends BaseActivity implements OnItemClickListener
 		super.onBackPressed();
 		
 	}
+	
+	OnTouchListener onTouchListener = new OnTouchListener(){
+		 
+	    @Override
+	    public boolean onTouch(View v, MotionEvent event) {
+	        if(event.getAction() == MotionEvent.ACTION_MOVE){
+	            return true;
+	        }
+	        return false;
+	    }
+	 
+	};
 	
 }

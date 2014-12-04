@@ -84,7 +84,7 @@ public class JourneyItemAdapter extends BaseAdapter {
 			String[] arrDateTime = DateTimeHelper.convertDateStringToWWW_MMMddyyyy(context, info.getDate(), info.getLeavingTime());
 			holder.txtDate.setText(arrDateTime[0]);
 			holder.txtCountry.setText(info.getDes().getCountryName().toUpperCase(Locale.US));
-			holder.txtCity.setText("- " + info.getDes().getLocationName().toUpperCase(Locale.US));
+			holder.txtCity.setText(info.getDes().getLocationName().toUpperCase(Locale.US));
 			holder.txtCodeTime.setText(arrDateTime[1] + ", PNR " + info.getpNRCode());
 			int resId;
 			int bgResId;

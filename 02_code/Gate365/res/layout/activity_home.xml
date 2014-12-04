@@ -11,7 +11,8 @@
 	    android:layout_width="fill_parent"
 	    android:layout_height="fill_parent"
 	    android:layout_below="@id/titlebar"
-        android:numColumns="2">
+        android:numColumns="2"
+        android:scrollbars="none">
     </GridView>
     
 </RelativeLayout>

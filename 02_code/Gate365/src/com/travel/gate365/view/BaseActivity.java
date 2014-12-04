@@ -192,6 +192,7 @@ public abstract class BaseActivity extends Activity {
 				break;
 
 			case NOTE_COULD_NOT_CONNECT_SERVER:
+				loading.dismiss();
 				DialogHelper.alert(BaseActivity.this, R.string.login_failed, R.string.could_not_connect_server, null);
 				BaseActivity.this.setContentView(R.layout.activity_home);
 				BaseActivity.this.init();
