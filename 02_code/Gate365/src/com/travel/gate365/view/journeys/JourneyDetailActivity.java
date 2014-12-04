@@ -47,7 +47,9 @@ public class JourneyDetailActivity extends BaseActivity implements OnItemClickLi
 		
 		View view = (View)findViewById(R.id.header);
 		TextView txtRight = (TextView)view.findViewById(R.id.txt_right);
-		txtRight.setText("PRN " + info.getpNRCode());
+		txtRight.setText("PRN " + info.getpNRCode());		
+		ImageView icRefresh = (ImageView)view.findViewById(R.id.img_refresh);
+		icRefresh.setVisibility(View.GONE);
 		
 		View layout = findViewById(R.id.layout_depart);
 		ImageView icon = (ImageView)layout.findViewById(R.id.img_icon);
@@ -80,6 +82,7 @@ public class JourneyDetailActivity extends BaseActivity implements OnItemClickLi
 		adapter = new FlightRoutingItemAdapter(this, menuList);
 		lstMenu.setAdapter(adapter);
 		lstMenu.setOnItemClickListener(this);			
+		
 		
 	}
 

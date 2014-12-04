@@ -29,8 +29,10 @@ import com.travel.gate365.model.Model;
 import com.travel.gate365.service.ServiceManager;
 import com.travel.gate365.view.BaseActivity;
 import com.travel.gate365.view.SettingsActivity;
+import com.travel.gate365.view.alert.AlertActivity;
 import com.travel.gate365.view.home.HomeMenuItemAdapter;
 import com.travel.gate365.view.journeys.JourneysActivity;
+import com.travel.gate365.view.travel.DesCountriesActivity;
 
 public class Gate365Activity extends BaseActivity implements OnItemClickListener {
 
@@ -38,7 +40,7 @@ public class Gate365Activity extends BaseActivity implements OnItemClickListener
 	private TextView edtUsername;
 	private TextView edtPassword;
 	private HomeMenuItemAdapter adapter;
-	private boolean fakeMode = true;
+	private boolean fakeMode = false;
 	
 	public Gate365Activity() {
 		super(Gate365Activity.class.getSimpleName());
@@ -57,7 +59,7 @@ public class Gate365Activity extends BaseActivity implements OnItemClickListener
 		
 		Model.getInstance().setLogin(pref.getBoolean(IS_LOGIN, false) && username.length() > 0 && password.length() > 0);
 		Model.getInstance().setLocationTrackingEnabled(gpstracking);
-		
+		Model.getInstance().paserLoginInfo(username, password);
 		if(Model.getInstance().isLogin()){
 			setContentView(R.layout.activity_home);
 		}else{
@@ -120,6 +122,8 @@ public class Gate365Activity extends BaseActivity implements OnItemClickListener
 				SharedPreferences pref = getSharedPreferences(CONFIG_NAME, MODE_PRIVATE);
 				SharedPreferences.Editor editor = pref.edit();
 				editor.putBoolean(IS_LOGIN, false);
+				editor.putString(USERNAME, "");
+				editor.putString(PASSWORD, "");
 				editor.commit();	            				
 				setContentView(R.layout.activity_login);
 				init();			
@@ -140,6 +144,8 @@ public class Gate365Activity extends BaseActivity implements OnItemClickListener
 			SharedPreferences pref = getSharedPreferences(CONFIG_NAME, MODE_PRIVATE);
 			SharedPreferences.Editor editor = pref.edit();
 			editor.putBoolean(IS_LOGIN, false);
+			editor.putString(USERNAME, "");
+			editor.putString(PASSWORD, "");
 			editor.commit();	            				
 			setContentView(R.layout.activity_login);
 			init();			
@@ -238,9 +244,9 @@ public class Gate365Activity extends BaseActivity implements OnItemClickListener
 		Intent intent;
 		switch ((int)id) {
 		case MenuItemInfo.MENU_ITEM_COUNTRY_RISK:
-			/*intent = new Intent(this, DesCountriesActivity.class);
+			intent = new Intent(this, DesCountriesActivity.class);
 			intent.putExtra(DesCountriesActivity.TARGET_TYPE, DesCountriesActivity.TARGET_RISK);
-			startActivity(intent);*/			
+			startActivityForResult(intent, FINISH_CODE);			
 			break;
 
 		case MenuItemInfo.MENU_ITEM_JOURNEYS:
@@ -254,20 +260,20 @@ public class Gate365Activity extends BaseActivity implements OnItemClickListener
 			break;
 
 		case MenuItemInfo.MENU_ITEM_TRAVEL_ADVICES:
-			/*intent = new Intent(this, DesCountriesActivity.class);
+			intent = new Intent(this, DesCountriesActivity.class);
 			intent.putExtra(DesCountriesActivity.TARGET_TYPE, DesCountriesActivity.TARGET_ADVICE);
-			startActivity(intent);*/
+			startActivityForResult(intent, FINISH_CODE);
 			break;
 
 		case MenuItemInfo.MENU_ITEM_TRAVEL_ALERTS:
-			/*intent = new Intent(this, AlertActivity.class);
-			startActivity(intent);*/
+			intent = new Intent(this, AlertActivity.class);
+			startActivityForResult(intent, FINISH_CODE);
 			break;
 
 		case MenuItemInfo.MENU_ITEM_TRAVEL_TIPS:
-			/*intent = new Intent(this, DesCountriesActivity.class);
+			intent = new Intent(this, DesCountriesActivity.class);
 			intent.putExtra(DesCountriesActivity.TARGET_TYPE, DesCountriesActivity.TARGET_TIP);
-			startActivity(intent);*/
+			startActivityForResult(intent, FINISH_CODE);
 			break;
 
 		default:

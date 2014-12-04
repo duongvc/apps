@@ -179,6 +179,8 @@ public abstract class BaseActivity extends Activity {
 				SharedPreferences pref = getSharedPreferences(CONFIG_NAME, MODE_PRIVATE);
 				SharedPreferences.Editor editor = pref.edit();
 				editor.putBoolean(IS_LOGIN, true);
+				editor.putString(USERNAME, Model.getInstance().getUserInfo().getUsername());
+				editor.putString(PASSWORD, Model.getInstance().getUserInfo().getPassword());
 				editor.commit();	            				
 				
 				BaseActivity.this.setContentView(R.layout.activity_home);
