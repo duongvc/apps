@@ -6,15 +6,17 @@
     android:layout_below="@id/titlebar"
     android:background="@drawable/header_selector">
     
-    <ImageView android:id="@id/img_icon"
+    <ImageView
+        android:id="@id/img_icon"
+        style="@style/CommonImageViewStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        style="@style/CommonImageViewStyle"
-        android:focusable="true"
+        android:layout_centerVertical="true"
         android:clickable="true"
         android:contentDescription="@string/login_U"
-        android:onClick="onBackIconClickHandler"/>
+        android:focusable="true"
+        android:onClick="onBackIconClickHandler" />
 
     <com.travel.gate365.view.widget.FontableTextView android:id="@id/txt_left" 
         android:layout_width="wrap_content"
