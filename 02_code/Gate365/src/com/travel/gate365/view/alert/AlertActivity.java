@@ -19,7 +19,6 @@ import com.travel.gate365.R;
 import com.travel.gate365.model.Model;
 import com.travel.gate365.service.ServiceManager;
 import com.travel.gate365.view.BaseActivity;
-import com.travel.gate365.view.journeys.JourneyDetailActivity;
 
 public class AlertActivity extends BaseActivity implements OnItemClickListener{
 
@@ -48,7 +47,9 @@ public class AlertActivity extends BaseActivity implements OnItemClickListener{
 		txtMessage = (TextView)findViewById(R.id.txt_message);
 		lstMenu = (ListView)findViewById(R.id.lst_alerts);
 		
-		load();
+		if (Model.getInstance().getAlerts().length == 0) {
+			load();
+		}
 	}
 
 	
