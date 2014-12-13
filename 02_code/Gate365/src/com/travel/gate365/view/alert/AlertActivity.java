@@ -48,7 +48,7 @@ public class AlertActivity extends BaseActivity implements OnItemClickListener{
 		txtMessage = (TextView)findViewById(R.id.txt_message);
 		lstMenu = (ListView)findViewById(R.id.lst_alerts);
 		
-		load();
+		load(true);
 	}
 
 	
@@ -68,8 +68,15 @@ public class AlertActivity extends BaseActivity implements OnItemClickListener{
 	}
 	
 	@Override
-	protected void load() {
-		super.load();
+	protected void load(boolean checkDataExist) {
+		super.load(checkDataExist);
+		
+		if(checkDataExist && Model.getInstance().getAlerts().length > 0){
+			android.os.Message msg = new Message();
+			msg.what = BaseActivity.NOTE_LOAD_ALERT_SUCCESSFULLY;
+			notificationHandler.sendMessage(msg);	
+			return;
+		}
 		
 		if(loading == null || (loading != null && !loading.isShowing())){
 			loading = ProgressDialog.show(this, "", getString(R.string.loading_pls_wait)); 

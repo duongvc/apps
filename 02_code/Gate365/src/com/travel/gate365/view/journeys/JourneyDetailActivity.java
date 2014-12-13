@@ -47,7 +47,7 @@ public class JourneyDetailActivity extends BaseActivity implements OnItemClickLi
 		
 		View view = (View)findViewById(R.id.header);
 		TextView txtRight = (TextView)view.findViewById(R.id.txt_right);
-		txtRight.setText("PRN " + info.getpNRCode());		
+		txtRight.setText("PNR " + info.getpNRCode());		
 		ImageView icRefresh = (ImageView)view.findViewById(R.id.img_refresh);
 		icRefresh.setVisibility(View.INVISIBLE);
 		

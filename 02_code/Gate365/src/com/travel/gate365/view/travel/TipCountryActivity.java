@@ -88,12 +88,12 @@ public class TipCountryActivity  extends BaseActivity implements OnItemClickList
 		txtMessage = (TextView)findViewById(R.id.txt_message);
 		lstMenu = (ListView)findViewById(R.id.lst_tips);
 		
-		load();
+		load(true);
 	}
 	
 	@Override
-	protected void load() {
-		super.load();
+	protected void load(boolean checkDataExist) {
+		super.load(checkDataExist);
 		
 		if(loading == null || (loading != null && !loading.isShowing())){
 			loading = ProgressDialog.show(this, "", getString(R.string.loading_pls_wait)); 

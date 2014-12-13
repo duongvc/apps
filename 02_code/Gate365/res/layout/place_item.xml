@@ -22,7 +22,7 @@
         	android:contentDescription="@string/journeys"
         	android:src="@drawable/_next"/>
         
-	     <com.travel.gate365.view.widget.FontableTextView android:id="@id/txt_risktype" 
+	     <com.travel.gate365.view.widget.FontableTextView2 android:id="@id/txt_risktype" 
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_toLeftOf="@id/img_arrow"

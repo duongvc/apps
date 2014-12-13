@@ -89,12 +89,12 @@ public class RisksCountryActivity  extends BaseActivity implements OnItemClickLi
 		
 		txtMessage = (TextView)findViewById(R.id.txt_message);
 		
-		load();
+		load(true);
 	}
 	
 	@Override
-	protected void load() {
-		super.load();
+	protected void load(boolean checkDataExist) {
+		super.load(checkDataExist);
 		
 		if(loading == null || (loading != null && !loading.isShowing())){
 			loading = ProgressDialog.show(this, "", getString(R.string.loading_pls_wait)); 

@@ -30,7 +30,7 @@ public class SettingsActivity extends BaseActivity {
 	protected void init() {
 		super.init();
 
-		load();
+		load(false);
 		
 		CheckBox chkGpstracking = (CheckBox)findViewById(R.id.chk_gpstracking);
 		chkGpstracking.setActivated(Model.getInstance().isLocationTrackingEnabled());

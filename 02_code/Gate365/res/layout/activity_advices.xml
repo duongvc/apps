@@ -21,7 +21,7 @@
 	            android:contentDescription="@string/travel_advices"
 	            android:src="@drawable/fr"/>
 	        
-		     <com.travel.gate365.view.widget.FontableTextView android:id="@id/txt_risktype" 
+		     <com.travel.gate365.view.widget.FontableTextView2 android:id="@id/txt_risktype" 
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
 	        	android:layout_alignParentRight="true"

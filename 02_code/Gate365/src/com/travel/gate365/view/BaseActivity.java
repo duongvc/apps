@@ -75,7 +75,7 @@ public abstract class BaseActivity extends Activity {
 			break;
 
 		case R.id.menu_refresh:
-			load();
+			load(false);
 			break;
 		
 		default:
@@ -153,7 +153,7 @@ public abstract class BaseActivity extends Activity {
 		}
 	}
 
-	protected void load(){
+	protected void load(boolean checkDataExist){
 	}
 	
 	public void onBackIconClickHandler(View view){
@@ -161,7 +161,7 @@ public abstract class BaseActivity extends Activity {
 	}
 	
 	public void onRefreshIconClickHandler(View view){
-		load();
+		load(false);
 	}
 	
 	protected String getId() {

@@ -91,12 +91,19 @@ public class AdvicesActivity extends BaseActivity implements OnItemClickListener
 		txtMessage = (TextView)findViewById(R.id.txt_message);
 		lstMenu = (ListView)findViewById(R.id.lst_advices);
 		
-		load();
+		load(true);
 	}
 	
 	@Override
-	protected void load() {
-		super.load();
+	protected void load(boolean checkDataExist) {
+		super.load(checkDataExist);
+		
+		/*if(checkDataExist && Model.getInstance().getAdvices().length > 0){
+			android.os.Message msg = new Message();
+			msg.what = BaseActivity.NOTE_LOAD_ADVICE_SUCCESSFULLY;
+			notificationHandler.sendMessage(msg);	
+			return;
+		}*/
 		
 		if(loading == null || (loading != null && !loading.isShowing())){
 			loading = ProgressDialog.show(this, "", getString(R.string.loading_pls_wait)); 

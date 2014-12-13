@@ -61,19 +61,25 @@ public class JourneysActivity extends BaseActivity implements OnItemClickListene
 		txtMessage = (TextView)findViewById(R.id.txt_message);
 		lstMenu = (ListView)findViewById(R.id.lst_journeys);
 		
-		load();		
+		load(true);		
 	}
 
 	@Override
-	protected void load() {		
-		super.load();
+	protected void load(boolean checkDataExist) {		
+		super.load(checkDataExist);
 		
 		if(!isNetworkAvailable()){
 			DialogHelper.alert(this, R.string.no_internet, R.string.no_internet_avaialbe, null);
 			return;
 		}
 		
-		if(Model.getInstance().getJourneys().length == 0){
+		Log.i(getId(), "checkDataExist:" + checkDataExist);
+		if(checkDataExist && Model.getInstance().getJourneys().length > 0){
+			android.os.Message msg = new Message();
+			msg.what = BaseActivity.NOTE_LOAD_JOURNEY_SUCCESSFULLY;
+			notificationHandler.sendMessage(msg);	
+			return;
+		}
 			if(loading == null || (loading != null && !loading.isShowing())){
 				loading = ProgressDialog.show(this, "", getString(R.string.loading_pls_wait)); 
 				loading.show();
@@ -97,13 +103,7 @@ public class JourneysActivity extends BaseActivity implements OnItemClickListene
 					}
 				}
 			});
-			
 			thread.start();				
-		}else{
-			android.os.Message msg = new Message();
-			msg.what = BaseActivity.NOTE_LOAD_JOURNEY_SUCCESSFULLY;
-			notificationHandler.sendMessage(msg);									
-		}
 	}
 	
 	@Override

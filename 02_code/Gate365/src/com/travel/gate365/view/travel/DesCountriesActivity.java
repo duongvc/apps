@@ -73,13 +73,20 @@ public class DesCountriesActivity extends BaseActivity implements OnItemClickLis
 			msg.what = BaseActivity.NOTE_LOAD_PLACE_SUCCESSFULLY;
 			notificationHandler.sendMessage(msg);									
 		}else{
-			load();
+			load(true);
 		}
 	}
 	
 	@Override
-	protected void load() {
-		super.load();
+	protected void load(boolean checkDataExist) {
+		super.load(checkDataExist);
+		
+		if(checkDataExist && Model.getInstance().getPlaces().length > 0){
+			android.os.Message msg = new Message();
+			msg.what = BaseActivity.NOTE_LOAD_PLACE_SUCCESSFULLY;
+			notificationHandler.sendMessage(msg);	
+			return;
+		}
 		
 		if(loading == null || (loading != null && !loading.isShowing())){
 			loading = ProgressDialog.show(this, "", getString(R.string.loading_pls_wait)); 
