@@ -60,8 +60,10 @@ public class JourneysActivity extends BaseActivity implements OnItemClickListene
 		
 		txtMessage = (TextView)findViewById(R.id.txt_message);
 		lstMenu = (ListView)findViewById(R.id.lst_journeys);
-		
-		load();		
+
+		if (Model.getInstance().getJourneys().length == 0) {
+			load();
+		}
 	}
 
 	@Override
