@@ -62,7 +62,7 @@ public class Model {
 	private String lastTimeSent;
 	private String lastLattitude;
 	private String lastLongtitude;
-	private boolean isLocationTrackingEnabled;
+	private boolean locationTrackingEnabled;
 	
 	private Model() {
 		journeys = new JourneyItemInfo[0];
@@ -244,10 +244,6 @@ public class Model {
 			}
 		}
 	}
-	
-	public boolean isLocationTrackingEnabled() {
-		return true;
-	}
 
 	public UserInfo getUserInfo(){
 		return userInfo;
@@ -353,7 +349,10 @@ public class Model {
 	}
 
 	public void setLocationTrackingEnabled(boolean isLocationTrackingEnabled) {
-		this.isLocationTrackingEnabled = isLocationTrackingEnabled;
+		this.locationTrackingEnabled = isLocationTrackingEnabled;
 	}
 
+	public boolean isLocationTrackingEnabled() {
+		return this.locationTrackingEnabled;
+	}
 }
