@@ -128,7 +128,9 @@ public class JourneysActivity extends BaseActivity implements OnItemClickListene
 
 		@Override
 		public void handleMessage(Message msg) {
-			loading.dismiss();
+			if (loading != null) {
+				loading.dismiss();
+			}
 			JourneysActivity activity = mActivity.get();
 			if (activity != null) {
 				switch (msg.what) {

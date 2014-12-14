@@ -56,4 +56,8 @@ public final class DialogHelper {
 		sAlert.show();
 		return sAlert;
 	}
+
+	public static void alert(Context pContext, int pTitleResId, int pMessageResId) {
+		alert(pContext, pTitleResId, pMessageResId, null);
+	}
 }

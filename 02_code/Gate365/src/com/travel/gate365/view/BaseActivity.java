@@ -44,11 +44,11 @@ public abstract class BaseActivity extends Activity {
 	protected static final String IS_GPS_TRACKING = "isGpsTracking";
 	protected static final String USERNAME = "username";
 	protected static final String PASSWORD = "password";
-	
+
 	protected static final int RESULT_LOGOUT = 99;
-	
+
 	private String id;
-	protected static ProgressDialog loading;	
+	protected static ProgressDialog loading;
 	private Timer timer;
 
 	public BaseActivity(String id) {
@@ -58,14 +58,14 @@ public abstract class BaseActivity extends Activity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		if(Model.getInstance().isLogin()){
+		if (Model.getInstance().isLogin()) {
 			getMenuInflater().inflate(R.menu.activity_gate365_logged, menu);
-		}else{
+		} else {
 			getMenuInflater().inflate(R.menu.activity_gate365, menu);
 		}
 		return true;
 	}
-	
+
 	@Override
 	public boolean onMenuItemSelected(int featureId, MenuItem item) {
 		switch (item.getItemId()) {
@@ -81,55 +81,54 @@ public abstract class BaseActivity extends Activity {
 		case R.id.menu_refresh:
 			load(false);
 			break;
-		
+
 		default:
 			break;
-		}		
+		}
 		return super.onMenuItemSelected(featureId, item);
 	}
 
 	@Override
 	public boolean dispatchTouchEvent(MotionEvent ev) {
-	    if(ev.getAction() == MotionEvent.ACTION_UP) {
-	        final View view = getCurrentFocus();
+		if (ev.getAction() == MotionEvent.ACTION_UP) {
+			final View view = getCurrentFocus();
 
-	        if(view != null) {
-	            final boolean consumed = super.dispatchTouchEvent(ev);
+			if (view != null) {
+				final boolean consumed = super.dispatchTouchEvent(ev);
 
-	            final View viewTmp = getCurrentFocus();
-	            final View viewNew = viewTmp != null ? viewTmp : view;
+				final View viewTmp = getCurrentFocus();
+				final View viewNew = viewTmp != null ? viewTmp : view;
 
-	            if(viewNew.equals(view)) {
-	                final Rect rect = new Rect();
-	                final int[] coordinates = new int[2];
+				if (viewNew.equals(view)) {
+					final Rect rect = new Rect();
+					final int[] coordinates = new int[2];
 
-	                view.getLocationOnScreen(coordinates);
+					view.getLocationOnScreen(coordinates);
 
-	                rect.set(coordinates[0], coordinates[1], coordinates[0] + view.getWidth(), coordinates[1] + view.getHeight());
+					rect.set(coordinates[0], coordinates[1], coordinates[0] + view.getWidth(), coordinates[1] + view.getHeight());
 
-	                final int x = (int) ev.getX();
-	                final int y = (int) ev.getY();
+					final int x = (int) ev.getX();
+					final int y = (int) ev.getY();
 
-	                if(rect.contains(x, y)) {
-	                    return consumed;
-	                }
-	            }
-	            else if(viewNew instanceof EditText) {
-	                return consumed;
-	            }
+					if (rect.contains(x, y)) {
+						return consumed;
+					}
+				} else if (viewNew instanceof EditText) {
+					return consumed;
+				}
 
-	            final InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+				final InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 
-	            inputMethodManager.hideSoftInputFromWindow(viewNew.getWindowToken(), 0);
-	            viewNew.clearFocus();
+				inputMethodManager.hideSoftInputFromWindow(viewNew.getWindowToken(), 0);
+				viewNew.clearFocus();
 
-	            return consumed;
-	        }
-	    }       
+				return consumed;
+			}
+		}
 
-	    return super.dispatchTouchEvent(ev);
-	}	
-	
+		return super.dispatchTouchEvent(ev);
+	}
+
 	protected void init() {
 		ActivityInfo info = Model.getInstance().retrieveActivityInfo(id);
 		if (info != null) {
@@ -145,11 +144,11 @@ public abstract class BaseActivity extends Activity {
 					public void run() {
 						if (lblDateTime != null) {
 							runOnUiThread(new Runnable() {
-		                        @Override
-		                        public void run() {
-		                        	lblDateTime.setText(DateTimeHelper.convertTimeToString(BaseActivity.this, System.currentTimeMillis()));
-		                        }
-		                    });
+								@Override
+								public void run() {
+									lblDateTime.setText(DateTimeHelper.convertTimeToString(BaseActivity.this, System.currentTimeMillis()));
+								}
+							});
 						}
 					}
 				};
@@ -175,27 +174,30 @@ public abstract class BaseActivity extends Activity {
 		}
 	}
 
-	protected void load(boolean checkDataExist){
+	protected void load(boolean checkDataExist) {
 	}
-	
-	public void onBackIconClickHandler(View view){
+
+	public void onBackIconClickHandler(View view) {
 		onBackPressed();
 	}
-	
-	public void onRefreshIconClickHandler(View view){
+
+	public void onRefreshIconClickHandler(View view) {
 		load(false);
 	}
-	
+
 	protected String getId() {
 		return id;
 	}
-	
-	protected void setId(String id){
+
+	protected void setId(String id) {
 		this.id = id;
 	}
-	
-	protected final Handler notificationHandler = new Handler(){
+
+	protected final Handler notificationHandler = new Handler() {
 		public void handleMessage(android.os.Message msg) {
+			if (loading != null) {
+				loading.dismiss();
+			}
 			switch (msg.what) {
 			case NOTE_LOGIN_SUCCESSFULLY:
 				SharedPreferences pref = getSharedPreferences(CONFIG_NAME, MODE_PRIVATE);
@@ -203,33 +205,32 @@ public abstract class BaseActivity extends Activity {
 				editor.putBoolean(IS_LOGIN, true);
 				editor.putString(USERNAME, Model.getInstance().getUserInfo().getUsername());
 				editor.putString(PASSWORD, Model.getInstance().getUserInfo().getPassword());
-				editor.commit();	            				
-				
+				editor.commit();
+
 				BaseActivity.this.setContentView(R.layout.activity_home);
 				BaseActivity.this.init();
 				break;
-				
+
 			case NOTE_LOGIN_FAILED:
-				DialogHelper.alert(BaseActivity.this, R.string.login_failed, R.string.invalid_username_pass, null);
+				DialogHelper.alert(BaseActivity.this, R.string.login_failed, R.string.invalid_username_pass);
 				break;
 
 			case NOTE_COULD_NOT_CONNECT_SERVER:
-				loading.dismiss();
-				DialogHelper.alert(BaseActivity.this, R.string.login_failed, R.string.could_not_connect_server, null);
+				DialogHelper.alert(BaseActivity.this, R.string.login_failed, R.string.could_not_connect_server);
 				BaseActivity.this.setContentView(R.layout.activity_home);
 				BaseActivity.this.init();
-				break;				
-				
+				break;
+
 			case NOTE_LOAD_JOURNEY_SUCCESSFULLY:
 				break;
-				
+
 			case NOTE_LOAD_JOURNEY_FAILED:
 				break;
-				
-			default: 
+
+			default:
 				break;
 			}
-		};		
+		};
 	};
 
 	/**
@@ -238,11 +239,11 @@ public abstract class BaseActivity extends Activity {
 	 */
 	public boolean isNetworkAvailable() {
 		ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-		if(cm == null){
+		if (cm == null) {
 			return false;
 		}
 		NetworkInfo info = cm.getActiveNetworkInfo();
-		
+
 		return (info != null && info.isAvailable() && info.isConnectedOrConnecting());
 	}
 }
