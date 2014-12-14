@@ -1,5 +1,7 @@
 package com.travel.gate365.view.journeys;
 
+import java.lang.ref.WeakReference;
+
 import org.json.JSONObject;
 
 import android.app.ProgressDialog;
@@ -99,6 +101,7 @@ public class JourneysActivity extends BaseActivity implements OnItemClickListene
 						e.printStackTrace();
 						android.os.Message msg = new Message();
 						msg.what = BaseActivity.NOTE_COULD_NOT_CONNECT_SERVER;
+						msg.obj = e.getMessage();
 						notificationHandler.sendMessage(msg);												
 					}
 				}
@@ -113,26 +116,41 @@ public class JourneysActivity extends BaseActivity implements OnItemClickListene
 		intent.putExtra(JourneyDetailActivity.JOURNEY_ID, itemId);
 		startActivity(intent);
 	}
-	
-	protected final Handler notificationHandler = new Handler(){
-		public void handleMessage(android.os.Message msg) {
-			switch (msg.what) {
-			case NOTE_LOAD_JOURNEY_SUCCESSFULLY:
-				if(Model.getInstance().getJourneys().length > 0){
-					txtMessage.setVisibility(View.GONE);
-					adapter = new JourneyItemAdapter(JourneysActivity.this, Model.getInstance().getJourneys());
-					lstMenu.setAdapter(adapter);
-					lstMenu.setOnItemClickListener(JourneysActivity.this);								
-				}else{
-					txtMessage.setVisibility(View.VISIBLE);
+
+	protected final Handler notificationHandler = new MyHandler(this);
+
+	private static final class MyHandler extends Handler {
+		private final WeakReference<JourneysActivity> mActivity;
+
+		public MyHandler(JourneysActivity activity) {
+			mActivity = new WeakReference<JourneysActivity>(activity);
+		}
+
+		@Override
+		public void handleMessage(Message msg) {
+			loading.dismiss();
+			JourneysActivity activity = mActivity.get();
+			if (activity != null) {
+				switch (msg.what) {
+				case NOTE_LOAD_JOURNEY_SUCCESSFULLY:
+					if (Model.getInstance().getJourneys().length > 0) {
+						activity.txtMessage.setVisibility(View.GONE);
+						activity.adapter = new JourneyItemAdapter(activity, Model.getInstance().getJourneys());
+						activity.lstMenu.setAdapter(activity.adapter);
+						activity.lstMenu.setOnItemClickListener(activity);
+					} else {
+						activity.txtMessage.setVisibility(View.VISIBLE);
+					}
+					break;
+
+				case NOTE_COULD_NOT_CONNECT_SERVER:
+					DialogHelper.alert(activity, "Error", (String) msg.obj);
+					break;
+
+				default:
+					break;
 				}
-				loading.dismiss();
-				break;
-				
-			default: 
-				break;
 			}
-		};		
-	};
-	
+		}
+	}
 }

@@ -96,7 +96,26 @@ public final class DialogHelper {
 		sAlert.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
 		sAlert.show();
 	}
-	
+
+	/**
+	 * Popups a alert with a given message.
+	 * @param pContext
+	 * @param pMessage
+	 */
+	public static void alert(Context pContext, String pTitle, String pMessage) {
+		AlertDialog.Builder builder = new AlertDialog.Builder(pContext);
+		builder.setTitle(pTitle).setMessage(pMessage).setCancelable(true)
+				.setNegativeButton(pContext.getString(android.R.string.ok), new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int id) {
+						dialog.dismiss();
+						sAlert = null;
+					}
+				});
+		sAlert = builder.create();
+		sAlert.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+		sAlert.show();
+	}
+
 	/**
 	 * 
 	 * @param pContext
