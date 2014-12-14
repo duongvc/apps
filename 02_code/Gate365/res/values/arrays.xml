@@ -1,48 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- <array name="accident_schema">
-        <item>@drawable/accident_schema_1</item>
-        <item>@drawable/accident_schema_2</item>
-        <item>@drawable/accident_schema_3</item>
-        <item>@drawable/accident_schema_4</item>
-        <item>@drawable/accident_schema_5</item>
-        <item>@drawable/accident_schema_6</item>
-        <item>@drawable/accident_schema_7</item>
-        <item>@drawable/accident_schema_8</item>
-        <item>@drawable/accident_schema_9</item>
-        <item>@drawable/accident_schema_10</item>
-        <item>@drawable/accident_schema_11</item>
-        <item>@drawable/accident_schema_12</item>
-        <item>@drawable/accident_schema_13</item>
-        <item>@drawable/accident_schema_14</item>
-        <item>@drawable/accident_schema_15</item>
-        <item>@drawable/accident_schema_16</item>
-        <item>@drawable/accident_schema_17</item>
-        <item>@drawable/accident_schema_18</item>
-        <item>@drawable/accident_schema_19</item>
-        <item>@drawable/accident_schema_20</item>
-        <item>@drawable/accident_schema_21</item>
-        <item>@drawable/accident_schema_22</item>
-        <item>@drawable/accident_schema_23</item>
-        <item>@drawable/accident_schema_24</item>
-        <item>@drawable/accident_schema_25</item>
-        <item>@drawable/accident_schema_26</item>
-        <item>@drawable/accident_schema_27</item>
-        <item>@drawable/accident_schema_28</item>
-        <item>@drawable/accident_schema_29</item>
-        <item>@drawable/accident_schema_30</item>
-        <item>@drawable/accident_schema_31</item>
-        <item>@drawable/accident_schema_32</item>
-        <item>@drawable/accident_schema_33</item>
-        <item>@drawable/accident_schema_34</item>
-        <item>@drawable/accident_schema_35</item>
-        <item>@drawable/accident_schema_36</item>
-    </array> -->
-    <!-- <array name="colors">
-        <item>#FFFF0000</item>
-        <item>#FF00FF00</item>
-        <item>#FF0000FF</item>
-    </array> -->
     <string-array name="daysOfWeek">
         <item>Sun</item>
         <item>Mon</item>
@@ -52,5 +9,4 @@
         <item>Fri</item>
         <item>Sat</item>
 	</string-array>
-    
 </resources>
