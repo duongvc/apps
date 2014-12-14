@@ -2,7 +2,6 @@ package com.travel.gate365.helper;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.Locale;
 
 import com.travel.gate365.R;
@@ -23,67 +22,66 @@ public class DateTimeHelper {
 	}
 
 	public static synchronized String[] convertDateStringToWWW_MMMddyyyy(Context context, String dateTime, String time) {
-		Date date = new Date();
-		String[] arr = dateTime.split(" ");
-		String[] arrDate = arr[0].split("/");
-		String[] arrTime = time.split(":");
-		date.setDate(Integer.parseInt(arrDate[0]));
-		date.setMonth(Integer.parseInt(arrDate[1]) - 1);
-		date.setYear(Integer.parseInt(arrDate[2]) - 1900);
-		date.setHours(Integer.parseInt(arrTime[0]));
-		date.setMinutes(Integer.parseInt(arrTime[1]));
+		try {
+			String[] arr = dateTime.split(" ");
+			String[] arrDate = arr[0].split("/");
+			String[] arrTime = time.split(":");
 
-		SimpleDateFormat dateFormat = new SimpleDateFormat("MMM dd, yyyy");
-		SimpleDateFormat timeFormat = new SimpleDateFormat("hh:mm a");
-		String[] dayOfWeeks = context.getResources().getStringArray(R.array.daysOfWeek);
+			Calendar cal = Calendar.getInstance();
+			cal.set(Calendar.DAY_OF_MONTH, Integer.parseInt(arrDate[0]));
+			cal.set(Calendar.MONTH, Integer.parseInt(arrDate[1]) - 1);
+			cal.set(Calendar.YEAR, Integer.parseInt(arrDate[2]));
+			cal.set(Calendar.HOUR_OF_DAY, Integer.parseInt(arrTime[0]));
+			cal.set(Calendar.MINUTE, Integer.parseInt(arrTime[1]));
 
-		return new String[] { dayOfWeeks[date.getDay()].toString() + ", " + dateFormat.format(date), timeFormat.format(date) };
+			SimpleDateFormat dateFormat = new SimpleDateFormat("MMM dd, yyyy", Locale.getDefault());
+			SimpleDateFormat timeFormat = new SimpleDateFormat("hh:mm a", Locale.getDefault());
+			String[] dayOfWeeks = context.getResources().getStringArray(R.array.daysOfWeek);
+			return new String[] { dayOfWeeks[cal.get(Calendar.DAY_OF_WEEK) - 1] + ", " + dateFormat.format(cal.getTime()),
+					timeFormat.format(cal.getTime()) };
+		} catch (Throwable t) {
+		}
+		return new String[] { "", "" };
 	}
 
 	public static synchronized String convertDateStringToWWW_ddMMMyyyy(Context context, String dateTime) {
-		Date date = new Date();
-		String[] arr = dateTime.split(" ");
-		String[] arrDate = arr[0].split("/");
-		String[] arrTime = arr[1].split(":");
-		date.setDate(Integer.parseInt(arrDate[0]));
-		date.setMonth(Integer.parseInt(arrDate[1]) - 1);
-		date.setYear(Integer.parseInt(arrDate[2]) - 1900);
-		date.setHours(Integer.parseInt(arrTime[0]));
-		date.setMinutes(Integer.parseInt(arrTime[1]));
+		try {
+			String[] arr = dateTime.split(" ");
+			String[] arrDate = arr[0].split("/");
+			String[] arrTime = arr[1].split(":");
 
-		SimpleDateFormat dateFormat = new SimpleDateFormat("MMM dd, yyyy");
-		SimpleDateFormat timeFormat = new SimpleDateFormat("hh:mm a");
-		String[] dayOfWeeks = context.getResources().getStringArray(R.array.daysOfWeek);
+			Calendar cal = Calendar.getInstance();
+			cal.set(Calendar.DAY_OF_MONTH, Integer.parseInt(arrDate[0]));
+			cal.set(Calendar.MONTH, Integer.parseInt(arrDate[1]) - 1);
+			cal.set(Calendar.YEAR, Integer.parseInt(arrDate[2]));
+			cal.set(Calendar.HOUR_OF_DAY, Integer.parseInt(arrTime[0]));
+			cal.set(Calendar.MINUTE, Integer.parseInt(arrTime[1]));
 
-		return new String(dayOfWeeks[date.getDay()].toString() + ", " + dateFormat.format(date) + " - " + timeFormat.format(date));
+			SimpleDateFormat dateFormat = new SimpleDateFormat("MMM dd, yyyy", Locale.getDefault());
+			SimpleDateFormat timeFormat = new SimpleDateFormat("hh:mm a", Locale.getDefault());
+			String[] dayOfWeeks = context.getResources().getStringArray(R.array.daysOfWeek);
+
+			return new String(dayOfWeeks[cal.get(Calendar.DAY_OF_WEEK) - 1] + ", " + dateFormat.format(cal.getTime()) + " - "
+					+ timeFormat.format(cal.getTime()));
+		} catch (Throwable t) {
+		}
+		return "";
 	}
 
 	public static synchronized String convertDateStringToddMMyyyy(String dateTime) {
-		Date date = new Date();
 		String[] arr = dateTime.split(" ");
 		String[] arrDate = arr[0].split("/");
 		String[] arrTime = arr[1].split(":");
-		date.setDate(Integer.parseInt(arrDate[0]));
-		date.setMonth(Integer.parseInt(arrDate[1]) - 1);
-		date.setYear(Integer.parseInt(arrDate[2]) - 1900);
-		date.setHours(Integer.parseInt(arrTime[0]));
-		date.setMinutes(Integer.parseInt(arrTime[1]));
 
-		SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy hh:mm a");
+		Calendar cal = Calendar.getInstance();
+		cal.set(Calendar.DAY_OF_MONTH, Integer.parseInt(arrDate[0]));
+		cal.set(Calendar.MONTH, Integer.parseInt(arrDate[1]) - 1);
+		cal.set(Calendar.YEAR, Integer.parseInt(arrDate[2]));
+		cal.set(Calendar.HOUR_OF_DAY, Integer.parseInt(arrTime[0]));
+		cal.set(Calendar.MINUTE, Integer.parseInt(arrTime[1]));
 
-		return new String(dateFormat.format(date));
+		SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy hh:mm a", Locale.getDefault());
+
+		return new String(dateFormat.format(cal.getTime()));
 	}
-
-	/**
-	 * Add padding to numbers less than ten
-	 * @param pC
-	 * @return
-	 */
-	public static synchronized String pad(int pC) {
-		if (pC >= 10)
-			return String.valueOf(pC);
-		else
-			return "0" + String.valueOf(pC);
-	}
-
 }
