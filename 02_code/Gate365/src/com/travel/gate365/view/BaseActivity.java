@@ -1,5 +1,8 @@
 package com.travel.gate365.view;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -46,7 +49,8 @@ public abstract class BaseActivity extends Activity {
 	
 	private String id;
 	protected static ProgressDialog loading;	
-	
+	private Timer timer;
+
 	public BaseActivity(String id) {
 		this.id = id;
 	}
@@ -128,27 +132,45 @@ public abstract class BaseActivity extends Activity {
 	
 	protected void init() {
 		ActivityInfo info = Model.getInstance().retrieveActivityInfo(id);
-		if(info != null){
-			View view = (View)findViewById(R.id.titlebar);
-			ImageView img = (ImageView)view.findViewById(R.id.img_icon);
+		if (info != null) {
+			View view = (View) findViewById(R.id.titlebar);
+			ImageView img = (ImageView) view.findViewById(R.id.img_icon);
 			int maxHeight = Math.min(Model.getInstance().getScreenHeight() / 20, 128);
 			img.setLayoutParams(new RelativeLayout.LayoutParams(maxHeight, maxHeight));
-			TextView txtRight = (TextView)view.findViewById(R.id.txt_right);
-			txtRight.setText(DateTimeHelper.convertTimeToString(this, System.currentTimeMillis()));
-			
-			view = (View)findViewById(R.id.header);
-			if(view != null){
-				img = (ImageView)view.findViewById(R.id.img_icon);
+
+			final TextView lblDateTime = (TextView) view.findViewById(R.id.txt_right);
+
+			if (timer == null) {
+				TimerTask task = new TimerTask() {
+					public void run() {
+						if (lblDateTime != null) {
+							runOnUiThread(new Runnable() {
+		                        @Override
+		                        public void run() {
+		                        	lblDateTime.setText(DateTimeHelper.convertTimeToString(BaseActivity.this, System.currentTimeMillis()));
+		                        }
+		                    });
+						}
+					}
+				};
+
+				timer = new Timer();
+				timer.scheduleAtFixedRate(task, 100, 1000);
+			}
+
+			view = (View) findViewById(R.id.header);
+			if (view != null) {
+				img = (ImageView) view.findViewById(R.id.img_icon);
 				maxHeight = Math.min(Model.getInstance().getScreenHeight() / 15, 128);
 				img.setLayoutParams(new RelativeLayout.LayoutParams(maxHeight, maxHeight));
 				img.setImageResource(info.getIconResId());
-				
-				TextView txtLeft = (TextView)view.findViewById(R.id.txt_left);
+
+				TextView txtLeft = (TextView) view.findViewById(R.id.txt_left);
 				txtLeft.setText(info.getTitleResId());
-				if(info.getRightTextResId() != 0){
-					txtRight = (TextView)view.findViewById(R.id.txt_right);
-					txtRight.setText(info.getRightTextResId());			
-				}							
+				if (info.getRightTextResId() != 0) {
+					TextView txtRight = (TextView) view.findViewById(R.id.txt_right);
+					txtRight.setText(info.getRightTextResId());
+				}
 			}
 		}
 	}
@@ -223,5 +245,4 @@ public abstract class BaseActivity extends Activity {
 		
 		return (info != null && info.isAvailable() && info.isConnectedOrConnecting());
 	}
-    
 }
