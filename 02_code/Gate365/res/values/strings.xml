@@ -25,6 +25,7 @@
     <string name="no_internet_avaialbe">Make sure your internet connection is available</string>
     <string name="no_internet">No Internet Connection</string>
     <string name="login_failed">Login failed</string>
+    <string name="load_failed">Load failed</string>
     <string name="destinations">DESTINATIONS</string>
     <string name="flight_routing">FLIGHT ROUTING</string>    
     <string name="you_no_journeys">You have no journeys</string>    
@@ -47,7 +48,7 @@
     <string name="enable_location_tracking">Enable location tracking</string>
     <string name="frequency">Frequency</string>
     <string name="last_time">Last time</string>
-    <string name="last_lattitude">Last lattitude</string>
+    <string name="last_lattitude">Last latitude</string>
     <string name="last_longtitude">Last longtitude</string>
     <string name="seconds">seconds</string>
     <string name="exit_app">Exit application</string>

@@ -7,6 +7,7 @@ import java.util.TimerTask;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Rect;
 import android.net.ConnectivityManager;
@@ -41,12 +42,14 @@ public abstract class BaseActivity extends Activity {
 	protected static final int NOTE_LOAD_PLACE_SUCCESSFULLY = 8;
 	protected static final int NOTE_LOAD_RISK_SUCCESSFULLY = 9;
 	protected static final int NOTE_LOAD_TIP_SUCCESSFULLY = 10;
+	protected static final int NOTE_COULD_NOT_REQUEST_SERVER_DATA = 11;
 	protected static final String CONFIG_NAME = "config";
 	protected static final String IS_LOGIN = "isLogin";
 	protected static final String IS_GPS_TRACKING = "isGpsTracking";
 	protected static final String USERNAME = "username";
 	protected static final String PASSWORD = "password";
 
+	protected static final int FINISH_CODE = 0;
 	protected static final int RESULT_LOGOUT = 99;
 
 	private String id;
@@ -90,6 +93,22 @@ public abstract class BaseActivity extends Activity {
 		return super.onMenuItemSelected(featureId, item);
 	}
 
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		switch (requestCode) {
+		case FINISH_CODE:
+			if(resultCode == RESULT_LOGOUT){
+				setResult(RESULT_LOGOUT);
+				finish();
+			}
+			break;
+
+		default:
+			super.onActivityResult(requestCode, resultCode, data);
+			break;
+		}
+	}
+	
 	@Override
 	public boolean dispatchTouchEvent(MotionEvent ev) {
 		if (ev.getAction() == MotionEvent.ACTION_UP) {
@@ -234,12 +253,10 @@ public abstract class BaseActivity extends Activity {
 					activity.init();
 					break;
 
-				case NOTE_LOAD_JOURNEY_SUCCESSFULLY:
+				case NOTE_COULD_NOT_REQUEST_SERVER_DATA:
+					DialogHelper.alert(activity, R.string.load_failed, R.string.could_not_connect_server);
 					break;
-
-				case NOTE_LOAD_JOURNEY_FAILED:
-					break;
-
+						
 				default:
 					break;
 				}

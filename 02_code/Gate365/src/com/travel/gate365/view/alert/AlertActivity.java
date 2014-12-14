@@ -18,6 +18,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.travel.gate365.R;
+import com.travel.gate365.helper.DialogHelper;
 import com.travel.gate365.model.Model;
 import com.travel.gate365.service.ServiceManager;
 import com.travel.gate365.view.BaseActivity;
@@ -65,7 +66,7 @@ public class AlertActivity extends BaseActivity implements OnItemClickListener{
 		Log.i(getId(), "::onItemClick - pos:" + itemPos + ", id:" + itemId);
 		Intent intent = new Intent(this, AlertDetailActivity.class);
 		intent.putExtra(AlertDetailActivity.ALERT_ID, itemId);
-		startActivity(intent);
+		startActivityForResult(intent, FINISH_CODE);
 	}
 	
 	@Override
@@ -76,6 +77,11 @@ public class AlertActivity extends BaseActivity implements OnItemClickListener{
 			android.os.Message msg = new Message();
 			msg.what = BaseActivity.NOTE_LOAD_ALERT_SUCCESSFULLY;
 			notificationHandler.sendMessage(msg);	
+			return;
+		}
+		
+		if(!isNetworkAvailable()){
+			DialogHelper.alert(this, R.string.no_internet, R.string.no_internet_avaialbe, null);
 			return;
 		}
 		
@@ -95,9 +101,10 @@ public class AlertActivity extends BaseActivity implements OnItemClickListener{
 					msg.what = BaseActivity.NOTE_LOAD_ALERT_SUCCESSFULLY;
 					notificationHandler.sendMessage(msg);						
 				} catch (Exception e) {
+					loading.dismiss();					
 					e.printStackTrace();
 					android.os.Message msg = new Message();
-					msg.what = BaseActivity.NOTE_COULD_NOT_CONNECT_SERVER;
+					msg.what = BaseActivity.NOTE_COULD_NOT_REQUEST_SERVER_DATA;
 					notificationHandler.sendMessage(msg);												
 				}
 			}

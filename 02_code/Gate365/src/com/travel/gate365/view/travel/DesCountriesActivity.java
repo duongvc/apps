@@ -1,5 +1,7 @@
 package com.travel.gate365.view.travel;
 
+import java.lang.ref.WeakReference;
+
 import org.json.JSONObject;
 
 import android.app.ProgressDialog;
@@ -8,6 +10,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -16,6 +19,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.travel.gate365.R;
+import com.travel.gate365.helper.DialogHelper;
 import com.travel.gate365.model.Model;
 import com.travel.gate365.service.ServiceManager;
 import com.travel.gate365.view.BaseActivity;
@@ -78,6 +82,13 @@ public class DesCountriesActivity extends BaseActivity implements OnItemClickLis
 	}
 	
 	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getMenuInflater().inflate(R.menu.activity_refresh, menu);
+		
+		return true;
+	}
+	
+	@Override
 	protected void load(boolean checkDataExist) {
 		super.load(checkDataExist);
 		
@@ -85,6 +96,11 @@ public class DesCountriesActivity extends BaseActivity implements OnItemClickLis
 			android.os.Message msg = new Message();
 			msg.what = BaseActivity.NOTE_LOAD_PLACE_SUCCESSFULLY;
 			notificationHandler.sendMessage(msg);	
+			return;
+		}
+		
+		if(!isNetworkAvailable()){
+			DialogHelper.alert(this, R.string.no_internet, R.string.no_internet_avaialbe, null);
 			return;
 		}
 		
@@ -104,9 +120,10 @@ public class DesCountriesActivity extends BaseActivity implements OnItemClickLis
 					msg.what = BaseActivity.NOTE_LOAD_PLACE_SUCCESSFULLY;
 					notificationHandler.sendMessage(msg);						
 				} catch (Exception e) {
+					loading.dismiss();					
 					e.printStackTrace();
 					android.os.Message msg = new Message();
-					msg.what = BaseActivity.NOTE_COULD_NOT_CONNECT_SERVER;
+					msg.what = BaseActivity.NOTE_COULD_NOT_REQUEST_SERVER_DATA;
 					notificationHandler.sendMessage(msg);												
 				}
 			}
@@ -128,26 +145,36 @@ public class DesCountriesActivity extends BaseActivity implements OnItemClickLis
 			default:return;
 		}
 		intent.putExtra(DesCountriesActivity.COUNTRY_ID, itemId);
-		startActivity(intent);
+		startActivityForResult(intent, FINISH_CODE);
 	}
 	
-	protected final Handler notificationHandler = new Handler(){
+	protected final Handler notificationHandler = new MyHandler(this);
+
+	private static final class MyHandler extends Handler {
+		private final WeakReference<DesCountriesActivity> mActivity;
+
+		public MyHandler(DesCountriesActivity activity) {
+			mActivity = new WeakReference<DesCountriesActivity>(activity);
+		}
 		public void handleMessage(android.os.Message msg) {
-			switch (msg.what) {
-			case BaseActivity.NOTE_LOAD_PLACE_SUCCESSFULLY:
-				if(Model.getInstance().getPlaces().length > 0){
-					txtMessage.setVisibility(View.GONE);
-					adapter = new PlaceItemAdapter(DesCountriesActivity.this, Model.getInstance().getPlaces(), R.layout.place_item);
-					lstMenu.setAdapter(adapter);
-					lstMenu.setOnItemClickListener(DesCountriesActivity.this);								
-				}else{
-					txtMessage.setVisibility(View.VISIBLE);
+			DesCountriesActivity activity = mActivity.get();
+			if (activity != null) {
+				switch (msg.what) {
+				case BaseActivity.NOTE_LOAD_PLACE_SUCCESSFULLY:
+					if(Model.getInstance().getPlaces().length > 0){
+						activity.txtMessage.setVisibility(View.GONE);
+						activity.adapter = new PlaceItemAdapter(activity, Model.getInstance().getPlaces(), R.layout.place_item);
+						activity.lstMenu.setAdapter(activity.adapter);
+						activity.lstMenu.setOnItemClickListener(activity);								
+					}else{
+						activity.txtMessage.setVisibility(View.VISIBLE);
+					}
+					loading.dismiss();					
+					break;
+					
+				default: 
+					break;
 				}
-				loading.dismiss();					
-				break;
-				
-			default: 
-				break;
 			}
 		};		
 	};

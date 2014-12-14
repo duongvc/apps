@@ -70,11 +70,6 @@ public class JourneysActivity extends BaseActivity implements OnItemClickListene
 	protected void load(boolean checkDataExist) {		
 		super.load(checkDataExist);
 		
-		if(!isNetworkAvailable()){
-			DialogHelper.alert(this, R.string.no_internet, R.string.no_internet_avaialbe, null);
-			return;
-		}
-		
 		Log.i(getId(), "checkDataExist:" + checkDataExist);
 		if(checkDataExist && Model.getInstance().getJourneys().length > 0){
 			android.os.Message msg = new Message();
@@ -82,6 +77,11 @@ public class JourneysActivity extends BaseActivity implements OnItemClickListene
 			notificationHandler.sendMessage(msg);	
 			return;
 		}
+		if(!isNetworkAvailable()){
+			DialogHelper.alert(this, R.string.no_internet, R.string.no_internet_avaialbe, null);
+			return;
+		}
+		
 			if(loading == null || (loading != null && !loading.isShowing())){
 				loading = ProgressDialog.show(this, "", getString(R.string.loading_pls_wait)); 
 				loading.show();
@@ -98,9 +98,10 @@ public class JourneysActivity extends BaseActivity implements OnItemClickListene
 						msg.what = BaseActivity.NOTE_LOAD_JOURNEY_SUCCESSFULLY;
 						notificationHandler.sendMessage(msg);						
 					} catch (Exception e) {
+						loading.dismiss();					
 						e.printStackTrace();
 						android.os.Message msg = new Message();
-						msg.what = BaseActivity.NOTE_COULD_NOT_CONNECT_SERVER;
+						msg.what = BaseActivity.NOTE_COULD_NOT_REQUEST_SERVER_DATA;
 						msg.obj = e.getMessage();
 						notificationHandler.sendMessage(msg);												
 					}
@@ -114,7 +115,7 @@ public class JourneysActivity extends BaseActivity implements OnItemClickListene
 		Log.i(getId(), "::onItemSelected - pos:" + itemPos + ", id:" + itemId);
 		Intent intent = new Intent(this, JourneyDetailActivity.class);
 		intent.putExtra(JourneyDetailActivity.JOURNEY_ID, itemId);
-		startActivity(intent);
+		startActivityForResult(intent, FINISH_CODE);
 	}
 
 	protected final Handler notificationHandler = new MyHandler(this);
@@ -143,10 +144,6 @@ public class JourneysActivity extends BaseActivity implements OnItemClickListene
 					} else {
 						activity.txtMessage.setVisibility(View.VISIBLE);
 					}
-					break;
-
-				case NOTE_COULD_NOT_CONNECT_SERVER:
-					DialogHelper.alert(activity, "Error", (String) msg.obj);
 					break;
 
 				default:

@@ -42,8 +42,7 @@
 		        android:layout_toRightOf="@id/img_icon"
 	            android:layout_centerVertical="true"
 		        style="@style/CommonTextViewStyle"
-		        android:padding="5dp"
-		        android:text="FRANCE"/>
+		        android:padding="5dp"/>
 		    	    	    	    
 	</RelativeLayout>
 	
@@ -59,16 +58,14 @@
         android:layout_gravity="right"
         style="@style/CommonTextViewStyle"
         android:padding="5dp"
-        android:textSize="10sp"
-        android:text="17-10-2014 06::44 AM"/>
+        android:textSize="10sp"/>
 
     <com.travel.gate365.view.widget.FontableTextView android:id="@id/txt_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         style="@style/CommonTextViewStyle"
         android:textColor="@color/light_green"
-        android:padding="5dp"
-        android:text="Title Title Title Title Title Title "/>
+        android:padding="5dp"/>
     	
     <com.travel.gate365.view.widget.FontableWebView android:id="@id/txt_message"
         android:layout_width="match_parent"

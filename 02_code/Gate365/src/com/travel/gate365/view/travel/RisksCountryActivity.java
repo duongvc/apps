@@ -6,20 +6,18 @@ import java.util.Locale;
 import org.json.JSONObject;
 
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
+import android.view.Menu;
 import android.view.View;
 import android.webkit.WebView;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.travel.gate365.R;
+import com.travel.gate365.helper.DialogHelper;
 import com.travel.gate365.helper.ResourceHelper;
 import com.travel.gate365.model.ArticleItemInfo;
 import com.travel.gate365.model.Model;
@@ -27,7 +25,7 @@ import com.travel.gate365.model.PlaceInfo;
 import com.travel.gate365.service.ServiceManager;
 import com.travel.gate365.view.BaseActivity;
 
-public class RisksCountryActivity extends BaseActivity implements OnItemClickListener {
+public class RisksCountryActivity extends BaseActivity {
 
 	private TextView txtMessage;
 
@@ -92,8 +90,20 @@ public class RisksCountryActivity extends BaseActivity implements OnItemClickLis
 	}
 	
 	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getMenuInflater().inflate(R.menu.activity_refresh, menu);
+		
+		return true;
+	}
+	
+	@Override
 	protected void load(boolean checkDataExist) {
 		super.load(checkDataExist);
+		
+		if(!isNetworkAvailable()){
+			DialogHelper.alert(this, R.string.no_internet, R.string.no_internet_avaialbe, null);
+			return;
+		}
 		
 		if(loading == null || (loading != null && !loading.isShowing())){
 			loading = ProgressDialog.show(this, "", getString(R.string.loading_pls_wait)); 
@@ -114,9 +124,10 @@ public class RisksCountryActivity extends BaseActivity implements OnItemClickLis
 					msg.obj = Model.getInstance().parserCountryRisks(res);
 					notificationHandler.sendMessage(msg);						
 				} catch (Exception e) {
+					loading.dismiss();					
 					e.printStackTrace();
 					android.os.Message msg = new Message();
-					msg.what = BaseActivity.NOTE_COULD_NOT_CONNECT_SERVER;
+					msg.what = BaseActivity.NOTE_COULD_NOT_REQUEST_SERVER_DATA;
 					notificationHandler.sendMessage(msg);												
 				}
 			}
@@ -125,15 +136,6 @@ public class RisksCountryActivity extends BaseActivity implements OnItemClickLis
 		thread.start();				
 		
 		
-	}
-
-	@Override
-	public void onItemClick(AdapterView<?> adapter, View view, int itemPos, long itemId) {
-		Log.i(getId(), "::onItemSelected - pos:" + itemPos + ", id:" + itemId);
-		Intent intent = new Intent(this, AdviceDetailActivity.class);
-		intent.putExtra(AdviceDetailActivity.ADVICE_ID, itemId);
-		intent.putExtra(DesCountriesActivity.COUNTRY_ID, getIntent().getExtras().getLong(DesCountriesActivity.COUNTRY_ID));
-		startActivity(intent);
 	}
 
 	protected final Handler notificationHandler = new MyHandler(this);

@@ -38,7 +38,6 @@ import com.travel.gate365.view.travel.DesCountriesActivity;
 
 public class Gate365Activity extends BaseActivity implements OnItemClickListener {
 
-	private static final int FINISH_CODE = 0;
 	private TextView edtUsername;
 	private TextView edtPassword;
 	private HomeMenuItemAdapter adapter;
@@ -70,20 +69,6 @@ public class Gate365Activity extends BaseActivity implements OnItemClickListener
 		init();
 	}
 
-	/*@Override
-	public void onConfigurationChanged(Configuration newConfig) {
-		super.onConfigurationChanged(newConfig);
-		
-		GridView grdMenu = (GridView)findViewById(R.id.layout_content);
-		adapter = new HomeMenuItemAdapter(this, Model.MENU_LIST);
-		if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT){
-			grdMenu.setNumColumns(1);
-		}else{
-			grdMenu.setNumColumns(2);
-		}	
-		grdMenu.setAdapter(adapter);
-	}*/
-	
 	@Override
 	protected void init() {
 		super.init();
@@ -134,9 +119,9 @@ public class Gate365Activity extends BaseActivity implements OnItemClickListener
 			break;
 
 		default:
+			super.onActivityResult(requestCode, resultCode, data);
 			break;
 		}
-		super.onActivityResult(requestCode, resultCode, data);
 	}
 	
 	@Override
@@ -229,7 +214,7 @@ public class Gate365Activity extends BaseActivity implements OnItemClickListener
 				} catch (Exception e) {
 					e.printStackTrace();
 					android.os.Message msg = new Message();
-					msg.what = BaseActivity.NOTE_COULD_NOT_CONNECT_SERVER;
+					msg.what = BaseActivity.NOTE_COULD_NOT_REQUEST_SERVER_DATA;
 					notificationHandler.sendMessage(msg);												
 				}
 			}

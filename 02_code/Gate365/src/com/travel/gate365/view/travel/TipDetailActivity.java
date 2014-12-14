@@ -41,6 +41,10 @@ public class TipDetailActivity extends BaseActivity {
 	protected void init() {
 		super.init();
 
+		View view = (View)findViewById(R.id.header);
+		ImageView icRefresh = (ImageView)view.findViewById(R.id.img_refresh);
+		icRefresh.setVisibility(View.INVISIBLE);
+		
 		View layoutContent = findViewById(R.id.layout_content);
 		long countryId = getIntent().getExtras().getLong(DesCountriesActivity.COUNTRY_ID);
 		PlaceInfo place = Model.getInstance().getPlace(String.valueOf(countryId));
