@@ -1,5 +1,7 @@
 package com.travel.gate365.view.alert;
 
+import java.lang.ref.WeakReference;
+
 import org.json.JSONObject;
 
 import android.app.ProgressDialog;
@@ -19,7 +21,6 @@ import com.travel.gate365.R;
 import com.travel.gate365.model.Model;
 import com.travel.gate365.service.ServiceManager;
 import com.travel.gate365.view.BaseActivity;
-import com.travel.gate365.view.journeys.JourneyDetailActivity;
 
 public class AlertActivity extends BaseActivity implements OnItemClickListener{
 
@@ -105,26 +106,39 @@ public class AlertActivity extends BaseActivity implements OnItemClickListener{
 		thread.start();				
 		
 	}
-	
-	protected final Handler notificationHandler = new Handler(){
-		public void handleMessage(android.os.Message msg) {
-			switch (msg.what) {
-			case BaseActivity.NOTE_LOAD_ALERT_SUCCESSFULLY:
-				loading.dismiss();					
-				if(Model.getInstance().getAlerts().length > 0){
-					txtMessage.setVisibility(View.GONE);
-					adapter = new AlertItemAdapter(AlertActivity.this, Model.getInstance().getAlerts());
-					lstMenu.setAdapter(adapter);
-					lstMenu.setOnItemClickListener(AlertActivity.this);								
-				}else{
-					txtMessage.setVisibility(View.VISIBLE);
+
+	protected final Handler notificationHandler = new MyHandler(this);
+
+	private static final class MyHandler extends Handler {
+		private final WeakReference<AlertActivity> mActivity;
+
+		public MyHandler(AlertActivity activity) {
+			mActivity = new WeakReference<AlertActivity>(activity);
+		}
+
+		@Override
+		public void handleMessage(Message msg) {
+			AlertActivity activity = mActivity.get();
+			if (activity != null) {
+				if (loading != null) {
+					loading.dismiss();
 				}
-				break;
-				
-			default: 
-				break;
+				switch (msg.what) {
+				case BaseActivity.NOTE_LOAD_ALERT_SUCCESSFULLY:
+					if (Model.getInstance().getAlerts().length > 0) {
+						activity.txtMessage.setVisibility(View.GONE);
+						activity.adapter = new AlertItemAdapter(activity, Model.getInstance().getAlerts());
+						activity.lstMenu.setAdapter(activity.adapter);
+						activity.lstMenu.setOnItemClickListener(activity);
+					} else {
+						activity.txtMessage.setVisibility(View.VISIBLE);
+					}
+					break;
+
+				default:
+					break;
+				}
 			}
-		};		
-	};
-	
+		}
+	}
 }

@@ -3,7 +3,6 @@ package com.travel.gate365.view.travel;
 import java.util.Locale;
 
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.ImageView;

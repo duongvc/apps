@@ -1,5 +1,6 @@
 package com.travel.gate365.view.travel;
 
+import java.lang.ref.WeakReference;
 import java.util.Locale;
 
 import org.json.JSONObject;
@@ -15,12 +16,10 @@ import android.webkit.WebView;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.travel.gate365.R;
-import com.travel.gate365.helper.DateTimeHelper;
 import com.travel.gate365.helper.ResourceHelper;
 import com.travel.gate365.model.ArticleItemInfo;
 import com.travel.gate365.model.Model;
@@ -28,7 +27,7 @@ import com.travel.gate365.model.PlaceInfo;
 import com.travel.gate365.service.ServiceManager;
 import com.travel.gate365.view.BaseActivity;
 
-public class RisksCountryActivity  extends BaseActivity implements OnItemClickListener {
+public class RisksCountryActivity extends BaseActivity implements OnItemClickListener {
 
 	private TextView txtMessage;
 
@@ -136,33 +135,42 @@ public class RisksCountryActivity  extends BaseActivity implements OnItemClickLi
 		intent.putExtra(DesCountriesActivity.COUNTRY_ID, getIntent().getExtras().getLong(DesCountriesActivity.COUNTRY_ID));
 		startActivity(intent);
 	}
-	
-	protected final Handler notificationHandler = new Handler(){
-		public void handleMessage(android.os.Message msg) {
-			switch (msg.what) {
-			case BaseActivity.NOTE_LOAD_RISK_SUCCESSFULLY:
-				if(msg.obj != null){
-					txtMessage.setVisibility(View.GONE);
-					
-					ArticleItemInfo info = (ArticleItemInfo)msg.obj;
-					String htmlText = "<html><head>"
-					          + "<style type=\"text/css\">body{color: #fff; background-color: #000;}"
-					          + "</style></head>"
-					          + "<body>"                          
-					          + info.getDetail()
-					          + "</body></html>";
-					((WebView)findViewById(R.id.txt_details)).loadData(htmlText, "text/html", "utf-8");
-					
-				}else{					
-					txtMessage.setVisibility(View.VISIBLE);
-				}
-				loading.dismiss();					
-				break;
-				
-			default: 
-				break;
-			}
-		};		
-	};
 
+	protected final Handler notificationHandler = new MyHandler(this);
+
+	private static final class MyHandler extends Handler {
+		private final WeakReference<RisksCountryActivity> mActivity;
+
+		public MyHandler(RisksCountryActivity activity) {
+			mActivity = new WeakReference<RisksCountryActivity>(activity);
+		}
+
+		@Override
+		public void handleMessage(Message msg) {
+			RisksCountryActivity activity = mActivity.get();
+			if (activity != null) {
+				if (loading != null) {
+					loading.dismiss();
+				}
+				switch (msg.what) {
+				case BaseActivity.NOTE_LOAD_RISK_SUCCESSFULLY:
+					if (msg.obj != null) {
+						activity.txtMessage.setVisibility(View.GONE);
+
+						ArticleItemInfo info = (ArticleItemInfo) msg.obj;
+						String htmlText = "<html><head>" + "<style type=\"text/css\">body{color: #fff; background-color: #000;}" + "</style></head>"
+								+ "<body>" + info.getDetail() + "</body></html>";
+						((WebView) activity.findViewById(R.id.txt_details)).loadData(htmlText, "text/html", "utf-8");
+
+					} else {
+						activity.txtMessage.setVisibility(View.VISIBLE);
+					}
+					break;
+
+				default:
+					break;
+				}
+			}
+		}
+	}
 }

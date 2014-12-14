@@ -1,5 +1,6 @@
 package com.travel.gate365.view.travel;
 
+import java.lang.ref.WeakReference;
 import java.util.Locale;
 
 import org.json.JSONObject;
@@ -24,7 +25,6 @@ import com.travel.gate365.model.Model;
 import com.travel.gate365.model.PlaceInfo;
 import com.travel.gate365.service.ServiceManager;
 import com.travel.gate365.view.BaseActivity;
-import com.travel.gate365.view.journeys.JourneyDetailActivity;
 
 public class AdvicesActivity extends BaseActivity implements OnItemClickListener {
 
@@ -145,26 +145,39 @@ public class AdvicesActivity extends BaseActivity implements OnItemClickListener
 		intent.putExtra(DesCountriesActivity.COUNTRY_ID, getIntent().getExtras().getLong(DesCountriesActivity.COUNTRY_ID));
 		startActivity(intent);
 	}
-	
-	protected final Handler notificationHandler = new Handler(){
-		public void handleMessage(android.os.Message msg) {
-			switch (msg.what) {
-			case BaseActivity.NOTE_LOAD_ADVICE_SUCCESSFULLY:
-				if(Model.getInstance().getAdvices().length > 0){
-					txtMessage.setVisibility(View.GONE);
-					adapter = new AdviceItemAdapter(AdvicesActivity.this, Model.getInstance().getAdvices(), R.layout.advice_item);
-					lstMenu.setAdapter(adapter);
-					lstMenu.setOnItemClickListener(AdvicesActivity.this);								
-				}else{
-					txtMessage.setVisibility(View.VISIBLE);
+
+	protected final Handler notificationHandler = new MyHandler(this);
+
+	private static final class MyHandler extends Handler {
+		private final WeakReference<AdvicesActivity> mActivity;
+
+		public MyHandler(AdvicesActivity activity) {
+			mActivity = new WeakReference<AdvicesActivity>(activity);
+		}
+
+		@Override
+		public void handleMessage(Message msg) {
+			AdvicesActivity activity = mActivity.get();
+			if (activity != null) {
+				if (loading != null) {
+					loading.dismiss();
 				}
-				loading.dismiss();					
-				break;
-				
-			default: 
-				break;
+				switch (msg.what) {
+				case BaseActivity.NOTE_LOAD_ADVICE_SUCCESSFULLY:
+					if (Model.getInstance().getAdvices().length > 0) {
+						activity.txtMessage.setVisibility(View.GONE);
+						activity.adapter = new AdviceItemAdapter(activity, Model.getInstance().getAdvices(), R.layout.advice_item);
+						activity.lstMenu.setAdapter(activity.adapter);
+						activity.lstMenu.setOnItemClickListener(activity);
+					} else {
+						activity.txtMessage.setVisibility(View.VISIBLE);
+					}
+					break;
+
+				default:
+					break;
+				}
 			}
-		};		
-	};
-	
+		}
+	}
 }
