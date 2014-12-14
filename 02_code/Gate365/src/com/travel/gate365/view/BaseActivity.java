@@ -1,5 +1,6 @@
 package com.travel.gate365.view;
 
+import java.lang.ref.WeakReference;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -11,6 +12,7 @@ import android.graphics.Rect;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Handler;
+import android.os.Message;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -193,45 +195,57 @@ public abstract class BaseActivity extends Activity {
 		this.id = id;
 	}
 
-	protected final Handler notificationHandler = new Handler() {
-		public void handleMessage(android.os.Message msg) {
-			if (loading != null) {
-				loading.dismiss();
+	protected final Handler notificationHandler = new MyHandler(this);
+
+	private static final class MyHandler extends Handler {
+		private final WeakReference<BaseActivity> mActivity;
+
+		public MyHandler(BaseActivity activity) {
+			mActivity = new WeakReference<BaseActivity>(activity);
+		}
+
+		@Override
+		public void handleMessage(Message msg) {
+			BaseActivity activity = mActivity.get();
+			if (activity != null) {
+				if (loading != null) {
+					loading.dismiss();
+				}
+				switch (msg.what) {
+				case NOTE_LOGIN_SUCCESSFULLY:
+					SharedPreferences pref = activity.getSharedPreferences(CONFIG_NAME, MODE_PRIVATE);
+					SharedPreferences.Editor editor = pref.edit();
+					editor.putBoolean(IS_LOGIN, true);
+					editor.putString(USERNAME, Model.getInstance().getUserInfo().getUsername());
+					editor.putString(PASSWORD, Model.getInstance().getUserInfo().getPassword());
+					editor.commit();
+
+					activity.setContentView(R.layout.activity_home);
+					activity.init();
+					break;
+
+				case NOTE_LOGIN_FAILED:
+					DialogHelper.alert(activity, R.string.login_failed, R.string.invalid_username_pass);
+					break;
+
+				case NOTE_COULD_NOT_CONNECT_SERVER:
+					DialogHelper.alert(activity, R.string.login_failed, R.string.could_not_connect_server);
+					activity.setContentView(R.layout.activity_home);
+					activity.init();
+					break;
+
+				case NOTE_LOAD_JOURNEY_SUCCESSFULLY:
+					break;
+
+				case NOTE_LOAD_JOURNEY_FAILED:
+					break;
+
+				default:
+					break;
+				}
 			}
-			switch (msg.what) {
-			case NOTE_LOGIN_SUCCESSFULLY:
-				SharedPreferences pref = getSharedPreferences(CONFIG_NAME, MODE_PRIVATE);
-				SharedPreferences.Editor editor = pref.edit();
-				editor.putBoolean(IS_LOGIN, true);
-				editor.putString(USERNAME, Model.getInstance().getUserInfo().getUsername());
-				editor.putString(PASSWORD, Model.getInstance().getUserInfo().getPassword());
-				editor.commit();
-
-				BaseActivity.this.setContentView(R.layout.activity_home);
-				BaseActivity.this.init();
-				break;
-
-			case NOTE_LOGIN_FAILED:
-				DialogHelper.alert(BaseActivity.this, R.string.login_failed, R.string.invalid_username_pass);
-				break;
-
-			case NOTE_COULD_NOT_CONNECT_SERVER:
-				DialogHelper.alert(BaseActivity.this, R.string.login_failed, R.string.could_not_connect_server);
-				BaseActivity.this.setContentView(R.layout.activity_home);
-				BaseActivity.this.init();
-				break;
-
-			case NOTE_LOAD_JOURNEY_SUCCESSFULLY:
-				break;
-
-			case NOTE_LOAD_JOURNEY_FAILED:
-				break;
-
-			default:
-				break;
-			}
-		};
-	};
+		}
+	}
 
 	/**
 	 * Determines if network is available or not. 
