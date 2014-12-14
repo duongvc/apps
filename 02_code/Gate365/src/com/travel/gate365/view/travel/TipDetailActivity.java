@@ -20,6 +20,7 @@ import com.travel.gate365.view.BaseActivity;
 public class TipDetailActivity extends BaseActivity {
 
 	public static final String TIP_ID = "tipId";
+	private WebView webView;
 	
 	public TipDetailActivity() {
 		super(TipDetailActivity.class.getSimpleName()); 
@@ -36,7 +37,7 @@ public class TipDetailActivity extends BaseActivity {
 		
 		
 	}
-	
+		
 	@Override
 	protected void init() {
 		super.init();
@@ -92,7 +93,17 @@ public class TipDetailActivity extends BaseActivity {
 		          + "<body>"                          
 		          + info.getDetail()
 		          + "</body></html>";
-		((WebView)findViewById(R.id.txt_message)).loadData(htmlText, "text/html", "utf-8");
+		webView = (WebView)findViewById(R.id.txt_message);
+		webView.loadData(htmlText, "text/html", "utf-8");
+	}
+	
+	@Override
+	public void onBackPressed() {
+		if(webView.canGoBack()){
+			webView.goBack();
+		}else{
+			super.onBackPressed();
+		}
 	}
 	
 }

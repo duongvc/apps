@@ -28,6 +28,7 @@ import com.travel.gate365.view.BaseActivity;
 public class RisksCountryActivity extends BaseActivity {
 
 	private TextView txtMessage;
+	private WebView webView;
 
 	public RisksCountryActivity() {
 		super(RisksCountryActivity.class.getSimpleName()); 
@@ -85,7 +86,8 @@ public class RisksCountryActivity extends BaseActivity {
 		txtRisktype.setBackgroundResource(bgResId);
 		
 		txtMessage = (TextView)findViewById(R.id.txt_message);
-		
+		webView = (WebView)findViewById(R.id.txt_details);
+				
 		load(true);
 	}
 	
@@ -138,6 +140,15 @@ public class RisksCountryActivity extends BaseActivity {
 		
 	}
 
+	@Override
+	public void onBackPressed() {
+		if(webView.canGoBack()){
+			webView.goBack();
+		}else{
+			super.onBackPressed();
+		}
+	}
+	
 	protected final Handler notificationHandler = new MyHandler(this);
 
 	private static final class MyHandler extends Handler {
@@ -162,7 +173,7 @@ public class RisksCountryActivity extends BaseActivity {
 						ArticleItemInfo info = (ArticleItemInfo) msg.obj;
 						String htmlText = "<html><head>" + "<style type=\"text/css\">body{color: #fff; background-color: #000;}" + "</style></head>"
 								+ "<body>" + info.getDetail() + "</body></html>";
-						((WebView) activity.findViewById(R.id.txt_details)).loadData(htmlText, "text/html", "utf-8");
+						activity.webView.loadData(htmlText, "text/html", "utf-8");
 
 					} else {
 						activity.txtMessage.setVisibility(View.VISIBLE);
