@@ -126,7 +126,6 @@ public class RisksCountryActivity extends BaseActivity {
 					msg.obj = Model.getInstance().parserCountryRisks(res);
 					notificationHandler.sendMessage(msg);						
 				} catch (Exception e) {
-					loading.dismiss();					
 					e.printStackTrace();
 					android.os.Message msg = new Message();
 					msg.what = BaseActivity.NOTE_COULD_NOT_REQUEST_SERVER_DATA;
@@ -180,6 +179,10 @@ public class RisksCountryActivity extends BaseActivity {
 					}
 					break;
 
+				case NOTE_COULD_NOT_REQUEST_SERVER_DATA:
+					DialogHelper.alert(activity, R.string.load_failed, R.string.could_not_connect_server);
+					break;
+					
 				default:
 					break;
 				}

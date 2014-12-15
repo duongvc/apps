@@ -131,7 +131,6 @@ public class AdvicesActivity extends BaseActivity implements OnItemClickListener
 					msg.what = BaseActivity.NOTE_LOAD_ADVICE_SUCCESSFULLY;
 					notificationHandler.sendMessage(msg);						
 				} catch (Exception e) {
-					loading.dismiss();					
 					e.printStackTrace();
 					android.os.Message msg = new Message();
 					msg.what = BaseActivity.NOTE_COULD_NOT_REQUEST_SERVER_DATA;
@@ -182,6 +181,10 @@ public class AdvicesActivity extends BaseActivity implements OnItemClickListener
 					}
 					break;
 
+				case NOTE_COULD_NOT_REQUEST_SERVER_DATA:
+					DialogHelper.alert(activity, R.string.load_failed, R.string.could_not_connect_server);
+					break;
+					
 				default:
 					break;
 				}

@@ -14,6 +14,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -225,6 +226,7 @@ public abstract class BaseActivity extends Activity {
 
 		@Override
 		public void handleMessage(Message msg) {
+			Log.i(BaseActivity.class.getSimpleName(), "msg.what:" + msg.what);
 			BaseActivity activity = mActivity.get();
 			if (activity != null) {
 				if (loading != null) {

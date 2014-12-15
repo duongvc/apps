@@ -98,7 +98,6 @@ public class JourneysActivity extends BaseActivity implements OnItemClickListene
 						msg.what = BaseActivity.NOTE_LOAD_JOURNEY_SUCCESSFULLY;
 						notificationHandler.sendMessage(msg);						
 					} catch (Exception e) {
-						loading.dismiss();					
 						e.printStackTrace();
 						android.os.Message msg = new Message();
 						msg.what = BaseActivity.NOTE_COULD_NOT_REQUEST_SERVER_DATA;
@@ -146,6 +145,10 @@ public class JourneysActivity extends BaseActivity implements OnItemClickListene
 					}
 					break;
 
+				case NOTE_COULD_NOT_REQUEST_SERVER_DATA:
+					DialogHelper.alert(activity, R.string.load_failed, R.string.could_not_connect_server);
+					break;
+					
 				default:
 					break;
 				}

@@ -129,7 +129,6 @@ public class TipCountryActivity  extends BaseActivity implements OnItemClickList
 					msg.obj = Model.getInstance().parserCountryTips(res);
 					notificationHandler.sendMessage(msg);						
 				} catch (Exception e) {
-					loading.dismiss();
 					e.printStackTrace();
 					android.os.Message msg = new Message();
 					msg.what = BaseActivity.NOTE_COULD_NOT_REQUEST_SERVER_DATA;
@@ -176,6 +175,11 @@ public class TipCountryActivity  extends BaseActivity implements OnItemClickList
 						activity.txtMessage.setVisibility(View.VISIBLE);
 					}
 					loading.dismiss();					
+					break;
+					
+				case NOTE_COULD_NOT_REQUEST_SERVER_DATA:
+					loading.dismiss();
+					DialogHelper.alert(activity, R.string.load_failed, R.string.could_not_connect_server);
 					break;
 					
 				default: 
