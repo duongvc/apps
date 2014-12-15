@@ -1,5 +1,7 @@
 package com.travel.gate365;
 
+import java.lang.ref.WeakReference;
+
 import org.json.JSONObject;
 
 import android.app.ProgressDialog;
@@ -9,6 +11,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -197,11 +200,6 @@ public class Gate365Activity extends BaseActivity implements OnItemClickListener
 						}else{
 							Model.getInstance().paserLoginInfo(edtUsername.getText().toString(), edtPassword.getText().toString());	
 						}
-						/*try{
-							Model.getInstance().paserConfiguration(ServiceManager.getConfiguration(Model.getInstance().getUserInfo().getUsername(), Model.getInstance().getUserInfo().getPassword()));
-						}catch(JSONException jsonEx){
-							jsonEx.printStackTrace();
-						}*/						
 						
 						android.os.Message msg = new Message();
 						msg.what = BaseActivity.NOTE_LOGIN_SUCCESSFULLY;
@@ -310,5 +308,49 @@ public class Gate365Activity extends BaseActivity implements OnItemClickListener
 	    }
 	 
 	};
-	
+
+	protected final Handler notificationHandler = new MyHandler(this);
+
+	private static final class MyHandler extends Handler {
+		private final WeakReference<Gate365Activity> mActivity;
+
+		public MyHandler(Gate365Activity activity) {
+			mActivity = new WeakReference<Gate365Activity>(activity);
+		}
+
+		@Override
+		public void handleMessage(Message msg) {
+			Log.i(BaseActivity.class.getSimpleName(), "msg.what:" + msg.what);
+			Gate365Activity activity = mActivity.get();
+			if (activity != null) {
+				if (loading != null) {
+					loading.dismiss();
+				}
+				switch (msg.what) {
+				case NOTE_LOGIN_SUCCESSFULLY:
+					SharedPreferences pref = activity.getSharedPreferences(CONFIG_NAME, MODE_PRIVATE);
+					SharedPreferences.Editor editor = pref.edit();
+					editor.putBoolean(IS_LOGIN, true);
+					editor.putString(USERNAME, Model.getInstance().getUserInfo().getUsername());
+					editor.putString(PASSWORD, Model.getInstance().getUserInfo().getPassword());
+					editor.commit();
+
+					activity.setContentView(R.layout.activity_home);
+					activity.init();
+					break;
+
+				case NOTE_LOGIN_FAILED:
+					DialogHelper.alert(activity, R.string.login_failed, R.string.invalid_username_pass);
+					break;
+
+				case NOTE_COULD_NOT_REQUEST_SERVER_DATA:
+					DialogHelper.alert(activity, R.string.load_failed, R.string.could_not_connect_server);
+					break;
+						
+				default:
+					break;
+				}
+			}
+		}
+	}
 }

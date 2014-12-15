@@ -1,6 +1,5 @@
 package com.travel.gate365.view;
 
-import java.lang.ref.WeakReference;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -8,13 +7,9 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Rect;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.os.Handler;
-import android.os.Message;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -27,7 +22,6 @@ import android.widget.TextView;
 
 import com.travel.gate365.R;
 import com.travel.gate365.helper.DateTimeHelper;
-import com.travel.gate365.helper.DialogHelper;
 import com.travel.gate365.model.ActivityInfo;
 import com.travel.gate365.model.Model;
 
@@ -35,9 +29,7 @@ public abstract class BaseActivity extends Activity {
 
 	protected static final int NOTE_LOGIN_SUCCESSFULLY = 1;
 	protected static final int NOTE_LOGIN_FAILED = 2;
-	protected static final int NOTE_COULD_NOT_CONNECT_SERVER = 3;
 	protected static final int NOTE_LOAD_JOURNEY_SUCCESSFULLY = 4;
-	protected static final int NOTE_LOAD_JOURNEY_FAILED = 5;
 	protected static final int NOTE_LOAD_ALERT_SUCCESSFULLY = 6;
 	protected static final int NOTE_LOAD_ADVICE_SUCCESSFULLY = 7;
 	protected static final int NOTE_LOAD_PLACE_SUCCESSFULLY = 8;
@@ -213,57 +205,6 @@ public abstract class BaseActivity extends Activity {
 
 	protected void setId(String id) {
 		this.id = id;
-	}
-
-	protected final Handler notificationHandler = new MyHandler(this);
-
-	private static final class MyHandler extends Handler {
-		private final WeakReference<BaseActivity> mActivity;
-
-		public MyHandler(BaseActivity activity) {
-			mActivity = new WeakReference<BaseActivity>(activity);
-		}
-
-		@Override
-		public void handleMessage(Message msg) {
-			Log.i(BaseActivity.class.getSimpleName(), "msg.what:" + msg.what);
-			BaseActivity activity = mActivity.get();
-			if (activity != null) {
-				if (loading != null) {
-					loading.dismiss();
-				}
-				switch (msg.what) {
-				case NOTE_LOGIN_SUCCESSFULLY:
-					SharedPreferences pref = activity.getSharedPreferences(CONFIG_NAME, MODE_PRIVATE);
-					SharedPreferences.Editor editor = pref.edit();
-					editor.putBoolean(IS_LOGIN, true);
-					editor.putString(USERNAME, Model.getInstance().getUserInfo().getUsername());
-					editor.putString(PASSWORD, Model.getInstance().getUserInfo().getPassword());
-					editor.commit();
-
-					activity.setContentView(R.layout.activity_home);
-					activity.init();
-					break;
-
-				case NOTE_LOGIN_FAILED:
-					DialogHelper.alert(activity, R.string.login_failed, R.string.invalid_username_pass);
-					break;
-
-				case NOTE_COULD_NOT_CONNECT_SERVER:
-					DialogHelper.alert(activity, R.string.login_failed, R.string.could_not_connect_server);
-					activity.setContentView(R.layout.activity_home);
-					activity.init();
-					break;
-
-				case NOTE_COULD_NOT_REQUEST_SERVER_DATA:
-					DialogHelper.alert(activity, R.string.load_failed, R.string.could_not_connect_server);
-					break;
-						
-				default:
-					break;
-				}
-			}
-		}
 	}
 
 	/**
