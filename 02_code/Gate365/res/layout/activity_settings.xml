@@ -6,42 +6,47 @@
 
     <include layout="@layout/titlebar"/>
     
-    <include layout="@layout/header"/>
+    <include layout="@layout/header" />
     
-    <com.travel.gate365.view.widget.FontableCheckBox android:id="@id/chk_gpstracking"
+    <CheckBox
+        android:id="@id/chk_gpstracking"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        style="@style/CommonCheckboxStyle"
-        android:padding="5dp"
-        android:text="@string/enable_location_tracking"/>
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="10dp"
+        android:text="@string/enable_location_tracking" />
     
-    <com.travel.gate365.view.widget.FontableTextView android:id="@id/txt_frequency"
+    <TextView
+        android:id="@id/txt_frequency"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        style="@style/CommonTextViewStyle"
+        android:layout_marginLeft="50dp"
         android:padding="5dp"
-        android:text="@string/frequency"/>
+        android:text="@string/frequency" />
     
-    <com.travel.gate365.view.widget.FontableTextView android:id="@id/txt_last_time"
+    <TextView
+        android:id="@id/txt_last_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        style="@style/CommonTextViewStyle"
+        android:layout_marginLeft="50dp"
         android:padding="5dp"
-        android:text="@string/last_time"/>
+        android:text="@string/last_time" />
     
-    <com.travel.gate365.view.widget.FontableTextView android:id="@id/txt_last_latitude"
+    <TextView
+        android:id="@id/txt_last_latitude"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        style="@style/CommonTextViewStyle"
+        android:layout_marginLeft="50dp"
         android:padding="5dp"
-        android:text="@string/last_lattitude"/>
+        android:text="@string/last_lattitude" />
     
-    <com.travel.gate365.view.widget.FontableTextView android:id="@id/txt_last_longtitude"
+    <TextView
+        android:id="@id/txt_last_longtitude"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        style="@style/CommonTextViewStyle"
+        android:layout_marginLeft="50dp"
         android:padding="5dp"
-        android:text="@string/last_longtitude"/>
+        android:text="@string/last_longtitude" />
     
     <com.travel.gate365.view.widget.FontableButton android:id="@id/btn_logout" 
         android:layout_width="wrap_content"
