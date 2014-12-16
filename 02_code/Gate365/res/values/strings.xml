@@ -54,5 +54,6 @@
     <string name="exit_app">Exit application</string>
     <string name="are_you_sure_exit_app">Are you sure you want to exit the application?</string>
     <string name="logout">Logout</string>
+    <string name="never_sent">Never sent</string>
     
 </resources>

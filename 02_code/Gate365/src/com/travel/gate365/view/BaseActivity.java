@@ -36,9 +36,12 @@ public abstract class BaseActivity extends Activity {
 	protected static final int NOTE_LOAD_RISK_SUCCESSFULLY = 9;
 	protected static final int NOTE_LOAD_TIP_SUCCESSFULLY = 10;
 	protected static final int NOTE_COULD_NOT_REQUEST_SERVER_DATA = 11;
+	protected static final int NOTE_LOAD_CONFIGURATION_SUCCESSFULLY = 12;
+	public static final int NOTE_LOCATION_CHANGED = 13;
 	protected static final String CONFIG_NAME = "config";
 	protected static final String IS_LOGIN = "isLogin";
 	protected static final String IS_GPS_TRACKING = "isGpsTracking";
+	protected static final String LAST_SENT = "lastSent";
 	protected static final String USERNAME = "username";
 	protected static final String PASSWORD = "password";
 

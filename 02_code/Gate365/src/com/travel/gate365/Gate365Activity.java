@@ -1,6 +1,9 @@
 package com.travel.gate365;
 
 import java.lang.ref.WeakReference;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
 
 import org.json.JSONObject;
 
@@ -10,6 +13,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -31,6 +35,7 @@ import android.widget.TextView.OnEditorActionListener;
 import com.travel.gate365.helper.DialogHelper;
 import com.travel.gate365.model.MenuItemInfo;
 import com.travel.gate365.model.Model;
+import com.travel.gate365.service.GPSWrapper;
 import com.travel.gate365.service.ServiceManager;
 import com.travel.gate365.view.BaseActivity;
 import com.travel.gate365.view.SettingsActivity;
@@ -44,7 +49,7 @@ public class Gate365Activity extends BaseActivity implements OnItemClickListener
 	private TextView edtUsername;
 	private TextView edtPassword;
 	private HomeMenuItemAdapter adapter;
-	private boolean fakeMode = false;
+	private boolean fakeMode = true;
 	
 	public Gate365Activity() {
 		super(Gate365Activity.class.getSimpleName());
@@ -58,12 +63,14 @@ public class Gate365Activity extends BaseActivity implements OnItemClickListener
 		
 		SharedPreferences pref = getSharedPreferences(CONFIG_NAME, MODE_PRIVATE);
 		boolean gpstracking = pref.getBoolean(IS_GPS_TRACKING, false);
+		String lastSent = pref.getString(LAST_SENT, getString(R.string.never_sent));
 		String username = pref.getString(USERNAME, "");
 		String password = pref.getString(PASSWORD, "");
 		
 		Model.getInstance().setLogin(pref.getBoolean(IS_LOGIN, false) && username.length() > 0 && password.length() > 0);
 		Model.getInstance().setLocationTrackingEnabled(gpstracking);
 		Model.getInstance().paserLoginInfo(username, password);
+		Model.getInstance().setLastTimeSent(lastSent);
 		if(Model.getInstance().isLogin()){
 			setContentView(R.layout.activity_home);
 		}else{
@@ -192,7 +199,6 @@ public class Gate365Activity extends BaseActivity implements OnItemClickListener
 					}else{
 						res = ServiceManager.login(edtUsername.getText().toString(), edtPassword.getText().toString());
 					}
-					loading.dismiss();
 					if(res != null && res.getString("status").equalsIgnoreCase(ServiceManager.SUCCESS_STATUS)){
 						Model.getInstance().setLogin(true);
 						if(fakeMode){
@@ -213,7 +219,18 @@ public class Gate365Activity extends BaseActivity implements OnItemClickListener
 					e.printStackTrace();
 					android.os.Message msg = new Message();
 					msg.what = BaseActivity.NOTE_COULD_NOT_REQUEST_SERVER_DATA;
-					notificationHandler.sendMessage(msg);												
+					notificationHandler.sendMessage(msg);	 											
+				}
+				try{
+					JSONObject res = ServiceManager.getConfiguration(Model.getInstance().getUserInfo().getUsername(), Model.getInstance().getUserInfo().getPassword());
+					if(res != null){
+						Model.getInstance().parserConfiguration(res);
+						android.os.Message msg = new Message();
+						msg.what = BaseActivity.NOTE_LOAD_CONFIGURATION_SUCCESSFULLY;
+						notificationHandler.sendMessage(msg);					
+					}
+				}catch(Exception e){
+					e.printStackTrace();
 				}
 			}
 		});
@@ -347,10 +364,36 @@ public class Gate365Activity extends BaseActivity implements OnItemClickListener
 					DialogHelper.alert(activity, R.string.load_failed, R.string.could_not_connect_server);
 					break;
 						
+				case NOTE_LOAD_CONFIGURATION_SUCCESSFULLY:
+					if (Model.getInstance().isLocationTrackingEnabled()) {
+						GPSWrapper.getInstance().init(activity, Model.getInstance().getLocationTrackingInterval());
+						GPSWrapper.getInstance().startTracking();
+					}
+					break;
+					
 				default:
 					break;
 				}
 			}
 		}
 	}
+	
+	public void onNewLocation(Location location){
+		Model model = Model.getInstance();
+		model.setLastLattitude(String.valueOf(location.getLatitude()));
+		model.setLastLongtitude(String.valueOf(location.getLatitude()));
+		try {
+			Calendar cal = Calendar.getInstance();
+			SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss", Locale.getDefault());
+			Model.getInstance().setLastTimeSent(dateFormat.format(cal.getTime()));
+			ServiceManager.sendLocation(model.getUserInfo().getUsername(), model.getUserInfo().getPassword(), location.getLatitude(), location.getLongitude());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		android.os.Message msg = new Message();
+		msg.what = BaseActivity.NOTE_LOCATION_CHANGED;
+		notificationHandler.sendMessage(msg);							
+	}
+	
 }

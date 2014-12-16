@@ -73,6 +73,9 @@ public class Model {
 		tips = new ArticleItemInfo[0];
 		
 		userInfo = new UserInfo("", "");
+		lastLongtitude = "";
+		lastLattitude = "";
+		lastTimeSent = "";
 	}
 
 	public static Model getInstance() {
@@ -235,7 +238,7 @@ public class Model {
 		return this.tips;
 	}
 
-	public void paserConfiguration(JSONObject obj) throws JSONException {
+	public void parserConfiguration(JSONObject obj) throws JSONException {
 		final int frequency = Integer.parseInt(obj.getString("gps_duration")) / 1000;
 		if (frequency != locationTrackingInterval) {
 			locationTrackingInterval = frequency;

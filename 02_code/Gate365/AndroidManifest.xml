@@ -84,6 +84,7 @@
             android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize"
             android:windowSoftInputMode="stateHidden">
         </activity>
+        <service android:name=".service.GPSWrapper" />
 	</application>
 
 </manifest>
