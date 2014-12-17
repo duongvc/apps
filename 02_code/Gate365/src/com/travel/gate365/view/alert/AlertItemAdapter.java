@@ -1,6 +1,5 @@
 package com.travel.gate365.view.alert;
 
-import java.lang.reflect.Field;
 import java.util.Locale;
 
 import android.app.Activity;

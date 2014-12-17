@@ -40,6 +40,7 @@
     <item type="id" name="txt_last_time" />
     <item type="id" name="txt_last_latitude" />
     <item type="id" name="txt_last_longtitude" />
+    <item type="id" name="txt_hyphen" />
     <item type="id" name="lst_menu" />
     <item type="id" name="lst_journeys" />
     <item type="id" name="lst_flight_routing" />

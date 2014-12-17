@@ -8,14 +8,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.travel.gate365.R;
 import com.travel.gate365.helper.DateTimeHelper;
 import com.travel.gate365.model.FlightRoutingInfo;
-import com.travel.gate365.model.Model;
 
 public class FlightRoutingItemAdapter extends BaseAdapter {
 
@@ -51,10 +48,6 @@ public class FlightRoutingItemAdapter extends BaseAdapter {
 	        holder = new Holder();
 	        LayoutInflater inflate = ((Activity) context).getLayoutInflater();
 	        convertView = (View)inflate.inflate(R.layout.flight_routing_item, null);  
-			ImageView icon = (ImageView)convertView.findViewById(R.id.img_icon);
-			//int maxHeight = Math.min(Model.getInstance().getScreenHeight() / 15, 128);
-			//icon.setLayoutParams(new RelativeLayout.LayoutParams(maxHeight, maxHeight));
-			holder.icon = icon;
 			
 			TextView text = (TextView)convertView.findViewById(R.id.txt_flight_code);
 			holder.txtFlightCode = text;
@@ -87,7 +80,6 @@ public class FlightRoutingItemAdapter extends BaseAdapter {
 	private class Holder {
 		TextView txtArrivalDateTime;
 		TextView txtArrivalCity;
-		ImageView icon;
 		TextView txtFlightCode;
 		TextView txtDepartCity;
 		TextView txtDepartDateTime;

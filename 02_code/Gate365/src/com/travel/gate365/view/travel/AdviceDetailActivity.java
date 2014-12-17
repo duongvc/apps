@@ -3,7 +3,6 @@ package com.travel.gate365.view.travel;
 import java.util.Locale;
 
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.ImageView;
@@ -21,6 +20,8 @@ import com.travel.gate365.view.BaseActivity;
 public class AdviceDetailActivity extends BaseActivity {
 
 	public static final String ADVICE_ID = "adviceId";
+	
+	private WebView webView;
 	
 	public AdviceDetailActivity() {
 		super(AdviceDetailActivity.class.getSimpleName()); 
@@ -89,7 +90,17 @@ public class AdviceDetailActivity extends BaseActivity {
 		          + "<body>"                          
 		          + info.getDetail()
 		          + "</body></html>";
-		((WebView)findViewById(R.id.txt_message)).loadData(htmlText, "text/html", "utf-8");
+		webView = (WebView)findViewById(R.id.txt_message);
+		webView.loadData(htmlText, "text/html", "utf-8");
+	}
+	
+	@Override
+	public void onBackPressed() {
+		if(webView.canGoBack()){
+			webView.goBack();
+		}else{
+			super.onBackPressed();
+		}
 	}
 	
 }

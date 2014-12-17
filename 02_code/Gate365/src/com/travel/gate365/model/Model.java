@@ -42,10 +42,10 @@ public class Model {
 	};
 	
 	public final static MenuItemInfo[] MENU_LIST = {new MenuItemInfo(MenuItemInfo.MENU_ITEM_JOURNEYS, R.drawable.journeys_menuitem_selector, R.string.journeys, true)
-		, new MenuItemInfo(MenuItemInfo.MENU_ITEM_TRAVEL_ALERTS, R.drawable.tvalerts_menuitem_selector, R.string.travel_alerts, false)
-		, new MenuItemInfo(MenuItemInfo.MENU_ITEM_TRAVEL_ADVICES, R.drawable.tvadvices_menuitem_selector, R.string.travel_advices, false)
-		, new MenuItemInfo(MenuItemInfo.MENU_ITEM_COUNTRY_RISK, R.drawable.countryrisk_menuitem_selector, R.string.country_risk, false)
-		, new MenuItemInfo(MenuItemInfo.MENU_ITEM_TRAVEL_TIPS, R.drawable.tvtips_menuitem_selector, R.string.travel_tips, false)
+		, new MenuItemInfo(MenuItemInfo.MENU_ITEM_TRAVEL_ALERTS, R.drawable.tvalerts_menuitem_selector, R.string.travel_alerts, true)
+		, new MenuItemInfo(MenuItemInfo.MENU_ITEM_TRAVEL_ADVICES, R.drawable.tvadvices_menuitem_selector, R.string.travel_advices, true)
+		, new MenuItemInfo(MenuItemInfo.MENU_ITEM_COUNTRY_RISK, R.drawable.countryrisk_menuitem_selector, R.string.country_risk, true)
+		, new MenuItemInfo(MenuItemInfo.MENU_ITEM_TRAVEL_TIPS, R.drawable.tvtips_menuitem_selector, R.string.travel_tips, true)
 		, new MenuItemInfo(MenuItemInfo.MENU_ITEM_SETTINGS, R.drawable.settings_menuitem_selector, R.string.settings, true)};
 	
 	private boolean isLogin;
@@ -62,7 +62,7 @@ public class Model {
 	private String lastTimeSent;
 	private String lastLattitude;
 	private String lastLongtitude;
-	private boolean isLocationTrackingEnabled;
+	private boolean locationTrackingEnabled;
 	
 	private Model() {
 		journeys = new JourneyItemInfo[0];
@@ -71,6 +71,11 @@ public class Model {
 		advices = new ArticleItemInfo[0];
 		intGenerator = new IntegerGenerator();
 		tips = new ArticleItemInfo[0];
+		
+		userInfo = new UserInfo("", "");
+		lastLongtitude = "";
+		lastLattitude = "";
+		lastTimeSent = "";
 	}
 
 	public static Model getInstance() {
@@ -102,9 +107,6 @@ public class Model {
 
 	public void setLogin(boolean isLogin) {
 		this.isLogin = isLogin;
-		if(isLogin()){
-			userInfo = new UserInfo("", "");
-		}
 	}
 	
 	public void paserLoginInfo(String username, String password){
@@ -236,7 +238,7 @@ public class Model {
 		return this.tips;
 	}
 
-	public void paserConfiguration(JSONObject obj) throws JSONException {
+	public void parserConfiguration(JSONObject obj) throws JSONException {
 		final int frequency = Integer.parseInt(obj.getString("gps_duration")) / 1000;
 		if (frequency != locationTrackingInterval) {
 			locationTrackingInterval = frequency;
@@ -244,10 +246,6 @@ public class Model {
 				//post a global event to restart the tracking
 			}
 		}
-	}
-	
-	public boolean isLocationTrackingEnabled() {
-		return true;
 	}
 
 	public UserInfo getUserInfo(){
@@ -354,7 +352,10 @@ public class Model {
 	}
 
 	public void setLocationTrackingEnabled(boolean isLocationTrackingEnabled) {
-		this.isLocationTrackingEnabled = isLocationTrackingEnabled;
+		this.locationTrackingEnabled = isLocationTrackingEnabled;
 	}
 
+	public boolean isLocationTrackingEnabled() {
+		return this.locationTrackingEnabled;
+	}
 }

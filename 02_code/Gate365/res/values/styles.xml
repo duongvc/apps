@@ -37,6 +37,8 @@
 		<item name="android:focusable">true</item>
 		<item name="android:clickable">true</item>
 		<item name="android:gravity">center_vertical|center_horizontal</item>
+        <item name="android:textColor">@color/home_menuitem_text_selector</item>
+				
 	</style>
     
 	<style name="CommonRadioButtonStyle" parent="@android:style/Widget.CompoundButton.RadioButton">
@@ -49,11 +51,8 @@
 		
 	<style name="CommonCheckboxStyle">
 		<item name="font">Context-Condensed-SSi-Condensed.ttf</item>
-		<item name="android:textAppearance">@android:style/TextAppearance.Small</item>
-		<item name="android:ellipsize">none</item>
-		<item name="android:scrollHorizontally">false</item>
 		<item name="android:padding">5dp</item>
-		<item name="android:gravity">center_vertical|left</item>
+		<item name="android:textAppearance">@android:style/TextAppearance.Small</item>
 	</style>
 		
 	<style name="CommonSpinnerStyle" parent="@android:style/Widget.Spinner">
@@ -94,7 +93,7 @@
         <item name="android:textViewStyle">@style/CommonTextViewStyle</item> 
         <item name="android:editTextStyle">@style/CommonEditTextStyle</item>
         <item name="android:buttonStyle">@style/CommonButtonStyle</item>
-        <item name="android:checkboxStyle">@style/CommonCheckboxStyle</item>
+        <!-- <item name="android:checkboxStyle">@style/CommonCheckboxStyle</item> -->
         <item name="android:radioButtonStyle">@style/CommonRadioButtonStyle</item>
         <item name="android:spinnerDropDownItemStyle">@style/CommonSpinnerDropDownItemStyle</item>
         <item name="android:spinnerItemStyle">@style/CommonSpinnerItemStyle</item> -->   

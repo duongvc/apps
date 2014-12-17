@@ -28,26 +28,25 @@
             android:src="@drawable/_take_off_plane"/>
         
         <ImageView android:id="@id/img_arrow"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
         	android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-        	android:padding="5dp"
+        	android:padding="0dp"
         	style="@style/CommonImageViewStyle"
         	android:contentDescription="@string/journeys"
         	android:src="@drawable/_next"/>
         
-	     <com.travel.gate365.view.widget.FontableTextView android:id="@id/txt_risktype" 
+	     <com.travel.gate365.view.widget.FontableTextView2 android:id="@id/txt_risktype" 
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_toLeftOf="@id/img_arrow"
             android:layout_centerVertical="true"
             android:background="@drawable/type_insignificant"
-	        android:text="@string/INSIGNIFICANT"
+	        android:text="@string/LOW"
 	        android:textSize="10sp"
 	        android:padding="3dp"
 	        android:textColor="@android:color/black"
-	        android:minWidth="50dp"
 	        android:gravity="center"
 	        style="@style/CommonTextViewStyle"/> 
 
@@ -56,21 +55,33 @@
 	        android:layout_height="wrap_content"
 	        android:layout_toRightOf="@id/img_icon"
 	        android:paddingLeft="5dp"
-	        android:paddingRight="5dp"
 	        android:paddingTop="5dp"
 	        style="@style/CommonTextViewStyle"
-	        android:text="VIETNAM"
-	        android:textColor="@color/yellow"/>
+	        android:text="NETHERLANDS"
+	        android:textColor="@color/yellow"
+	        android:singleLine="true"/>
 
-	    <com.travel.gate365.view.widget.FontableTextView android:id="@id/txt_city"
+	    <com.travel.gate365.view.widget.FontableTextView android:id="@id/txt_hyphen"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_toRightOf="@id/txt_country"
 	        style="@style/CommonTextViewStyle"
-	        android:paddingLeft="5dp"
+	        android:paddingLeft="0dp"
+	        android:paddingRight="0dp"
+	        android:paddingTop="5dp"
+	        android:paddingBottom="5dp"
+	        android:text="-"/>
+	    	    
+	    <com.travel.gate365.view.widget.FontableTextView android:id="@id/txt_city"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_toRightOf="@id/txt_hyphen"
+	        android:layout_toLeftOf="@id/txt_risktype"
+	        style="@style/CommonTextViewStyle"
 	        android:paddingRight="5dp"
 	        android:paddingTop="5dp"
-	        android:text="- HANOI"/>
+	        android:text="AMSTERDAM"
+	        android:singleLine="true"/>
 	    	    	    	    
 	    <com.travel.gate365.view.widget.FontableTextView android:id="@id/txt_codetime"
 	        android:layout_width="wrap_content"

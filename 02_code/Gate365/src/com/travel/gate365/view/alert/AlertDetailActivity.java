@@ -38,6 +38,10 @@ public class AlertDetailActivity extends BaseActivity {
 	protected void init() {
 		super.init();
 		
+		View view = (View)findViewById(R.id.header);
+		ImageView icRefresh = (ImageView)view.findViewById(R.id.img_refresh);
+		icRefresh.setVisibility(View.GONE);
+		
 		TextView txtMessage = (TextView)findViewById(R.id.txt_message);
 		txtMessage.setMovementMethod(new ScrollingMovementMethod());
 		

@@ -1,5 +1,6 @@
 package com.travel.gate365.view.travel;
 
+import java.lang.ref.WeakReference;
 import java.util.Locale;
 
 import org.json.JSONObject;
@@ -10,6 +11,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -19,12 +21,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.travel.gate365.R;
+import com.travel.gate365.helper.DialogHelper;
 import com.travel.gate365.helper.ResourceHelper;
 import com.travel.gate365.model.Model;
 import com.travel.gate365.model.PlaceInfo;
 import com.travel.gate365.service.ServiceManager;
 import com.travel.gate365.view.BaseActivity;
-import com.travel.gate365.view.journeys.JourneyDetailActivity;
 
 public class AdvicesActivity extends BaseActivity implements OnItemClickListener {
 
@@ -91,12 +93,24 @@ public class AdvicesActivity extends BaseActivity implements OnItemClickListener
 		txtMessage = (TextView)findViewById(R.id.txt_message);
 		lstMenu = (ListView)findViewById(R.id.lst_advices);
 		
-		load();
+		load(true);
 	}
 	
 	@Override
-	protected void load() {
-		super.load();
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getMenuInflater().inflate(R.menu.activity_refresh, menu);
+		
+		return true;
+	}
+	
+	@Override
+	protected void load(boolean checkDataExist) {
+		super.load(checkDataExist);
+		
+		if(!isNetworkAvailable()){
+			DialogHelper.alert(this, R.string.no_internet, R.string.no_internet_avaialbe, null);
+			return;
+		}
 		
 		if(loading == null || (loading != null && !loading.isShowing())){
 			loading = ProgressDialog.show(this, "", getString(R.string.loading_pls_wait)); 
@@ -112,16 +126,14 @@ public class AdvicesActivity extends BaseActivity implements OnItemClickListener
 							, Model.getInstance().getUserInfo().getPassword()
 							, String.valueOf(getIntent().getExtras().getLong(DesCountriesActivity.COUNTRY_ID)));
 					
-					loading.dismiss();
 					Model.getInstance().parserTravelAdvices(res);
 					android.os.Message msg = new Message();
 					msg.what = BaseActivity.NOTE_LOAD_ADVICE_SUCCESSFULLY;
 					notificationHandler.sendMessage(msg);						
 				} catch (Exception e) {
-					loading.dismiss();
 					e.printStackTrace();
 					android.os.Message msg = new Message();
-					msg.what = BaseActivity.NOTE_COULD_NOT_CONNECT_SERVER;
+					msg.what = BaseActivity.NOTE_COULD_NOT_REQUEST_SERVER_DATA;
 					notificationHandler.sendMessage(msg);												
 				}
 			}
@@ -138,27 +150,45 @@ public class AdvicesActivity extends BaseActivity implements OnItemClickListener
 		Intent intent = new Intent(this, AdviceDetailActivity.class);
 		intent.putExtra(AdviceDetailActivity.ADVICE_ID, itemId);
 		intent.putExtra(DesCountriesActivity.COUNTRY_ID, getIntent().getExtras().getLong(DesCountriesActivity.COUNTRY_ID));
-		startActivity(intent);
+		startActivityForResult(intent, FINISH_CODE);
 	}
-	
-	protected final Handler notificationHandler = new Handler(){
-		public void handleMessage(android.os.Message msg) {
-			switch (msg.what) {
-			case BaseActivity.NOTE_LOAD_ADVICE_SUCCESSFULLY:
-				if(Model.getInstance().getAdvices().length > 0){
-					txtMessage.setVisibility(View.GONE);
-					adapter = new AdviceItemAdapter(AdvicesActivity.this, Model.getInstance().getAdvices(), R.layout.advice_item);
-					lstMenu.setAdapter(adapter);
-					lstMenu.setOnItemClickListener(AdvicesActivity.this);								
-				}else{
-					txtMessage.setVisibility(View.VISIBLE);
+
+	protected final Handler notificationHandler = new MyHandler(this);
+
+	private static final class MyHandler extends Handler {
+		private final WeakReference<AdvicesActivity> mActivity;
+
+		public MyHandler(AdvicesActivity activity) {
+			mActivity = new WeakReference<AdvicesActivity>(activity);
+		}
+
+		@Override
+		public void handleMessage(Message msg) {
+			AdvicesActivity activity = mActivity.get();
+			if (activity != null) {
+				if (loading != null) {
+					loading.dismiss();
 				}
-				break;
-				
-			default: 
-				break;
+				switch (msg.what) {
+				case BaseActivity.NOTE_LOAD_ADVICE_SUCCESSFULLY:
+					if (Model.getInstance().getAdvices().length > 0) {
+						activity.txtMessage.setVisibility(View.GONE);
+						activity.adapter = new AdviceItemAdapter(activity, Model.getInstance().getAdvices(), R.layout.advice_item);
+						activity.lstMenu.setAdapter(activity.adapter);
+						activity.lstMenu.setOnItemClickListener(activity);
+					} else {
+						activity.txtMessage.setVisibility(View.VISIBLE);
+					}
+					break;
+
+				case NOTE_COULD_NOT_REQUEST_SERVER_DATA:
+					DialogHelper.alert(activity, R.string.load_failed, R.string.could_not_connect_server);
+					break;
+					
+				default:
+					break;
+				}
 			}
-		};		
-	};
-	
+		}
+	}
 }

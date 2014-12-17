@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.travel.gate365"
     android:versionCode="1"
-    android:versionName="1.0" >
+    android:versionName="1.0.5" >
 
     <uses-sdk
         android:minSdkVersion="14"
@@ -84,6 +84,7 @@
             android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize"
             android:windowSoftInputMode="stateHidden">
         </activity>
+        <service android:name=".service.GPSWrapper" />
 	</application>
 
 </manifest>

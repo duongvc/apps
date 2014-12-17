@@ -47,7 +47,9 @@ public class JourneyDetailActivity extends BaseActivity implements OnItemClickLi
 		
 		View view = (View)findViewById(R.id.header);
 		TextView txtRight = (TextView)view.findViewById(R.id.txt_right);
-		txtRight.setText("PRN " + info.getpNRCode());
+		txtRight.setText("PNR " + info.getpNRCode());		
+		ImageView icRefresh = (ImageView)view.findViewById(R.id.img_refresh);
+		icRefresh.setVisibility(View.INVISIBLE);
 		
 		View layout = findViewById(R.id.layout_depart);
 		ImageView icon = (ImageView)layout.findViewById(R.id.img_icon);
@@ -57,7 +59,7 @@ public class JourneyDetailActivity extends BaseActivity implements OnItemClickLi
 		TextView textView = (TextView)layout.findViewById(R.id.txt_country);
 		textView.setText(info.getSrc().getCountryName().toUpperCase(Locale.US));
 		textView = (TextView)layout.findViewById(R.id.txt_city);
-		textView.setText("- " + info.getSrc().getLocationName().toUpperCase(Locale.US));
+		textView.setText(info.getSrc().getLocationName().toUpperCase(Locale.US));
 		textView = (TextView)layout.findViewById(R.id.txt_codetime);
 		String dateTime = DateTimeHelper.convertDateStringToWWW_ddMMMyyyy(this, info.getFlightRoutings()[0].getDepartureDateTime());
 		textView.setText(getString(R.string.departs) + ":" + dateTime);
@@ -69,7 +71,7 @@ public class JourneyDetailActivity extends BaseActivity implements OnItemClickLi
 		textView = (TextView)layout.findViewById(R.id.txt_country);
 		textView.setText(info.getDes().getCountryName().toUpperCase(Locale.US));
 		textView = (TextView)layout.findViewById(R.id.txt_city);
-		textView.setText("- " + info.getDes().getLocationName().toUpperCase(Locale.US));
+		textView.setText(info.getDes().getLocationName().toUpperCase(Locale.US));
 		textView = (TextView)layout.findViewById(R.id.txt_codetime);
 		dateTime = DateTimeHelper.convertDateStringToWWW_ddMMMyyyy(this, info.getFlightRoutings()[info.getFlightRoutings().length - 1].getArrivalDateTime());
 		textView.setText(getString(R.string.arrives) + ":" + dateTime);
@@ -80,6 +82,7 @@ public class JourneyDetailActivity extends BaseActivity implements OnItemClickLi
 		adapter = new FlightRoutingItemAdapter(this, menuList);
 		lstMenu.setAdapter(adapter);
 		lstMenu.setOnItemClickListener(this);			
+		
 		
 	}
 

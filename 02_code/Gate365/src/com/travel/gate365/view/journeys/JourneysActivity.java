@@ -1,5 +1,7 @@
 package com.travel.gate365.view.journeys;
 
+import java.lang.ref.WeakReference;
+
 import org.json.JSONObject;
 
 import android.app.ProgressDialog;
@@ -61,19 +63,25 @@ public class JourneysActivity extends BaseActivity implements OnItemClickListene
 		txtMessage = (TextView)findViewById(R.id.txt_message);
 		lstMenu = (ListView)findViewById(R.id.lst_journeys);
 		
-		load();		
+		load(true);		
 	}
 
 	@Override
-	protected void load() {		
-		super.load();
+	protected void load(boolean checkDataExist) {		
+		super.load(checkDataExist);
 		
+		Log.i(getId(), "checkDataExist:" + checkDataExist);
+		if(checkDataExist && Model.getInstance().getJourneys().length > 0){
+			android.os.Message msg = new Message();
+			msg.what = BaseActivity.NOTE_LOAD_JOURNEY_SUCCESSFULLY;
+			notificationHandler.sendMessage(msg);	
+			return;
+		}
 		if(!isNetworkAvailable()){
 			DialogHelper.alert(this, R.string.no_internet, R.string.no_internet_avaialbe, null);
 			return;
 		}
 		
-		if(Model.getInstance().getJourneys().length == 0){
 			if(loading == null || (loading != null && !loading.isShowing())){
 				loading = ProgressDialog.show(this, "", getString(R.string.loading_pls_wait)); 
 				loading.show();
@@ -85,27 +93,20 @@ public class JourneysActivity extends BaseActivity implements OnItemClickListene
 				public void run() {
 					try { 
 						JSONObject res = ServiceManager.getJourneys(Model.getInstance().getUserInfo().getUsername(), Model.getInstance().getUserInfo().getPassword());					
-						loading.dismiss();
 						Model.getInstance().paserJourney(res);
 						android.os.Message msg = new Message();
 						msg.what = BaseActivity.NOTE_LOAD_JOURNEY_SUCCESSFULLY;
 						notificationHandler.sendMessage(msg);						
 					} catch (Exception e) {
-						loading.dismiss();
 						e.printStackTrace();
 						android.os.Message msg = new Message();
-						msg.what = BaseActivity.NOTE_COULD_NOT_CONNECT_SERVER;
+						msg.what = BaseActivity.NOTE_COULD_NOT_REQUEST_SERVER_DATA;
+						msg.obj = e.getMessage();
 						notificationHandler.sendMessage(msg);												
 					}
 				}
 			});
-			
 			thread.start();				
-		}else{
-			android.os.Message msg = new Message();
-			msg.what = BaseActivity.NOTE_LOAD_JOURNEY_SUCCESSFULLY;
-			notificationHandler.sendMessage(msg);									
-		}
 	}
 	
 	@Override
@@ -113,27 +114,45 @@ public class JourneysActivity extends BaseActivity implements OnItemClickListene
 		Log.i(getId(), "::onItemSelected - pos:" + itemPos + ", id:" + itemId);
 		Intent intent = new Intent(this, JourneyDetailActivity.class);
 		intent.putExtra(JourneyDetailActivity.JOURNEY_ID, itemId);
-		startActivity(intent);
+		startActivityForResult(intent, FINISH_CODE);
 	}
-	
-	protected final Handler notificationHandler = new Handler(){
-		public void handleMessage(android.os.Message msg) {
-			switch (msg.what) {
-			case NOTE_LOAD_JOURNEY_SUCCESSFULLY:
-				if(Model.getInstance().getJourneys().length > 0){
-					txtMessage.setVisibility(View.GONE);
-					adapter = new JourneyItemAdapter(JourneysActivity.this, Model.getInstance().getJourneys());
-					lstMenu.setAdapter(adapter);
-					lstMenu.setOnItemClickListener(JourneysActivity.this);								
-				}else{
-					txtMessage.setVisibility(View.VISIBLE);
-				}
-				break;
-				
-			default: 
-				break;
+
+	protected final Handler notificationHandler = new MyHandler(this);
+
+	private static final class MyHandler extends Handler {
+		private final WeakReference<JourneysActivity> mActivity;
+
+		public MyHandler(JourneysActivity activity) {
+			mActivity = new WeakReference<JourneysActivity>(activity);
+		}
+
+		@Override
+		public void handleMessage(Message msg) {
+			if (loading != null) {
+				loading.dismiss();
 			}
-		};		
-	};
-	
+			JourneysActivity activity = mActivity.get();
+			if (activity != null) {
+				switch (msg.what) {
+				case NOTE_LOAD_JOURNEY_SUCCESSFULLY:
+					if (Model.getInstance().getJourneys().length > 0) {
+						activity.txtMessage.setVisibility(View.GONE);
+						activity.adapter = new JourneyItemAdapter(activity, Model.getInstance().getJourneys());
+						activity.lstMenu.setAdapter(activity.adapter);
+						activity.lstMenu.setOnItemClickListener(activity);
+					} else {
+						activity.txtMessage.setVisibility(View.VISIBLE);
+					}
+					break;
+
+				case NOTE_COULD_NOT_REQUEST_SERVER_DATA:
+					DialogHelper.alert(activity, R.string.load_failed, R.string.could_not_connect_server);
+					break;
+					
+				default:
+					break;
+				}
+			}
+		}
+	}
 }

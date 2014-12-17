@@ -29,13 +29,24 @@
 	        android:text="VIETNAM"
 	        android:textColor="@color/yellow"/>
 
-	    <com.travel.gate365.view.widget.FontableTextView android:id="@id/txt_city"
+	    <com.travel.gate365.view.widget.FontableTextView android:id="@id/txt_hyphen"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_toRightOf="@id/txt_country"
 	        style="@style/CommonTextViewStyle"
+	        android:paddingLeft="0dp"
+	        android:paddingRight="0dp"
+	        android:paddingTop="5dp"
+	        android:paddingBottom="5dp"
+	        android:text="-"/>
+	    	    
+	    <com.travel.gate365.view.widget.FontableTextView android:id="@id/txt_city"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_toRightOf="@id/txt_hyphen"
+	        style="@style/CommonTextViewStyle"
 	        android:padding="5dp"
-	        android:text="- HANOI"/>
+	        android:text="HANOI"/>
 	    	    	    	    
 	    <com.travel.gate365.view.widget.FontableTextView android:id="@id/txt_codetime"
 	        android:layout_width="wrap_content"
@@ -72,13 +83,24 @@
 	        android:text="VIETNAM"
 	        android:textColor="@color/yellow"/>
 
-	    <com.travel.gate365.view.widget.FontableTextView android:id="@id/txt_city"
+	    <com.travel.gate365.view.widget.FontableTextView android:id="@id/txt_hyphen"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_toRightOf="@id/txt_country"
 	        style="@style/CommonTextViewStyle"
+	        android:paddingLeft="0dp"
+	        android:paddingRight="0dp"
+	        android:paddingTop="5dp"
+	        android:paddingBottom="5dp"
+	        android:text="-"/>
+	    	    
+	    <com.travel.gate365.view.widget.FontableTextView android:id="@id/txt_city"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_toRightOf="@id/txt_hyphen"
+	        style="@style/CommonTextViewStyle"
 	        android:padding="5dp"
-	        android:text="- HANOI"/>
+	        android:text="HANOI"/>
 	    	    	    	    
 	    <com.travel.gate365.view.widget.FontableTextView android:id="@id/txt_codetime"
 	        android:layout_width="wrap_content"

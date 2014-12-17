@@ -1,5 +1,6 @@
 package com.travel.gate365.view.travel;
 
+import java.lang.ref.WeakReference;
 import java.util.Locale;
 
 import org.json.JSONObject;
@@ -10,6 +11,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -19,6 +21,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.travel.gate365.R;
+import com.travel.gate365.helper.DialogHelper;
 import com.travel.gate365.helper.ResourceHelper;
 import com.travel.gate365.model.ArticleItemInfo;
 import com.travel.gate365.model.Model;
@@ -88,12 +91,24 @@ public class TipCountryActivity  extends BaseActivity implements OnItemClickList
 		txtMessage = (TextView)findViewById(R.id.txt_message);
 		lstMenu = (ListView)findViewById(R.id.lst_tips);
 		
-		load();
+		load(true);
 	}
 	
 	@Override
-	protected void load() {
-		super.load();
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getMenuInflater().inflate(R.menu.activity_refresh, menu);
+		
+		return true;
+	}
+	
+	@Override
+	protected void load(boolean checkDataExist) {
+		super.load(checkDataExist);
+		
+		if(!isNetworkAvailable()){
+			DialogHelper.alert(this, R.string.no_internet, R.string.no_internet_avaialbe, null);
+			return;
+		}
 		
 		if(loading == null || (loading != null && !loading.isShowing())){
 			loading = ProgressDialog.show(this, "", getString(R.string.loading_pls_wait)); 
@@ -109,16 +124,14 @@ public class TipCountryActivity  extends BaseActivity implements OnItemClickList
 							, Model.getInstance().getUserInfo().getPassword()
 							, String.valueOf(getIntent().getExtras().getLong(DesCountriesActivity.COUNTRY_ID)));
 					
-					loading.dismiss();					
 					android.os.Message msg = new Message();
 					msg.what = BaseActivity.NOTE_LOAD_TIP_SUCCESSFULLY;
 					msg.obj = Model.getInstance().parserCountryTips(res);
 					notificationHandler.sendMessage(msg);						
 				} catch (Exception e) {
-					loading.dismiss();
 					e.printStackTrace();
 					android.os.Message msg = new Message();
-					msg.what = BaseActivity.NOTE_COULD_NOT_CONNECT_SERVER;
+					msg.what = BaseActivity.NOTE_COULD_NOT_REQUEST_SERVER_DATA;
 					notificationHandler.sendMessage(msg);												
 				}
 			}
@@ -135,27 +148,43 @@ public class TipCountryActivity  extends BaseActivity implements OnItemClickList
 		Intent intent = new Intent(this, TipDetailActivity.class);
 		intent.putExtra(TipDetailActivity.TIP_ID, itemId);
 		intent.putExtra(DesCountriesActivity.COUNTRY_ID, getIntent().getExtras().getLong(DesCountriesActivity.COUNTRY_ID));
-		startActivity(intent);
+		startActivityForResult(intent, FINISH_CODE);
 	}
 	
-	protected final Handler notificationHandler = new Handler(){
+	protected final Handler notificationHandler = new MyHandler(this);
+
+	private static final class MyHandler extends Handler {
+		private final WeakReference<TipCountryActivity> mActivity;
+
+		public MyHandler(TipCountryActivity activity) {
+			mActivity = new WeakReference<TipCountryActivity>(activity);
+		}
 		public void handleMessage(android.os.Message msg) {
-			switch (msg.what) {
-			case BaseActivity.NOTE_LOAD_TIP_SUCCESSFULLY:
-				if(msg.obj != null && ((ArticleItemInfo[])msg.obj).length > 0){
-					txtMessage.setVisibility(View.GONE);
+			TipCountryActivity activity = mActivity.get();
+			if (activity != null) {
+				switch (msg.what) {
+				case BaseActivity.NOTE_LOAD_TIP_SUCCESSFULLY:
+					if(msg.obj != null && ((ArticleItemInfo[])msg.obj).length > 0){
+						activity.txtMessage.setVisibility(View.GONE);
+						
+						ArticleItemInfo[] info = (ArticleItemInfo[])msg.obj;
+						activity.adapter = new TipItemAdapter(activity, info, R.layout.tip_item);
+						activity.lstMenu.setAdapter(activity.adapter);
+						activity.lstMenu.setOnItemClickListener(activity);								
+					}else{					
+						activity.txtMessage.setVisibility(View.VISIBLE);
+					}
+					loading.dismiss();					
+					break;
 					
-					ArticleItemInfo[] info = (ArticleItemInfo[])msg.obj;
-					adapter = new TipItemAdapter(TipCountryActivity.this, info, R.layout.tip_item);
-					lstMenu.setAdapter(adapter);
-					lstMenu.setOnItemClickListener(TipCountryActivity.this);								
-				}else{					
-					txtMessage.setVisibility(View.VISIBLE);
-				}
-				break;
-				
-			default: 
-				break;
+				case NOTE_COULD_NOT_REQUEST_SERVER_DATA:
+					loading.dismiss();
+					DialogHelper.alert(activity, R.string.load_failed, R.string.could_not_connect_server);
+					break;
+					
+				default: 
+					break;
+				}				
 			}
 		};		
 	};

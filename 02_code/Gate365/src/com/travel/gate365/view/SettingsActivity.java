@@ -1,6 +1,11 @@
 package com.travel.gate365.view;
 
+import java.lang.ref.WeakReference;
+
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.ImageView;
@@ -11,6 +16,8 @@ import com.travel.gate365.model.Model;
 
 public class SettingsActivity extends BaseActivity {
 
+	private TextView txtFrequency, txtLastTime, txtLastLatitude, txtLastLongtitude;	
+	
 	public SettingsActivity() {
 		super(SettingsActivity.class.getSimpleName()); 
 	}
@@ -30,15 +37,18 @@ public class SettingsActivity extends BaseActivity {
 	protected void init() {
 		super.init();
 
-		load();
+		load(false);
 		
 		CheckBox chkGpstracking = (CheckBox)findViewById(R.id.chk_gpstracking);
 		chkGpstracking.setActivated(Model.getInstance().isLocationTrackingEnabled());
-		TextView text = ((TextView)findViewById(R.id.txt_frequency));
-		text.setText(getString(R.string.frequency)+ ": " + Model.getInstance().getLocationTrackingInterval() + " " + getString(R.string.seconds));
-		text = ((TextView)findViewById(R.id.txt_last_time));
-		text = ((TextView)findViewById(R.id.txt_last_latitude));
-		text = ((TextView)findViewById(R.id.txt_last_longtitude));
+		txtFrequency = ((TextView)findViewById(R.id.txt_frequency));
+		txtFrequency.setText(getString(R.string.frequency)+ ": " + Model.getInstance().getLocationTrackingInterval() + " " + getString(R.string.seconds));
+		txtLastTime = ((TextView)findViewById(R.id.txt_last_time));
+		txtLastTime.setText(getString(R.string.last_time)+ ": " + Model.getInstance().getLastTimeSent());
+		txtLastLatitude = ((TextView)findViewById(R.id.txt_last_latitude));
+		txtLastLatitude.setText(getString(R.string.last_lattitude)+ ": " + Model.getInstance().getLastLattitude());
+		txtLastLongtitude = ((TextView)findViewById(R.id.txt_last_longtitude));
+		txtLastLongtitude.setText(getString(R.string.last_longtitude)+ ": " + Model.getInstance().getLastLongtitude());
 		
 		ImageView icRefresh = (ImageView)findViewById(R.id.img_refresh);
 		icRefresh.setVisibility(View.GONE);
@@ -47,6 +57,41 @@ public class SettingsActivity extends BaseActivity {
 	public void onLogoutButtonHandler(View view){
 		setResult(RESULT_LOGOUT);
 		finish();
+	}
+	
+	protected final Handler notificationHandler = new MyHandler(this);
+
+	private static final class MyHandler extends Handler {
+		private final WeakReference<SettingsActivity> mActivity;
+
+		public MyHandler(SettingsActivity activity) {
+			mActivity = new WeakReference<SettingsActivity>(activity);
+		}
+
+		@Override
+		public void handleMessage(Message msg) {
+			Log.i(SettingsActivity.class.getSimpleName(), "msg.what:" + msg.what);
+			SettingsActivity activity = mActivity.get();
+			if (activity != null) {
+				if (loading != null) {
+					loading.dismiss();
+				}
+				switch (msg.what) {
+				case NOTE_LOAD_CONFIGURATION_SUCCESSFULLY:
+					activity.txtFrequency.setText(activity.getString(R.string.frequency)+ ": " + Model.getInstance().getLocationTrackingInterval() + " " + activity.getString(R.string.seconds));
+					break;
+
+				case NOTE_LOCATION_CHANGED:
+					activity.txtLastTime.setText(activity.getString(R.string.last_time)+ ": " + Model.getInstance().getLastTimeSent());
+					activity.txtLastLatitude.setText(activity.getString(R.string.last_lattitude)+ ": " + Model.getInstance().getLastLattitude());
+					activity.txtLastLongtitude.setText(activity.getString(R.string.last_longtitude)+ ": " + Model.getInstance().getLastLongtitude());
+					break;
+					
+				default:
+					break;
+				}
+			}
+		}
 	}
 	
 }

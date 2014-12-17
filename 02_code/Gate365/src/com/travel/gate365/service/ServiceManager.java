@@ -12,9 +12,7 @@ import java.security.NoSuchAlgorithmException;
 import java.security.UnrecoverableKeyException;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;
@@ -22,6 +20,7 @@ import javax.net.ssl.X509TrustManager;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
+import org.apache.http.HttpStatus;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
@@ -40,6 +39,7 @@ import org.apache.http.util.EntityUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.annotation.SuppressLint;
 import android.util.Log;
 
 public class ServiceManager {
@@ -68,7 +68,7 @@ public class ServiceManager {
 	public ServiceManager() {
 	}
 
-	public static JSONObject login(String username, String password){
+	public static JSONObject login(String username, String password) throws Exception {
 		String pax = username.replace('\\', '_');
 		String url = URL_LOGIN;	
 		if (url.indexOf("=") != -1) {
@@ -81,7 +81,7 @@ public class ServiceManager {
 		return connect(url, null, TIMEOUT_SOCKET, TIMEOUT_CONNECTION);
 	}
 	
-	public static JSONObject getJourneys(String username, String password){
+	public static JSONObject getJourneys(String username, String password) throws Exception{
 		String pax = username.replace('\\', '_');
 		String url = URL_JOURNEYS;
 		if (url.indexOf("=") != -1) {
@@ -153,7 +153,7 @@ public class ServiceManager {
 		return connect(url, null, TIMEOUT_SOCKET, TIMEOUT_CONNECTION);
 	}
 	
-	public static JSONObject getConfiguration(String username, String password) {
+	public static JSONObject getConfiguration(String username, String password) throws Exception {
 		String pax = username.replace('\\', '_');
 		String url = URL_GET_CONFIGURATIONS;
 		if (url.indexOf("=") != -1) {
@@ -165,7 +165,7 @@ public class ServiceManager {
 		return connect(url, null, TIMEOUT_SOCKET, TIMEOUT_CONNECTION);
 	}
 
-	public static JSONObject sendLocation(String username, String password, final double latitude, final double longitude) {
+	public static JSONObject sendLocation(String username, String password, final double latitude, final double longitude) throws Exception {
     	//Date date = new Date(System.currentTimeMillis());
     	//SimpleDateFormat dateFormat = new SimpleDateFormat("MMM dd - hh:mm a");
     	//final String lastTimeSent = dateFormat.format(date);
@@ -188,8 +188,9 @@ public class ServiceManager {
 	 * @param url The URL
 	 * @param params The parameters to use along with the URL
 	 * @return The requested JSON object, null if an exception was raised.
+	 * @throws Exception 
 	 */
-	public static JSONObject connect(String url, ArrayList<String> params) {
+	public static JSONObject connect(String url, ArrayList<String> params) throws Exception {
 		return connect(url, params, TIMEOUT_SOCKET, TIMEOUT_CONNECTION);
 	}
 
@@ -200,64 +201,41 @@ public class ServiceManager {
 	 * @param params The parameters to use along with the URL
 	 * @param timeoutSocket The timeout socket
 	 * @param timeoutConnection The timeout connection
-	 * @return The requested JSON object, null if an exception was raised.
+	 * @return The requested JSON object
+	 * @throws Exception 
 	 */
-	public static JSONObject connect(String url, ArrayList<String> params,int timeoutSocket, int timeoutConnection) {
-		HttpGet httpGet;
+	public static JSONObject connect(String url, ArrayList<String> params, int timeoutSocket, int timeoutConnection) throws Exception {
 		// prepare the params to append it with url
 		String combinedParams = "";
-		if (params != null) {
-			if (!params.isEmpty()) {
-				int i = 0;
-				while (!params.isEmpty()) {
-					String paramString = null;
-					try {
-						paramString = "/"+params.remove(i) + ":" + URLEncoder.encode(params.remove(i), "UTF-8");
-						i = 0;
-					} catch (UnsupportedEncodingException e) {
-						e.printStackTrace();
-					}
-					combinedParams += paramString;
+		if ((params != null) && !params.isEmpty()) {
+			while (!params.isEmpty()) {
+				try {
+					combinedParams += "/" + params.remove(0) + ":" + URLEncoder.encode(params.remove(0), "UTF-8");
+				} catch (Exception e) {
 				}
 			}
-			httpGet = new HttpGet(url + combinedParams);
-		} else
-			httpGet = new HttpGet(url);
-		
+		}
+
 		Log.d(TAG + "-connect", url + combinedParams);
-		
+
 		HttpParams httpParameters = new BasicHttpParams();
 		// Set the timeout in milliseconds until a connection is established.
 		HttpConnectionParams.setConnectionTimeout(httpParameters, timeoutConnection);
 		// Set the default socket timeout (SO_TIMEOUT)
 		// in milliseconds which is the timeout for waiting for data.
 		HttpConnectionParams.setSoTimeout(httpParameters, timeoutSocket);
+
 		DefaultHttpClient httpClient = new DefaultHttpClient(httpParameters);
-		
-		try {
-			HttpResponse response = httpClient.execute(httpGet);
-			if (response != null) {
-				// A Simple JSONObject Creation
-				HttpEntity responseEntity = response.getEntity();
-				String test = EntityUtils.toString(responseEntity);
-				Log.d(TAG + "-connect", "response - " + test);
-				JSONObject json = null;
-				try {
-					json = new JSONObject(test);
-					return json;
-				} catch (JSONException e) {
-					e.printStackTrace();
-					Log.e(TAG, url + combinedParams + "\n" + test);
-					return null;
-				}
-			}
-			return null;
-		} catch (ClientProtocolException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
+		HttpResponse response = httpClient.execute(new HttpGet(url + combinedParams));
+
+		if (response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
+			String text = EntityUtils.toString(response.getEntity());
+			Log.d(TAG + "-connect", "response - " + text);
+			return new JSONObject(text);
+		} else {
+			throw new Exception("Server Response Code: " + response.getStatusLine().getStatusCode() + " - "
+					+ response.getStatusLine().getReasonPhrase());
 		}
-		return null;
 	}
 	
 	/**
@@ -317,6 +295,7 @@ public class ServiceManager {
 			super(params);
 		}
 
+		@SuppressLint("TrulyRandom")
 		@Override
 		protected ClientConnectionManager createClientConnectionManager() {
 

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_window_focused="false" android:state_enabled="true" 
+        android:id="@+id/checkbox_layerlist_state_0" 
+        android:drawable="@drawable/checkbox_inactive"> <!-- btn_dropdown_normal -->
+    </item>
+    
+    <item android:state_window_focused="false" android:state_enabled="false" 
+        android:id="@+id/checkbox_layerlist_state_1"
+        android:drawable="@drawable/checkbox_inactive"> <!-- btn_dropdown_disabled -->
+    </item>
+    
+    <item android:state_pressed="true" 
+        android:id="@+id/checkbox_layerlist_state_2"
+        android:drawable="@drawable/checkbox_active"> <!-- btn_dropdown_pressed -->
+    </item>
+    
+    <item android:state_focused="true" android:state_enabled="true" 
+        android:id="@+id/checkbox_layerlist_state_3"
+        android:drawable="@drawable/checkbox_active"> <!-- btn_dropdown_selected -->
+    </item>
+
+    <item android:state_checked="true" android:state_enabled="true"
+        android:id="@+id/checkbox_layerlist_state_6"
+        android:drawable="@drawable/checkbox_active"> <!-- btn_dropdown_selected -->
+    </item>
+		
+    <item android:state_enabled="true" 
+        android:id="@+id/checkbox_layerlist_state_4"
+        android:drawable="@drawable/checkbox_inactive"> <!-- btn_dropdown_normal -->
+    </item>
+    
+	<item android:state_focused="true" 
+	    android:id="@+id/checkbox_layerlist_state_5"
+	    android:drawable="@drawable/checkbox_inactive"> <!-- btn_dropdown_disabled_focused -->
+    </item>    
+
+	<item android:id="@+id/checkbox_layerlist_state_7" android:state_checked="false" 
+	    android:drawable="@drawable/checkbox_inactive"> <!-- btn_dropdown_disabled -->
+    </item>
+
+		
+</selector>

@@ -3,7 +3,6 @@ package com.travel.gate365.view.travel;
 import java.util.Locale;
 
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.ImageView;
@@ -21,6 +20,7 @@ import com.travel.gate365.view.BaseActivity;
 public class TipDetailActivity extends BaseActivity {
 
 	public static final String TIP_ID = "tipId";
+	private WebView webView;
 	
 	public TipDetailActivity() {
 		super(TipDetailActivity.class.getSimpleName()); 
@@ -37,11 +37,15 @@ public class TipDetailActivity extends BaseActivity {
 		
 		
 	}
-	
+		
 	@Override
 	protected void init() {
 		super.init();
 
+		View view = (View)findViewById(R.id.header);
+		ImageView icRefresh = (ImageView)view.findViewById(R.id.img_refresh);
+		icRefresh.setVisibility(View.INVISIBLE);
+		
 		View layoutContent = findViewById(R.id.layout_content);
 		long countryId = getIntent().getExtras().getLong(DesCountriesActivity.COUNTRY_ID);
 		PlaceInfo place = Model.getInstance().getPlace(String.valueOf(countryId));
@@ -89,7 +93,17 @@ public class TipDetailActivity extends BaseActivity {
 		          + "<body>"                          
 		          + info.getDetail()
 		          + "</body></html>";
-		((WebView)findViewById(R.id.txt_message)).loadData(htmlText, "text/html", "utf-8");
+		webView = (WebView)findViewById(R.id.txt_message);
+		webView.loadData(htmlText, "text/html", "utf-8");
+	}
+	
+	@Override
+	public void onBackPressed() {
+		if(webView.canGoBack()){
+			webView.goBack();
+		}else{
+			super.onBackPressed();
+		}
 	}
 	
 }
