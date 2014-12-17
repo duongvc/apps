@@ -62,7 +62,7 @@ public class Gate365Activity extends BaseActivity implements OnItemClickListener
 		Model.getInstance().init(this);			
 		
 		SharedPreferences pref = getSharedPreferences(CONFIG_NAME, MODE_PRIVATE);
-		boolean gpstracking = pref.getBoolean(IS_GPS_TRACKING, false);
+		boolean gpstracking = pref.getBoolean(IS_GPS_TRACKING, false); 
 		String lastSent = pref.getString(LAST_SENT, getString(R.string.never_sent));
 		String username = pref.getString(USERNAME, "");
 		String password = pref.getString(PASSWORD, "");
@@ -221,16 +221,18 @@ public class Gate365Activity extends BaseActivity implements OnItemClickListener
 					msg.what = BaseActivity.NOTE_COULD_NOT_REQUEST_SERVER_DATA;
 					notificationHandler.sendMessage(msg);	 											
 				}
-				try{
-					JSONObject res = ServiceManager.getConfiguration(Model.getInstance().getUserInfo().getUsername(), Model.getInstance().getUserInfo().getPassword());
-					if(res != null){
-						Model.getInstance().parserConfiguration(res);
-						android.os.Message msg = new Message();
-						msg.what = BaseActivity.NOTE_LOAD_CONFIGURATION_SUCCESSFULLY;
-						notificationHandler.sendMessage(msg);					
+				if(Model.getInstance().isLogin()){
+					try{
+						JSONObject res = ServiceManager.getConfiguration(Model.getInstance().getUserInfo().getUsername(), Model.getInstance().getUserInfo().getPassword());
+						if(res != null){
+							Model.getInstance().parserConfiguration(res);
+							android.os.Message msg = new Message();
+							msg.what = BaseActivity.NOTE_LOAD_CONFIGURATION_SUCCESSFULLY;
+							notificationHandler.sendMessage(msg);					
+						}
+					}catch(Exception e){
+						e.printStackTrace();
 					}
-				}catch(Exception e){
-					e.printStackTrace();
 				}
 			}
 		});
