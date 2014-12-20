@@ -28,6 +28,9 @@ public class GPSWrapper extends Service {
 	}
 
 	public static GPSWrapper getInstance(){
+		if(sInstance == null){
+			sInstance = new GPSWrapper();
+		}
 		return sInstance;
 	}
 	
@@ -49,7 +52,7 @@ public class GPSWrapper extends Service {
 	
 	public void startTracking() {
 		Log.d(LOGTAG, "startTracking()");
-		locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+		locationManager = (LocationManager)activity.getSystemService(Context.LOCATION_SERVICE);
 		locationListener = new LocationListener() {
 			public void onLocationChanged(Location location) {
 				makeUseOfNewLocation(location);

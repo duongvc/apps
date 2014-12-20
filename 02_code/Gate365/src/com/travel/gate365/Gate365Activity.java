@@ -62,7 +62,7 @@ public class Gate365Activity extends BaseActivity implements OnItemClickListener
 		Model.getInstance().init(this);			
 		
 		SharedPreferences pref = getSharedPreferences(CONFIG_NAME, MODE_PRIVATE);
-		boolean gpstracking = pref.getBoolean(IS_GPS_TRACKING, false); 
+		boolean gpstracking = pref.getBoolean(IS_GPS_TRACKING, fakeMode || false); 
 		String lastSent = pref.getString(LAST_SENT, getString(R.string.never_sent));
 		String username = pref.getString(USERNAME, "");
 		String password = pref.getString(PASSWORD, "");
@@ -77,6 +77,12 @@ public class Gate365Activity extends BaseActivity implements OnItemClickListener
 			setContentView(R.layout.activity_login);
 		}		
 		init();
+		
+		if(gpstracking){
+			startService(new Intent(getApplicationContext(), GPSWrapper.class));
+			GPSWrapper.getInstance().init(this, 160000);
+			//GPSWrapper.getInstance().startTracking();
+		}
 	}
 
 	@Override
@@ -339,7 +345,7 @@ public class Gate365Activity extends BaseActivity implements OnItemClickListener
 
 		@Override
 		public void handleMessage(Message msg) {
-			Log.i(BaseActivity.class.getSimpleName(), "msg.what:" + msg.what);
+			Log.i(Gate365Activity.class.getSimpleName(), "msg.what:" + msg.what);
 			Gate365Activity activity = mActivity.get();
 			if (activity != null) {
 				if (loading != null) {
@@ -369,7 +375,7 @@ public class Gate365Activity extends BaseActivity implements OnItemClickListener
 				case NOTE_LOAD_CONFIGURATION_SUCCESSFULLY:
 					if (Model.getInstance().isLocationTrackingEnabled()) {
 						GPSWrapper.getInstance().init(activity, Model.getInstance().getLocationTrackingInterval());
-						GPSWrapper.getInstance().startTracking();
+						//GPSWrapper.getInstance().startTracking();
 					}
 					break;
 					
