@@ -91,7 +91,7 @@ public class AdviceDetailActivity extends BaseActivity {
 		          + info.getDetail()
 		          + "</body></html>";
 		webView = (WebView)findViewById(R.id.txt_message);
-		webView.loadData(htmlText, "text/html", "utf-8");
+		webView.loadDataWithBaseURL("", htmlText, "text/html", "UTF-8", "");
 	}
 	
 	@Override

@@ -172,8 +172,7 @@ public class RisksCountryActivity extends BaseActivity {
 						ArticleItemInfo info = (ArticleItemInfo) msg.obj;
 						String htmlText = "<html><head>" + "<style type=\"text/css\">body{color: #fff; background-color: #000;}" + "</style></head>"
 								+ "<body>" + info.getDetail() + "</body></html>";
-						activity.webView.loadData(htmlText, "text/html", "utf-8");
-
+						activity.webView.loadDataWithBaseURL("", htmlText, "text/html", "UTF-8", "");
 					} else {
 						activity.txtMessage.setVisibility(View.VISIBLE);
 					}

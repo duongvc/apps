@@ -90,11 +90,11 @@ public class TipDetailActivity extends BaseActivity {
 		String htmlText = "<html><head>"
 		          + "<style type=\"text/css\">body{color: #fff; background-color: #000;}"
 		          + "</style></head>"
-		          + "<body>"                          
+		          + "<body>"
 		          + info.getDetail()
 		          + "</body></html>";
 		webView = (WebView)findViewById(R.id.txt_message);
-		webView.loadData(htmlText, "text/html", "utf-8");
+		webView.loadDataWithBaseURL("", htmlText, "text/html", "UTF-8", "");
 	}
 	
 	@Override
