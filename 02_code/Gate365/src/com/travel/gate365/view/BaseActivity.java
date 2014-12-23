@@ -44,6 +44,9 @@ public abstract class BaseActivity extends Activity {
 	protected static final String LAST_SENT = "lastSent";
 	protected static final String USERNAME = "username";
 	protected static final String PASSWORD = "password";
+	protected static final String GPS_FREQUENCY = "gpsfrequency";
+	protected static final String GPS_LAST_LATITUDE = "gpslasttitude";
+	protected static final String GPS_LAST_LONGTITUDE = "gpslastlongtitude";
 
 	protected static final int FINISH_CODE = 0;
 	protected static final int RESULT_LOGOUT = 99;

@@ -323,6 +323,10 @@ public class Model {
 		return null;
 	}
 
+	public void setLocationTrackingInterval(int locationTrackingInterval) {
+		this.locationTrackingInterval = locationTrackingInterval;
+	}
+	
 	public int getLocationTrackingInterval() {
 		return locationTrackingInterval;
 	}

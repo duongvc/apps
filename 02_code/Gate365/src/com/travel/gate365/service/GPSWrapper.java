@@ -52,28 +52,36 @@ public class GPSWrapper extends Service {
 	
 	public void startTracking() {
 		Log.d(LOGTAG, "startTracking()");
-		locationManager = (LocationManager)activity.getSystemService(Context.LOCATION_SERVICE);
-		locationListener = new LocationListener() {
-			public void onLocationChanged(Location location) {
-				makeUseOfNewLocation(location);
+		if(locationManager == null){
+			try{
+				locationManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);			
+			}catch(Exception ex){
+				
 			}
+			if(locationManager != null){
+				locationListener = new LocationListener() {
+					public void onLocationChanged(Location location) {
+						makeUseOfNewLocation(location);
+					}
 
-			public void onStatusChanged(String provider, int status, Bundle extras) {
-			}
+					public void onStatusChanged(String provider, int status, Bundle extras) {
+					}
 
-			public void onProviderEnabled(String provider) {
-			}
+					public void onProviderEnabled(String provider) {
+					}
 
-			public void onProviderDisabled(String provider) {
-			}
-		};
+					public void onProviderDisabled(String provider) {
+					}
+				};
 
-		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
+				locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);			
+			}			
+		}
 	}
 
 	private void makeUseOfNewLocation(Location location) {
 		if (isBetterLocation(location)) {
-			currentBestLocation = location;
+			currentBestLocation = location; 
 			if(activity != null){
 				activity.onNewLocation(currentBestLocation);
 			}

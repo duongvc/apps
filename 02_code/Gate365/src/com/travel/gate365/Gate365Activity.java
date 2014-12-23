@@ -62,15 +62,20 @@ public class Gate365Activity extends BaseActivity implements OnItemClickListener
 		Model.getInstance().init(this);			
 		
 		SharedPreferences pref = getSharedPreferences(CONFIG_NAME, MODE_PRIVATE);
-		boolean gpstracking = pref.getBoolean(IS_GPS_TRACKING, fakeMode || false); 
+		boolean gpstracking = pref.getBoolean(IS_GPS_TRACKING, fakeMode || false);
+		int gpsFrequency = pref.getInt(GPS_FREQUENCY, 160000);
 		String lastSent = pref.getString(LAST_SENT, getString(R.string.never_sent));
 		String username = pref.getString(USERNAME, "");
 		String password = pref.getString(PASSWORD, "");
 		
 		Model.getInstance().setLogin(pref.getBoolean(IS_LOGIN, false) && username.length() > 0 && password.length() > 0);
 		Model.getInstance().setLocationTrackingEnabled(gpstracking);
-		Model.getInstance().paserLoginInfo(username, password);
+		Model.getInstance().setLocationTrackingInterval(gpsFrequency);
 		Model.getInstance().setLastTimeSent(lastSent);
+		Model.getInstance().setLastLattitude(pref.getString(GPS_LAST_LATITUDE, getString(R.string.never_sent)));
+		Model.getInstance().setLastTimeSent(pref.getString(GPS_LAST_LONGTITUDE, getString(R.string.never_sent)));
+		
+		Model.getInstance().paserLoginInfo(username, password);
 		if(Model.getInstance().isLogin()){
 			setContentView(R.layout.activity_home);
 		}else{
@@ -80,8 +85,8 @@ public class Gate365Activity extends BaseActivity implements OnItemClickListener
 		
 		if(gpstracking){
 			startService(new Intent(getApplicationContext(), GPSWrapper.class));
-			GPSWrapper.getInstance().init(this, 160000);
-			//GPSWrapper.getInstance().startTracking();
+			GPSWrapper.getInstance().init(this, Model.getInstance().getLocationTrackingInterval());
+			GPSWrapper.getInstance().startTracking();
 		}
 	}
 
@@ -347,14 +352,16 @@ public class Gate365Activity extends BaseActivity implements OnItemClickListener
 		public void handleMessage(Message msg) {
 			Log.i(Gate365Activity.class.getSimpleName(), "msg.what:" + msg.what);
 			Gate365Activity activity = mActivity.get();
+			SharedPreferences pref;
+			SharedPreferences.Editor editor;
 			if (activity != null) {
 				if (loading != null) {
 					loading.dismiss();
 				}
 				switch (msg.what) {
 				case NOTE_LOGIN_SUCCESSFULLY:
-					SharedPreferences pref = activity.getSharedPreferences(CONFIG_NAME, MODE_PRIVATE);
-					SharedPreferences.Editor editor = pref.edit();
+					pref = activity.getSharedPreferences(CONFIG_NAME, MODE_PRIVATE);
+					editor = pref.edit();
 					editor.putBoolean(IS_LOGIN, true);
 					editor.putString(USERNAME, Model.getInstance().getUserInfo().getUsername());
 					editor.putString(PASSWORD, Model.getInstance().getUserInfo().getPassword());
@@ -373,9 +380,13 @@ public class Gate365Activity extends BaseActivity implements OnItemClickListener
 					break;
 						
 				case NOTE_LOAD_CONFIGURATION_SUCCESSFULLY:
+					pref = activity.getSharedPreferences(CONFIG_NAME, MODE_PRIVATE);
+					editor = pref.edit();
+					editor.putInt(GPS_FREQUENCY, Model.getInstance().getLocationTrackingInterval());
+					editor.commit();
 					if (Model.getInstance().isLocationTrackingEnabled()) {
 						GPSWrapper.getInstance().init(activity, Model.getInstance().getLocationTrackingInterval());
-						//GPSWrapper.getInstance().startTracking();
+						GPSWrapper.getInstance().startTracking();
 					}
 					break;
 					
@@ -395,6 +406,15 @@ public class Gate365Activity extends BaseActivity implements OnItemClickListener
 			SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss", Locale.getDefault());
 			Model.getInstance().setLastTimeSent(dateFormat.format(cal.getTime()));
 			ServiceManager.sendLocation(model.getUserInfo().getUsername(), model.getUserInfo().getPassword(), location.getLatitude(), location.getLongitude());
+			
+			SharedPreferences pref;
+			SharedPreferences.Editor editor;
+			pref = getSharedPreferences(CONFIG_NAME, MODE_PRIVATE);
+			editor = pref.edit();
+			editor.putString(LAST_SENT, Model.getInstance().getLastTimeSent());
+			editor.putString(GPS_LAST_LATITUDE, Model.getInstance().getLastLattitude());
+			editor.putString(GPS_LAST_LONGTITUDE, Model.getInstance().getLastLongtitude());
+			editor.commit();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

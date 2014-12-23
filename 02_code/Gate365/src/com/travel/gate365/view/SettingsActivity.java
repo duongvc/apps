@@ -2,12 +2,15 @@ package com.travel.gate365.view;
 
 import java.lang.ref.WeakReference;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
+import android.widget.CompoundButton.OnCheckedChangeListener;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -17,6 +20,7 @@ import com.travel.gate365.model.Model;
 public class SettingsActivity extends BaseActivity {
 
 	private TextView txtFrequency, txtLastTime, txtLastLatitude, txtLastLongtitude;	
+	private CheckBox chkGpstracking;
 	
 	public SettingsActivity() {
 		super(SettingsActivity.class.getSimpleName()); 
@@ -39,8 +43,10 @@ public class SettingsActivity extends BaseActivity {
 
 		load(false);
 		
-		CheckBox chkGpstracking = (CheckBox)findViewById(R.id.chk_gpstracking);
+		chkGpstracking = (CheckBox)findViewById(R.id.chk_gpstracking);
 		chkGpstracking.setActivated(Model.getInstance().isLocationTrackingEnabled());
+		chkGpstracking.setOnCheckedChangeListener(onCheckedChangeListener);
+		
 		txtFrequency = ((TextView)findViewById(R.id.txt_frequency));
 		txtFrequency.setText(getString(R.string.frequency)+ ": " + Model.getInstance().getLocationTrackingInterval() + " " + getString(R.string.seconds));
 		txtLastTime = ((TextView)findViewById(R.id.txt_last_time));
@@ -58,6 +64,20 @@ public class SettingsActivity extends BaseActivity {
 		setResult(RESULT_LOGOUT);
 		finish();
 	}
+	
+	private OnCheckedChangeListener onCheckedChangeListener = new OnCheckedChangeListener() {
+		
+		@Override
+		public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+			Model.getInstance().setLocationTrackingEnabled(isChecked);
+			SharedPreferences pref;
+			SharedPreferences.Editor editor;
+			pref = getSharedPreferences(CONFIG_NAME, MODE_PRIVATE);
+			editor = pref.edit();
+			editor.putBoolean(IS_GPS_TRACKING, Model.getInstance().isLocationTrackingEnabled());
+			editor.commit();
+		}
+	};
 	
 	protected final Handler notificationHandler = new MyHandler(this);
 
