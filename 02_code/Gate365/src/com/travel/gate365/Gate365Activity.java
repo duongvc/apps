@@ -1,12 +1,7 @@
 package com.travel.gate365;
 
 import java.lang.ref.WeakReference;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Locale;
-
 import org.json.JSONObject;
-
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -49,7 +44,7 @@ public class Gate365Activity extends BaseActivity implements OnItemClickListener
 	private TextView edtUsername;
 	private TextView edtPassword;
 	private HomeMenuItemAdapter adapter;
-	private boolean fakeMode = true;
+	public static boolean fakeMode = true;
 	
 	public Gate365Activity() {
 		super(Gate365Activity.class.getSimpleName());
@@ -73,7 +68,7 @@ public class Gate365Activity extends BaseActivity implements OnItemClickListener
 		Model.getInstance().setLocationTrackingInterval(gpsFrequency);
 		Model.getInstance().setLastTimeSent(lastSent);
 		Model.getInstance().setLastLattitude(pref.getString(GPS_LAST_LATITUDE, getString(R.string.never_sent)));
-		Model.getInstance().setLastTimeSent(pref.getString(GPS_LAST_LONGTITUDE, getString(R.string.never_sent)));
+		Model.getInstance().setLastLongtitude(pref.getString(GPS_LAST_LONGTITUDE, getString(R.string.never_sent)));
 		
 		Model.getInstance().paserLoginInfo(username, password);
 		if(Model.getInstance().isLogin()){
@@ -82,11 +77,14 @@ public class Gate365Activity extends BaseActivity implements OnItemClickListener
 			setContentView(R.layout.activity_login);
 		}		
 		init();
-		
-		if(gpstracking){
-			startService(new Intent(getApplicationContext(), GPSWrapper.class));
+
+		if(GPSWrapper.getInstance() != null){
 			GPSWrapper.getInstance().init(this, Model.getInstance().getLocationTrackingInterval());
-			GPSWrapper.getInstance().startTracking();
+			if(gpstracking){
+				GPSWrapper.getInstance().startTracking();				
+			}
+		}else{
+			startService(new Intent(getApplicationContext(), GPSWrapper.class));
 		}
 	}
 
@@ -359,7 +357,7 @@ public class Gate365Activity extends BaseActivity implements OnItemClickListener
 					loading.dismiss();
 				}
 				switch (msg.what) {
-				case NOTE_LOGIN_SUCCESSFULLY:
+				case NOTE_LOGIN_SUCCESSFULLY: 
 					pref = activity.getSharedPreferences(CONFIG_NAME, MODE_PRIVATE);
 					editor = pref.edit();
 					editor.putBoolean(IS_LOGIN, true);
@@ -384,9 +382,12 @@ public class Gate365Activity extends BaseActivity implements OnItemClickListener
 					editor = pref.edit();
 					editor.putInt(GPS_FREQUENCY, Model.getInstance().getLocationTrackingInterval());
 					editor.commit();
-					if (Model.getInstance().isLocationTrackingEnabled()) {
+						
+					if(GPSWrapper.getInstance() != null){
 						GPSWrapper.getInstance().init(activity, Model.getInstance().getLocationTrackingInterval());
-						GPSWrapper.getInstance().startTracking();
+						if (Model.getInstance().isLocationTrackingEnabled()) {						
+							GPSWrapper.getInstance().startTracking();
+						}
 					}
 					break;
 					
@@ -398,27 +399,7 @@ public class Gate365Activity extends BaseActivity implements OnItemClickListener
 	}
 	
 	public void onNewLocation(Location location){
-		Model model = Model.getInstance();
-		model.setLastLattitude(String.valueOf(location.getLatitude()));
-		model.setLastLongtitude(String.valueOf(location.getLatitude()));
-		try {
-			Calendar cal = Calendar.getInstance();
-			SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss", Locale.getDefault());
-			Model.getInstance().setLastTimeSent(dateFormat.format(cal.getTime()));
-			ServiceManager.sendLocation(model.getUserInfo().getUsername(), model.getUserInfo().getPassword(), location.getLatitude(), location.getLongitude());
-			
-			SharedPreferences pref;
-			SharedPreferences.Editor editor;
-			pref = getSharedPreferences(CONFIG_NAME, MODE_PRIVATE);
-			editor = pref.edit();
-			editor.putString(LAST_SENT, Model.getInstance().getLastTimeSent());
-			editor.putString(GPS_LAST_LATITUDE, Model.getInstance().getLastLattitude());
-			editor.putString(GPS_LAST_LONGTITUDE, Model.getInstance().getLastLongtitude());
-			editor.commit();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
+		Log.d(getId(), "onNewLocation - " + location.getLatitude() + "," + location.getLongitude());
 		android.os.Message msg = new Message();
 		msg.what = BaseActivity.NOTE_LOCATION_CHANGED;
 		notificationHandler.sendMessage(msg);							

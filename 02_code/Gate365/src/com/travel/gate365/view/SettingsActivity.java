@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.travel.gate365.R;
 import com.travel.gate365.model.Model;
+import com.travel.gate365.service.GPSWrapper;
 
 public class SettingsActivity extends BaseActivity {
 
@@ -44,7 +45,7 @@ public class SettingsActivity extends BaseActivity {
 		load(false);
 		
 		chkGpstracking = (CheckBox)findViewById(R.id.chk_gpstracking);
-		chkGpstracking.setActivated(Model.getInstance().isLocationTrackingEnabled());
+		chkGpstracking.setChecked(Model.getInstance().isLocationTrackingEnabled());
 		chkGpstracking.setOnCheckedChangeListener(onCheckedChangeListener);
 		
 		txtFrequency = ((TextView)findViewById(R.id.txt_frequency));
@@ -69,6 +70,7 @@ public class SettingsActivity extends BaseActivity {
 		
 		@Override
 		public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+			Log.d(getId(), "isChecked:" + isChecked);
 			Model.getInstance().setLocationTrackingEnabled(isChecked);
 			SharedPreferences pref;
 			SharedPreferences.Editor editor;
@@ -76,6 +78,11 @@ public class SettingsActivity extends BaseActivity {
 			editor = pref.edit();
 			editor.putBoolean(IS_GPS_TRACKING, Model.getInstance().isLocationTrackingEnabled());
 			editor.commit();
+			if(isChecked){
+				GPSWrapper.getInstance().startTracking();
+			}else{
+				GPSWrapper.getInstance().stopTracking();
+			}
 		}
 	};
 	

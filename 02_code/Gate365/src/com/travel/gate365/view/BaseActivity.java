@@ -38,15 +38,15 @@ public abstract class BaseActivity extends Activity {
 	protected static final int NOTE_COULD_NOT_REQUEST_SERVER_DATA = 11;
 	protected static final int NOTE_LOAD_CONFIGURATION_SUCCESSFULLY = 12;
 	public static final int NOTE_LOCATION_CHANGED = 13;
-	protected static final String CONFIG_NAME = "config";
+	public static final String CONFIG_NAME = "config";
 	protected static final String IS_LOGIN = "isLogin";
-	protected static final String IS_GPS_TRACKING = "isGpsTracking";
-	protected static final String LAST_SENT = "lastSent";
-	protected static final String USERNAME = "username";
-	protected static final String PASSWORD = "password";
-	protected static final String GPS_FREQUENCY = "gpsfrequency";
-	protected static final String GPS_LAST_LATITUDE = "gpslasttitude";
-	protected static final String GPS_LAST_LONGTITUDE = "gpslastlongtitude";
+	public static final String IS_GPS_TRACKING = "isGpsTracking";
+	public static final String LAST_SENT = "lastSent";
+	public static final String USERNAME = "username";
+	public static final String PASSWORD = "password";
+	public static final String GPS_FREQUENCY = "gpsfrequency";
+	public static final String GPS_LAST_LATITUDE = "gpslasttitude";
+	public static final String GPS_LAST_LONGTITUDE = "gpslastlongtitude";
 
 	protected static final int FINISH_CODE = 0;
 	protected static final int RESULT_LOGOUT = 99;
