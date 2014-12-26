@@ -113,8 +113,6 @@ public class GPSWrapper extends Service {
                     	currentBestLocation = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
                         if (currentBestLocation != null) {
                         	makeUseOfNewLocation(currentBestLocation);
-                        }else{
-                        	Log.d(LOGTAG, "currentBestLocation is null");
                         }
         				isActive = true;
                     }
@@ -124,7 +122,7 @@ public class GPSWrapper extends Service {
                     locationManager.requestLocationUpdates(
                             LocationManager.NETWORK_PROVIDER,
                             frequency,
-                            MIN_DISTANCE_CHANGE_FOR_UPDATES, locationListener);
+                            0, locationListener);
 
                     Log.d(LOGTAG, "GPS Enabled");
 
@@ -132,8 +130,6 @@ public class GPSWrapper extends Service {
                     	currentBestLocation = locationManager.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER);
                         if (currentBestLocation != null) {
                         	makeUseOfNewLocation(currentBestLocation);
-                        }else{
-                        	Log.d(LOGTAG, "currentBestLocation is null");
                         }
         				isActive = true;
                     }
@@ -151,15 +147,13 @@ public class GPSWrapper extends Service {
 		//if (isBetterLocation(location)) {
 			currentBestLocation = location;
 			Log.d(LOGTAG, "makeUseOfNewLocation - " + location.getLatitude() + "," + location.getLongitude());
-			Model model = Model.getInstance();
+			Model model = Model.getInstance(); 
 			model.setLastLattitude(String.valueOf(location.getLatitude()));
 			model.setLastLongtitude(String.valueOf(location.getLatitude()));
 			try {
 				Calendar cal = Calendar.getInstance();
 				SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss", Locale.getDefault());
 				Model.getInstance().setLastTimeSent(dateFormat.format(cal.getTime()));
-				ServiceManager.sendLocation(model.getUserInfo().getUsername(), model.getUserInfo().getPassword(), location.getLatitude(), location.getLongitude());
-				
 				SharedPreferences pref;
 				SharedPreferences.Editor editor;
 				pref = getSharedPreferences(BaseActivity.CONFIG_NAME, MODE_PRIVATE);
@@ -169,8 +163,11 @@ public class GPSWrapper extends Service {
 				editor.putString(BaseActivity.GPS_LAST_LONGTITUDE, Model.getInstance().getLastLongtitude());
 				editor.commit();
 				Log.d(LOGTAG, "makeUseOfNewLocation - committed:" + location.getLatitude() + "," + location.getLongitude());
+				
+				ServiceManager.sendLocation(model.getUserInfo().getUsername(), model.getUserInfo().getPassword(), location.getLatitude(), location.getLongitude());				
 			} catch (Exception e) {
 				e.printStackTrace();
+				Log.e(LOGTAG, "makeUseOfNewLocation - error:" + e.getMessage());
 			}			
 			if(activity != null){
 				Log.d(LOGTAG, "makeUseOfNewLocation:" + currentBestLocation.getLatitude() + "," + currentBestLocation.getLongitude());
