@@ -214,7 +214,7 @@ public class ServiceManager {
 				} catch (Exception e) {
 				}
 			}
-		}
+		} 
 
 		Log.d(TAG + "-connect", url + combinedParams);
 
