@@ -4,9 +4,12 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
+import org.json.JSONObject;
+
 import com.travel.gate365.Gate365Activity;
 import com.travel.gate365.model.Model;
 import com.travel.gate365.view.BaseActivity;
+import com.travel.gate365.view.SettingsActivity;
 
 import android.app.Service;
 import android.content.Context;
@@ -15,6 +18,7 @@ import android.content.SharedPreferences;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;
@@ -34,6 +38,8 @@ public class GPSWrapper extends Service {
 	private int frequency = 5000;
 	private boolean isActive;
 	private Gate365Activity activity;
+
+	private SettingsActivity settingsActivity;
 	
 	public GPSWrapper() {
 		sInstance = this;
@@ -120,7 +126,7 @@ public class GPSWrapper extends Service {
                 //if GPS Enabled get lat/long using GPS Services
                 if (isGPSEnabled){
                     locationManager.requestLocationUpdates(
-                            LocationManager.NETWORK_PROVIDER,
+                            LocationManager.GPS_PROVIDER,
                             frequency,
                             0, locationListener);
 
@@ -143,37 +149,49 @@ public class GPSWrapper extends Service {
 		}
 	}
 
-	private void makeUseOfNewLocation(Location location) {
-		//if (isBetterLocation(location)) {
-			currentBestLocation = location;
-			Log.d(LOGTAG, "makeUseOfNewLocation - " + location.getLatitude() + "," + location.getLongitude());
-			Model model = Model.getInstance(); 
-			model.setLastLattitude(String.valueOf(location.getLatitude()));
-			model.setLastLongtitude(String.valueOf(location.getLatitude()));
-			try {
-				Calendar cal = Calendar.getInstance();
-				SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss", Locale.getDefault());
-				Model.getInstance().setLastTimeSent(dateFormat.format(cal.getTime()));
-				SharedPreferences pref;
-				SharedPreferences.Editor editor;
-				pref = getSharedPreferences(BaseActivity.CONFIG_NAME, MODE_PRIVATE);
-				editor = pref.edit();
-				editor.putString(BaseActivity.LAST_SENT, Model.getInstance().getLastTimeSent());
-				editor.putString(BaseActivity.GPS_LAST_LATITUDE, Model.getInstance().getLastLattitude());
-				editor.putString(BaseActivity.GPS_LAST_LONGTITUDE, Model.getInstance().getLastLongtitude());
-				editor.commit();
-				Log.d(LOGTAG, "makeUseOfNewLocation - committed:" + location.getLatitude() + "," + location.getLongitude());
-				
-				ServiceManager.sendLocation(model.getUserInfo().getUsername(), model.getUserInfo().getPassword(), location.getLatitude(), location.getLongitude());				
-			} catch (Exception e) {
-				e.printStackTrace();
-				Log.e(LOGTAG, "makeUseOfNewLocation - error:" + e.getMessage());
-			}			
-			if(activity != null){
-				Log.d(LOGTAG, "makeUseOfNewLocation:" + currentBestLocation.getLatitude() + "," + currentBestLocation.getLongitude());
-				activity.onNewLocation(currentBestLocation);
-			}
-		//}
+	private void makeUseOfNewLocation(final Location location) {
+		currentBestLocation = location;
+		Log.d(LOGTAG, "makeUseOfNewLocation - " + location.getLatitude() + "," + location.getLongitude());
+		final Model model = Model.getInstance(); 
+		model.setLastLattitude(String.valueOf(location.getLatitude()));
+		model.setLastLongtitude(String.valueOf(location.getLongitude()));
+		try {
+			Calendar cal = Calendar.getInstance();
+			SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss", Locale.getDefault());
+			Model.getInstance().setLastTimeSent(dateFormat.format(cal.getTime()));
+			SharedPreferences pref;
+			SharedPreferences.Editor editor;
+			pref = getSharedPreferences(BaseActivity.CONFIG_NAME, MODE_PRIVATE);
+			editor = pref.edit();
+			editor.putString(BaseActivity.LAST_SENT, Model.getInstance().getLastTimeSent());
+			editor.putString(BaseActivity.GPS_LAST_LATITUDE, Model.getInstance().getLastLattitude());
+			editor.putString(BaseActivity.GPS_LAST_LONGTITUDE, Model.getInstance().getLastLongtitude());
+			editor.commit();
+			Log.d(LOGTAG, "makeUseOfNewLocation - committed:" + location.getLatitude() + "," + location.getLongitude());
+			
+			AsyncTask<Void, Void, JSONObject> task = new AsyncTask<Void, Void, JSONObject>() {
+
+				protected JSONObject doInBackground(Void... urls) {
+					try {
+						return ServiceManager.sendLocation(model.getUserInfo().getUsername(), model.getUserInfo().getPassword(),
+								location.getLatitude(), location.getLongitude());
+					} catch (Exception e) {
+						return null;
+					}
+				}
+
+				protected void onPostExecute(JSONObject result) {
+				}
+			};
+			task.execute();
+		} catch (Exception e) {
+			e.printStackTrace();
+			Log.e(LOGTAG, "makeUseOfNewLocation - error:" + e.getMessage());
+		}			
+		if(settingsActivity != null){
+			Log.d(LOGTAG, "makeUseOfNewLocation:" + currentBestLocation.getLatitude() + "," + currentBestLocation.getLongitude());
+			settingsActivity.onNewLocation(currentBestLocation);
+		}
 	}
 
 	protected boolean isBetterLocation(Location location) {
@@ -229,4 +247,8 @@ public class GPSWrapper extends Service {
 		super.onDestroy();
 	}
 
+
+	public void setSettingsActivity(SettingsActivity settingsActivity) {
+		this.settingsActivity = settingsActivity;
+	}
 }

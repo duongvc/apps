@@ -3,6 +3,7 @@ package com.travel.gate365.view;
 import java.lang.ref.WeakReference;
 
 import android.content.SharedPreferences;
+import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -36,6 +37,9 @@ public class SettingsActivity extends BaseActivity {
 		
 		init();
 		
+		if (GPSWrapper.getInstance() != null) {
+			GPSWrapper.getInstance().setSettingsActivity(this);
+		}
 	}
 	
 	@Override
@@ -120,5 +124,11 @@ public class SettingsActivity extends BaseActivity {
 			}
 		}
 	}
-	
+
+	public void onNewLocation(Location location){
+		Log.d(getId(), "onNewLocation - " + location.getLatitude() + "," + location.getLongitude());
+		android.os.Message msg = new Message();
+		msg.what = BaseActivity.NOTE_LOCATION_CHANGED;
+		notificationHandler.sendMessage(msg);				
+	}
 }
