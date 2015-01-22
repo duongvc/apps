@@ -79,7 +79,7 @@ public class Gate365Activity extends BaseActivity implements OnItemClickListener
 		init();
 
 		if(GPSWrapper.getInstance() != null){
-			GPSWrapper.getInstance().init(this, Model.getInstance().getLocationTrackingInterval());
+			GPSWrapper.getInstance().init(Model.getInstance().getLocationTrackingInterval());
 			if(gpstracking){
 				GPSWrapper.getInstance().startTracking();				
 			}
@@ -384,7 +384,7 @@ public class Gate365Activity extends BaseActivity implements OnItemClickListener
 					editor.commit();
 						
 					if(GPSWrapper.getInstance() != null){
-						GPSWrapper.getInstance().init(activity, Model.getInstance().getLocationTrackingInterval());
+						GPSWrapper.getInstance().init(Model.getInstance().getLocationTrackingInterval());
 						if (Model.getInstance().isLocationTrackingEnabled()) {						
 							GPSWrapper.getInstance().startTracking();
 						}

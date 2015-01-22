@@ -25,9 +25,6 @@ import android.util.Log;
 
 public class GPSWrapper extends Service {
 
-    // The minimum distance to change Updates in meters
-    private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 1; // 10 meters
-    
 	private static final String LOGTAG = GPSWrapper.class.getSimpleName();
 	private static final int REQUIRED_GPS_ACCURACY = 20; //metres
 	private static GPSWrapper sInstance;
@@ -37,7 +34,6 @@ public class GPSWrapper extends Service {
 	//The minimum time between updates in milliseconds
 	private int frequency = 5000;
 	private boolean isActive;
-	private Gate365Activity activity;
 
 	private SettingsActivity settingsActivity;
 	
@@ -64,13 +60,12 @@ public class GPSWrapper extends Service {
 		int gpsFrequency = pref.getInt(BaseActivity.GPS_FREQUENCY, 160000);
 		Log.d(LOGTAG, "gpstracking:" + gpstracking);
 		if(gpstracking){
-			init(null, gpsFrequency);
+			init(gpsFrequency);
 			startTracking();			
 		}
 	}
 
-	public void init(Gate365Activity activity, int frequency){
-		this.activity = activity;
+	public void init(int frequency){
 		this.frequency = frequency;
 	}
 	
