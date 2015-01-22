@@ -21,7 +21,9 @@ import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.provider.Settings;
 import android.util.Log;
+import android.widget.Toast;
 
 public class GPSWrapper extends Service {
 
@@ -33,13 +35,11 @@ public class GPSWrapper extends Service {
 	public Location currentBestLocation = null;
 	//The minimum time between updates in milliseconds
 	private int frequency = 5000;
-	private boolean isActive;
 
 	private SettingsActivity settingsActivity;
 	
 	public GPSWrapper() {
 		sInstance = this;
-		isActive = false;
 	}
 
 	public static GPSWrapper getInstance(){
@@ -70,78 +70,78 @@ public class GPSWrapper extends Service {
 	}
 	
 	public void startTracking() {
+		Log.d(LOGTAG, "startTracking()");
 		if(locationManager == null){
-			Log.d(LOGTAG, "startTracking()");
 			try{
 				locationManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);			
 			}catch(Exception ex){
 				ex.printStackTrace();
 			}
-			if(locationManager != null){
-				locationListener = new LocationListener() {
-					public void onLocationChanged(Location location) {
-						makeUseOfNewLocation(location);
-					}
-
-					public void onStatusChanged(String provider, int status, Bundle extras) {
-					}
-
-					public void onProviderEnabled(String provider) {
-					}
-
-					public void onProviderDisabled(String provider) {
-					}
-				};
-
-
-	            //getting GPS status
-	            boolean isGPSEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
-
-	            //getting network status
-	            boolean isNetworkEnabled = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
-	            
-
-                //First get location from Network Provider
-                if (isNetworkEnabled){
-                    locationManager.requestLocationUpdates(
-                            LocationManager.NETWORK_PROVIDER,
-                            frequency,
-                            0, locationListener);
-
-                    Log.d(LOGTAG, "Network");
-
-                    if (locationManager != null){
-                    	currentBestLocation = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-                        if (currentBestLocation != null) {
-                        	makeUseOfNewLocation(currentBestLocation);
-                        }
-        				isActive = true;
-                    }
-                }	            
-                //if GPS Enabled get lat/long using GPS Services
-                if (isGPSEnabled){
-                    locationManager.requestLocationUpdates(
-                            LocationManager.GPS_PROVIDER,
-                            frequency,
-                            0, locationListener);
-
-                    Log.d(LOGTAG, "GPS Enabled");
-
-                    if (locationManager != null){
-                    	currentBestLocation = locationManager.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER);
-                        if (currentBestLocation != null) {
-                        	makeUseOfNewLocation(currentBestLocation);
-                        }
-        				isActive = true;
-                    }
-                	
-                }
-			}			
-		}else if(!isActive){
-			Log.d(LOGTAG, "re-startTracking()");
-			locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
-			isActive = true;
 		}
+		if(locationManager != null){
+			locationListener = new LocationListener() {
+				public void onLocationChanged(Location location) {
+					makeUseOfNewLocation(location);
+				}
+
+				public void onStatusChanged(String provider, int status, Bundle extras) {
+				}
+
+				public void onProviderEnabled(String provider) {
+				}
+
+				public void onProviderDisabled(String provider) {
+				}
+			};
+
+            //getting GPS status
+            boolean isGPSEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+
+            //getting network status
+            boolean isNetworkEnabled = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+            
+
+            //First get location from Network Provider
+            if (isNetworkEnabled){
+                locationManager.requestLocationUpdates(
+                        LocationManager.NETWORK_PROVIDER,
+                        frequency,
+                        0, locationListener);
+
+                Log.d(LOGTAG, "Network");
+
+                if (locationManager != null){
+                	currentBestLocation = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+                    if (currentBestLocation != null) {
+                    	makeUseOfNewLocation(currentBestLocation);
+                    }
+                }
+            }	            
+            //if GPS Enabled get lat/long using GPS Services
+            if (isGPSEnabled){
+                locationManager.requestLocationUpdates(
+                        LocationManager.GPS_PROVIDER,
+                        frequency,
+                        0, locationListener);
+
+                Log.d(LOGTAG, "GPS Enabled");
+
+                if (locationManager != null){
+                	currentBestLocation = locationManager.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER);
+                    if (currentBestLocation != null) {
+                    	makeUseOfNewLocation(currentBestLocation);
+                    }
+                }
+            	
+            } else {
+            	// Provider not enabled, prompt user to enable it
+            	if (settingsActivity != null) {
+                    Toast.makeText(settingsActivity, "Please turn GPS on!", Toast.LENGTH_LONG).show();
+                    Intent myIntent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                    settingsActivity.startActivity(myIntent);
+            	}
+            }
+		}		
 	}
 
 	private void makeUseOfNewLocation(final Location location) {
@@ -231,9 +231,10 @@ public class GPSWrapper extends Service {
 	}
 
 	public void stopTracking() {
-		Log.d(LOGTAG, "stopTracking()");		
-		locationManager.removeUpdates(locationListener);
-		isActive = false;
+		Log.d(LOGTAG, "stopTracking()");
+		if (locationManager != null && locationListener != null) {
+			locationManager.removeUpdates(locationListener);
+		}
 	}
 	
 	@Override
