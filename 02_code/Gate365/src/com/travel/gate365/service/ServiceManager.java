@@ -39,7 +39,10 @@ import org.apache.http.util.EntityUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.travel.gate365.model.Model;
+
 import android.annotation.SuppressLint;
+import android.util.Base64;
 import android.util.Log;
 
 public class ServiceManager {
@@ -166,18 +169,8 @@ public class ServiceManager {
 	}
 
 	public static JSONObject sendLocation(String username, String password, final double latitude, final double longitude) throws Exception {
-    	//Date date = new Date(System.currentTimeMillis());
-    	//SimpleDateFormat dateFormat = new SimpleDateFormat("MMM dd - hh:mm a");
-    	//final String lastTimeSent = dateFormat.format(date);
-    	
 		String pax = username.replace('\\', '_');
-		String url = URL_GET_SEND_LOCATION + "?lat=" + latitude + "&long=" + longitude;
-		if (url.indexOf("=") != -1) {
-			url += "&";
-		} else {
-			url += "?";
-		}
-		url += "pax=" + pax;
+		String url = URL_GET_SEND_LOCATION + "?lat=" + latitude + "&long=" + longitude + "&pax=" + pax;
 		return connect(url, null, TIMEOUT_SOCKET, TIMEOUT_CONNECTION);
 	}	
 	
@@ -225,8 +218,17 @@ public class ServiceManager {
 		// in milliseconds which is the timeout for waiting for data.
 		HttpConnectionParams.setSoTimeout(httpParameters, timeoutSocket);
 
+		final Model model = Model.getInstance();
+		String pax = model.getUserInfo().getUsername();
+		String password = model.getUserInfo().getPassword();
+		String login = pax + ":" + password;
+
+		String base64EncodedCredentials = Base64.encodeToString(login.getBytes(), Base64.NO_WRAP);
+		HttpGet request = new HttpGet(url + combinedParams);
+		request.addHeader("Authorization", "Basic " + base64EncodedCredentials);
+
 		DefaultHttpClient httpClient = new DefaultHttpClient(httpParameters);
-		HttpResponse response = httpClient.execute(new HttpGet(url + combinedParams));
+		HttpResponse response = httpClient.execute(request);
 
 		if (response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
 			String text = EntityUtils.toString(response.getEntity());
@@ -237,7 +239,7 @@ public class ServiceManager {
 					+ response.getStatusLine().getReasonPhrase());
 		}
 	}
-	
+
 	/**
 	 * Use this method to post a HTTP request.
 	 * @param url A URL to post the request to.
