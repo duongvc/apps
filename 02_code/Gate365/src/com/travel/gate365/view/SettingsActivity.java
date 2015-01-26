@@ -69,22 +69,19 @@ public class SettingsActivity extends BaseActivity {
 		setResult(RESULT_LOGOUT);
 		finish();
 	}
-	
+
 	private OnCheckedChangeListener onCheckedChangeListener = new OnCheckedChangeListener() {
-		
+
 		@Override
 		public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 			Log.d(getId(), "isChecked:" + isChecked);
 			Model.getInstance().setLocationTrackingEnabled(isChecked);
-			SharedPreferences pref;
-			SharedPreferences.Editor editor;
-			pref = getSharedPreferences(CONFIG_NAME, MODE_PRIVATE);
-			editor = pref.edit();
+			SharedPreferences.Editor editor = getSharedPreferences(CONFIG_NAME, MODE_PRIVATE).edit();
 			editor.putBoolean(IS_GPS_TRACKING, Model.getInstance().isLocationTrackingEnabled());
 			editor.commit();
-			if(isChecked){
+			if (isChecked) {
 				GPSWrapper.getInstance().startTracking();
-			}else{
+			} else {
 				GPSWrapper.getInstance().stopTracking();
 			}
 		}

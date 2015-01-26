@@ -34,7 +34,7 @@ public class GPSWrapper extends Service {
 	private LocationListener locationListener;
 	public Location currentBestLocation = null;
 	//The minimum time between updates in milliseconds
-	private int frequency = 5000;
+	private int frequency = 160000; // 160 seconds by default
 
 	private SettingsActivity settingsActivity;
 	
@@ -57,28 +57,29 @@ public class GPSWrapper extends Service {
 		Log.d(LOGTAG, "onCreate()");
 		SharedPreferences pref = getSharedPreferences(BaseActivity.CONFIG_NAME, MODE_PRIVATE);
 		boolean gpstracking = pref.getBoolean(BaseActivity.IS_GPS_TRACKING, Gate365Activity.fakeMode || false);
-		int gpsFrequency = pref.getInt(BaseActivity.GPS_FREQUENCY, 160000);
+		frequency = pref.getInt(BaseActivity.GPS_FREQUENCY, 160000);
 		Log.d(LOGTAG, "gpstracking:" + gpstracking);
-		if(gpstracking){
-			init(gpsFrequency);
-			startTracking();			
+		if (gpstracking) {
+			init(frequency);
+			startTracking();
 		}
 	}
 
 	public void init(int frequency){
 		this.frequency = frequency;
 	}
-	
+
 	public void startTracking() {
 		Log.d(LOGTAG, "startTracking()");
-		if(locationManager == null){
-			try{
-				locationManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);			
-			}catch(Exception ex){
+		if (locationManager == null) {
+			try {
+				locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+			} catch (Exception ex) {
 				ex.printStackTrace();
 			}
 		}
-		if(locationManager != null){
+
+		if (locationManager != null) {
 			locationListener = new LocationListener() {
 				public void onLocationChanged(Location location) {
 					makeUseOfNewLocation(location);
@@ -94,54 +95,39 @@ public class GPSWrapper extends Service {
 				}
 			};
 
-            //getting GPS status
-            boolean isGPSEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+			//getting GPS status
+			boolean isGPSEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+			//if GPS Enabled get lat/long using GPS Services
+			if (isGPSEnabled) {
+				locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, frequency, 0, locationListener);
 
-            //getting network status
-            boolean isNetworkEnabled = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
-            
+				Log.d(LOGTAG, "GPS Enabled");
 
-            //First get location from Network Provider
-            if (isNetworkEnabled){
-                locationManager.requestLocationUpdates(
-                        LocationManager.NETWORK_PROVIDER,
-                        frequency,
-                        0, locationListener);
+				currentBestLocation = locationManager.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER);
+				if (currentBestLocation != null) {
+					makeUseOfNewLocation(currentBestLocation);
+				}
+			} else {
+				// only use network location provider if gps is not enabled
+				boolean isNetworkEnabled = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+				if (isNetworkEnabled) {
+					locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, frequency, 0, locationListener);
 
-                Log.d(LOGTAG, "Network");
+					Log.d(LOGTAG, "Network Location Provider enabled");
 
-                if (locationManager != null){
-                	currentBestLocation = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-                    if (currentBestLocation != null) {
-                    	makeUseOfNewLocation(currentBestLocation);
-                    }
-                }
-            }	            
-            //if GPS Enabled get lat/long using GPS Services
-            if (isGPSEnabled){
-                locationManager.requestLocationUpdates(
-                        LocationManager.GPS_PROVIDER,
-                        frequency,
-                        0, locationListener);
-
-                Log.d(LOGTAG, "GPS Enabled");
-
-                if (locationManager != null){
-                	currentBestLocation = locationManager.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER);
-                    if (currentBestLocation != null) {
-                    	makeUseOfNewLocation(currentBestLocation);
-                    }
-                }
-            	
-            } else {
-            	// Provider not enabled, prompt user to enable it
-            	if (settingsActivity != null) {
-                    Toast.makeText(settingsActivity, "Please turn GPS on!", Toast.LENGTH_LONG).show();
-                    Intent myIntent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                    settingsActivity.startActivity(myIntent);
-            	}
-            }
-		}		
+					currentBestLocation = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+					if (currentBestLocation != null) {
+						makeUseOfNewLocation(currentBestLocation);
+					}
+				}
+				// Provider not enabled, prompt user to enable it
+				if (settingsActivity != null) {
+					Toast.makeText(settingsActivity, "Please turn GPS on!", Toast.LENGTH_LONG).show();
+					Intent myIntent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+					settingsActivity.startActivity(myIntent);
+				}
+			}
+		}
 	}
 
 	private void makeUseOfNewLocation(final Location location) {

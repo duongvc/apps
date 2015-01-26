@@ -383,9 +383,9 @@ public class Gate365Activity extends BaseActivity implements OnItemClickListener
 					editor.putInt(GPS_FREQUENCY, Model.getInstance().getLocationTrackingInterval());
 					editor.commit();
 						
-					if(GPSWrapper.getInstance() != null){
+					if (GPSWrapper.getInstance() != null) {
 						GPSWrapper.getInstance().init(Model.getInstance().getLocationTrackingInterval());
-						if (Model.getInstance().isLocationTrackingEnabled()) {						
+						if (Model.getInstance().isLocationTrackingEnabled()) {
 							GPSWrapper.getInstance().startTracking();
 						}
 					}
