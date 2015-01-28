@@ -28,24 +28,22 @@ import android.widget.Toast;
 public class GPSWrapper extends Service {
 
 	private static final String LOGTAG = GPSWrapper.class.getSimpleName();
-	private static final int REQUIRED_GPS_ACCURACY = 20; //metres
 	private static GPSWrapper sInstance;
 	private LocationManager locationManager;
 	private LocationListener locationListener;
-	public Location currentBestLocation = null;
 	//The minimum time between updates in milliseconds
-	private int frequency = 160000; // 160 seconds by default
-
 	private SettingsActivity settingsActivity;
-	
+	private static long frequency = 160000;
+	private static long lastTime = 0;
+
 	public GPSWrapper() {
 		sInstance = this;
 	}
 
-	public static GPSWrapper getInstance(){
+	public static GPSWrapper getInstance() {
 		return sInstance;
 	}
-	
+
 	@Override
 	public IBinder onBind(Intent arg0) {
 		return null;
@@ -57,72 +55,69 @@ public class GPSWrapper extends Service {
 		Log.d(LOGTAG, "onCreate()");
 		SharedPreferences pref = getSharedPreferences(BaseActivity.CONFIG_NAME, MODE_PRIVATE);
 		boolean gpstracking = pref.getBoolean(BaseActivity.IS_GPS_TRACKING, Gate365Activity.fakeMode || false);
-		frequency = pref.getInt(BaseActivity.GPS_FREQUENCY, 160000);
 		Log.d(LOGTAG, "gpstracking:" + gpstracking);
 		if (gpstracking) {
-			init(frequency);
 			startTracking();
 		}
 	}
 
-	public void init(int frequency){
-		this.frequency = frequency;
-	}
-
 	public void startTracking() {
+		stopTracking();
+
 		Log.d(LOGTAG, "startTracking()");
 		if (locationManager == null) {
-			try {
-				locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-			} catch (Exception ex) {
-				ex.printStackTrace();
-			}
+			locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 		}
 
 		if (locationManager != null) {
-			locationListener = new LocationListener() {
-				public void onLocationChanged(Location location) {
-					makeUseOfNewLocation(location);
-				}
+			if (locationListener == null) {
+				locationListener = new LocationListener() {
+					public void onLocationChanged(Location location) {
+						makeUseOfNewLocation(location);
+					}
 
-				public void onStatusChanged(String provider, int status, Bundle extras) {
-				}
+					public void onStatusChanged(String provider, int status, Bundle extras) {
+					}
 
-				public void onProviderEnabled(String provider) {
-				}
+					public void onProviderEnabled(String provider) {
+					}
 
-				public void onProviderDisabled(String provider) {
-				}
-			};
+					public void onProviderDisabled(String provider) {
+					}
+				};
+			}
+
+			SharedPreferences pref = getSharedPreferences(BaseActivity.CONFIG_NAME, MODE_PRIVATE);
+			frequency = pref.getInt(BaseActivity.GPS_FREQUENCY, 160000);
+			Log.d(LOGTAG, "GPS frequency " + frequency);
 
 			//getting GPS status
 			boolean isGPSEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
 			//if GPS Enabled get lat/long using GPS Services
 			if (isGPSEnabled) {
-				locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, frequency, 0, locationListener);
-
 				Log.d(LOGTAG, "GPS Enabled");
-
-				currentBestLocation = locationManager.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER);
-				if (currentBestLocation != null) {
-					makeUseOfNewLocation(currentBestLocation);
+				locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, frequency, 0, locationListener);
+				Location l = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+				if (l != null) {
+					makeUseOfNewLocation(l);
 				}
-			} else {
-				// only use network location provider if gps is not enabled
-				boolean isNetworkEnabled = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
-				if (isNetworkEnabled) {
-					locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, frequency, 0, locationListener);
+			}
 
-					Log.d(LOGTAG, "Network Location Provider enabled");
-
-					currentBestLocation = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-					if (currentBestLocation != null) {
-						makeUseOfNewLocation(currentBestLocation);
-					}
+			boolean isNetworkEnabled = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+			if (isNetworkEnabled) {
+				Log.d(LOGTAG, "Network Location Provider enabled");
+				locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, frequency, 0, locationListener);
+				Location l = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+				if (l != null) {
+					makeUseOfNewLocation(l);
 				}
+			}
+
+			if (!isGPSEnabled && !isNetworkEnabled) {
 				// Provider not enabled, prompt user to enable it
 				if (settingsActivity != null) {
-					Toast.makeText(settingsActivity, "Please turn GPS on!", Toast.LENGTH_LONG).show();
+					settingsActivity.gpsIsOff();
+					Toast.makeText(settingsActivity, "Please turn GPS on first!", Toast.LENGTH_LONG).show();
 					Intent myIntent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
 					settingsActivity.startActivity(myIntent);
 				}
@@ -131,9 +126,13 @@ public class GPSWrapper extends Service {
 	}
 
 	private void makeUseOfNewLocation(final Location location) {
-		currentBestLocation = location;
+		if ((System.currentTimeMillis() - lastTime ) < frequency ) {
+			Log.d(LOGTAG, "makeUseOfNewLocation - not new");
+			return;
+		}
+		lastTime = System.currentTimeMillis();
 		Log.d(LOGTAG, "makeUseOfNewLocation - " + location.getLatitude() + "," + location.getLongitude());
-		final Model model = Model.getInstance(); 
+		final Model model = Model.getInstance();
 		model.setLastLattitude(String.valueOf(location.getLatitude()));
 		model.setLastLongtitude(String.valueOf(location.getLongitude()));
 		try {
@@ -149,7 +148,7 @@ public class GPSWrapper extends Service {
 			editor.putString(BaseActivity.GPS_LAST_LONGTITUDE, Model.getInstance().getLastLongtitude());
 			editor.commit();
 			Log.d(LOGTAG, "makeUseOfNewLocation - committed:" + location.getLatitude() + "," + location.getLongitude());
-			
+
 			AsyncTask<Void, Void, JSONObject> task = new AsyncTask<Void, Void, JSONObject>() {
 
 				protected JSONObject doInBackground(Void... urls) {
@@ -168,67 +167,26 @@ public class GPSWrapper extends Service {
 		} catch (Exception e) {
 			e.printStackTrace();
 			Log.e(LOGTAG, "makeUseOfNewLocation - error:" + e.getMessage());
-		}			
-		if(settingsActivity != null){
-			Log.d(LOGTAG, "makeUseOfNewLocation:" + currentBestLocation.getLatitude() + "," + currentBestLocation.getLongitude());
-			settingsActivity.onNewLocation(currentBestLocation);
 		}
-	}
-
-	protected boolean isBetterLocation(Location location) {
-		if (!location.hasAccuracy() || location.getAccuracy() > REQUIRED_GPS_ACCURACY) {
-			return false;
+		if (settingsActivity != null) {
+			Log.d(LOGTAG, "makeUseOfNewLocation:" + location.getLatitude() + "," + location.getLongitude());
+			settingsActivity.onNewLocation(location);
 		}
-
-		if (currentBestLocation == null) {
-			return true;
-		}
-
-		// Check whether the new location fix is newer or older
-		long timeDelta = location.getTime() - currentBestLocation.getTime();
-		boolean isSignificantlyNewer = timeDelta > 5000;
-		boolean isSignificantlyOlder = timeDelta < -5000;
-		boolean isNewer = timeDelta > 0;
-
-		// If it's been more than five seconds since the last location, use the new location
-		// because the user has likely moved
-		if (isSignificantlyNewer) {
-			return true;
-			// If the new location is more than five seconds older, it must be worse
-		} else if (isSignificantlyOlder) {
-			return false;
-		}
-
-		// Check whether the new location fix is more or less accurate
-		int accuracyDelta = (int) (location.getAccuracy() - currentBestLocation.getAccuracy());
-		boolean isMoreAccurate = accuracyDelta < 0;
-		boolean isLessAccurate = accuracyDelta > 0;
-		boolean isSignificantlyLessAccurate = accuracyDelta > 5;
-
-		// Determine location quality using a combination of timeliness and accuracy
-		if (isMoreAccurate) {
-			return true;
-		} else if (isNewer && !isLessAccurate) {
-			return true;
-		} else if (isNewer && !isSignificantlyLessAccurate) {
-			return true;
-		}
-		return false;
 	}
 
 	public void stopTracking() {
 		Log.d(LOGTAG, "stopTracking()");
+		lastTime = 0;
 		if (locationManager != null && locationListener != null) {
 			locationManager.removeUpdates(locationListener);
 		}
 	}
-	
+
 	@Override
 	public void onDestroy() {
-		locationManager.removeUpdates(locationListener);
+		stopTracking();
 		super.onDestroy();
 	}
-
 
 	public void setSettingsActivity(SettingsActivity settingsActivity) {
 		this.settingsActivity = settingsActivity;

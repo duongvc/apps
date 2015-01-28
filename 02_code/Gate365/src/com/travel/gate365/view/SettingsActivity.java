@@ -53,7 +53,7 @@ public class SettingsActivity extends BaseActivity {
 		chkGpstracking.setOnCheckedChangeListener(onCheckedChangeListener);
 		
 		txtFrequency = ((TextView)findViewById(R.id.txt_frequency));
-		txtFrequency.setText(getString(R.string.frequency)+ ": " + Model.getInstance().getLocationTrackingInterval() + " " + getString(R.string.seconds));
+		txtFrequency.setText(getString(R.string.frequency)+ ": " + Model.getInstance().getLocationTrackingInterval() / 1000 + " " + getString(R.string.seconds));
 		txtLastTime = ((TextView)findViewById(R.id.txt_last_time));
 		txtLastTime.setText(getString(R.string.last_time)+ ": " + Model.getInstance().getLastTimeSent());
 		txtLastLatitude = ((TextView)findViewById(R.id.txt_last_latitude));
@@ -105,9 +105,6 @@ public class SettingsActivity extends BaseActivity {
 					loading.dismiss();
 				}
 				switch (msg.what) {
-				case NOTE_LOAD_CONFIGURATION_SUCCESSFULLY:
-					activity.txtFrequency.setText(activity.getString(R.string.frequency)+ ": " + Model.getInstance().getLocationTrackingInterval() + " " + activity.getString(R.string.seconds));
-					break;
 
 				case NOTE_LOCATION_CHANGED:
 					activity.txtLastTime.setText(activity.getString(R.string.last_time)+ ": " + Model.getInstance().getLastTimeSent());
@@ -127,5 +124,14 @@ public class SettingsActivity extends BaseActivity {
 		android.os.Message msg = new Message();
 		msg.what = BaseActivity.NOTE_LOCATION_CHANGED;
 		notificationHandler.sendMessage(msg);				
+	}
+
+	public void gpsIsOff() {
+		chkGpstracking.setChecked(false);
+		Model.getInstance().setLocationTrackingEnabled(false);
+		SharedPreferences.Editor editor = getSharedPreferences(CONFIG_NAME, MODE_PRIVATE).edit();
+		editor.putBoolean(IS_GPS_TRACKING, Model.getInstance().isLocationTrackingEnabled());
+		editor.commit();
+		GPSWrapper.getInstance().stopTracking();
 	}
 }

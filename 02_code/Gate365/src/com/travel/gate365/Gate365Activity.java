@@ -79,7 +79,6 @@ public class Gate365Activity extends BaseActivity implements OnItemClickListener
 		init();
 
 		if(GPSWrapper.getInstance() != null){
-			GPSWrapper.getInstance().init(Model.getInstance().getLocationTrackingInterval());
 			if(gpstracking){
 				GPSWrapper.getInstance().startTracking();				
 			}
@@ -218,7 +217,19 @@ public class Gate365Activity extends BaseActivity implements OnItemClickListener
 						
 						android.os.Message msg = new Message();
 						msg.what = BaseActivity.NOTE_LOGIN_SUCCESSFULLY;
-						notificationHandler.sendMessage(msg);					
+						notificationHandler.sendMessage(msg);
+						
+						try{
+							JSONObject r = ServiceManager.getConfiguration(Model.getInstance().getUserInfo().getUsername(), Model.getInstance().getUserInfo().getPassword());
+							if(r != null){
+								Model.getInstance().parserConfiguration(r);
+								android.os.Message msg1 = new Message();
+								msg1.what = BaseActivity.NOTE_LOAD_CONFIGURATION_SUCCESSFULLY;
+								notificationHandler.sendMessage(msg1);					
+							}
+						}catch(Exception e){
+							e.printStackTrace();
+						}
 					}else{
 						android.os.Message msg = new Message();
 						msg.what = BaseActivity.NOTE_LOGIN_FAILED;
@@ -382,15 +393,8 @@ public class Gate365Activity extends BaseActivity implements OnItemClickListener
 					editor = pref.edit();
 					editor.putInt(GPS_FREQUENCY, Model.getInstance().getLocationTrackingInterval());
 					editor.commit();
-						
-					if (GPSWrapper.getInstance() != null) {
-						GPSWrapper.getInstance().init(Model.getInstance().getLocationTrackingInterval());
-						if (Model.getInstance().isLocationTrackingEnabled()) {
-							GPSWrapper.getInstance().startTracking();
-						}
-					}
 					break;
-					
+
 				default:
 					break;
 				}
