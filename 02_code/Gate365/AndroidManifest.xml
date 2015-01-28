@@ -6,7 +6,7 @@
 
     <uses-sdk
         android:minSdkVersion="14"
-        android:targetSdkVersion="16" />
+        android:targetSdkVersion="19" />
 
     <!-- Donut-specific flags which allow us to run on any dpi screens. -->
     <supports-screens
