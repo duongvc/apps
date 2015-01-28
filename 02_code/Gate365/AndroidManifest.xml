@@ -10,7 +10,6 @@
 
     <!-- Donut-specific flags which allow us to run on any dpi screens. -->
     <supports-screens
-        android:anyDensity="false"
         android:largeScreens="true"
         android:normalScreens="true"
         android:resizeable="false"
