@@ -45,7 +45,7 @@ public class Gate365Activity extends BaseActivity implements OnItemClickListener
 	private TextView edtPassword;
 	private HomeMenuItemAdapter adapter;
 	public static boolean fakeMode = false;
-	
+
 	public Gate365Activity() {
 		super(Gate365Activity.class.getSimpleName());
 	}
@@ -53,36 +53,36 @@ public class Gate365Activity extends BaseActivity implements OnItemClickListener
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
-		Model.getInstance().init(this);			
-		
+
+		Model.getInstance().init(this);
+
 		SharedPreferences pref = getSharedPreferences(CONFIG_NAME, MODE_PRIVATE);
 		boolean gpstracking = pref.getBoolean(IS_GPS_TRACKING, fakeMode || false);
 		int gpsFrequency = pref.getInt(GPS_FREQUENCY, 160000);
 		String lastSent = pref.getString(LAST_SENT, getString(R.string.never_sent));
 		String username = pref.getString(USERNAME, "");
 		String password = pref.getString(PASSWORD, "");
-		
+
 		Model.getInstance().setLogin(pref.getBoolean(IS_LOGIN, false) && username.length() > 0 && password.length() > 0);
 		Model.getInstance().setLocationTrackingEnabled(gpstracking);
 		Model.getInstance().setLocationTrackingInterval(gpsFrequency);
 		Model.getInstance().setLastTimeSent(lastSent);
 		Model.getInstance().setLastLattitude(pref.getString(GPS_LAST_LATITUDE, getString(R.string.never_sent)));
 		Model.getInstance().setLastLongtitude(pref.getString(GPS_LAST_LONGTITUDE, getString(R.string.never_sent)));
-		
+
 		Model.getInstance().paserLoginInfo(username, password);
-		if(Model.getInstance().isLogin()){
+		if (Model.getInstance().isLogin()) {
 			setContentView(R.layout.activity_home);
-		}else{
+		} else {
 			setContentView(R.layout.activity_login);
-		}		
+		}
 		init();
 
-		if(GPSWrapper.getInstance() != null){
-			if(gpstracking){
-				GPSWrapper.getInstance().startTracking();				
+		if (GPSWrapper.getInstance() != null) {
+			if (gpstracking) {
+				GPSWrapper.getInstance().startTracking();
 			}
-		}else{
+		} else {
 			startService(new Intent(getApplicationContext(), GPSWrapper.class));
 		}
 	}
@@ -90,49 +90,49 @@ public class Gate365Activity extends BaseActivity implements OnItemClickListener
 	@Override
 	protected void init() {
 		super.init();
-		
-		if(Model.getInstance().isLogin()){
-			GridView grdMenu = (GridView)findViewById(R.id.layout_content);
+
+		if (Model.getInstance().isLogin()) {
+			GridView grdMenu = (GridView) findViewById(R.id.layout_content);
 			adapter = new HomeMenuItemAdapter(this, Model.MENU_LIST);
-			if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT){
+			if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
 				grdMenu.setNumColumns(1);
-			}else{
+			} else {
 				grdMenu.setNumColumns(2);
 			}
 			grdMenu.setAdapter(adapter);
 			grdMenu.setOnItemClickListener(this);
-			grdMenu.setOnTouchListener(onTouchListener);			
-		}else{
-			edtUsername = (TextView)findViewById(R.id.edt_username);
-			edtPassword = (TextView)findViewById(R.id.edt_password);	
-			edtPassword.setImeActionLabel(getString(R.string.login_l), EditorInfo.IME_ACTION_GO);	
-			edtPassword.setOnEditorActionListener(onEditorActionListener);	
-			
-			ImageView icRefresh = (ImageView)findViewById(R.id.img_refresh);
+			grdMenu.setOnTouchListener(onTouchListener);
+		} else {
+			edtUsername = (TextView) findViewById(R.id.edt_username);
+			edtPassword = (TextView) findViewById(R.id.edt_password);
+			edtPassword.setImeActionLabel(getString(R.string.login_l), EditorInfo.IME_ACTION_GO);
+			edtPassword.setOnEditorActionListener(onEditorActionListener);
+
+			ImageView icRefresh = (ImageView) findViewById(R.id.img_refresh);
 			icRefresh.setVisibility(View.GONE);
-		}		
+		}
 	}
-	
+
 	@Override
 	public void onBackPressed() {
-		DialogHelper.yesNoAlert(this, getString(R.string.exit_app), getString(R.string.are_you_sure_exit_app)
-				, getString(android.R.string.yes), getString(android.R.string.no), exitPositiveHandler, exitNegativeHandler);
+		DialogHelper.yesNoAlert(this, getString(R.string.exit_app), getString(R.string.are_you_sure_exit_app), getString(android.R.string.yes),
+				getString(android.R.string.no), exitPositiveHandler, exitNegativeHandler);
 	}
-	
+
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		switch (requestCode) {
 		case FINISH_CODE:
-			if(resultCode == RESULT_LOGOUT){
+			if (resultCode == RESULT_LOGOUT) {
 				Model.getInstance().setLogin(false);
 				SharedPreferences pref = getSharedPreferences(CONFIG_NAME, MODE_PRIVATE);
 				SharedPreferences.Editor editor = pref.edit();
 				editor.putBoolean(IS_LOGIN, false);
 				editor.putString(USERNAME, "");
 				editor.putString(PASSWORD, "");
-				editor.commit();	            				
+				editor.commit();
 				setContentView(R.layout.activity_login);
-				init();			
+				init();
 			}
 			break;
 
@@ -141,7 +141,7 @@ public class Gate365Activity extends BaseActivity implements OnItemClickListener
 			break;
 		}
 	}
-	
+
 	@Override
 	public boolean onMenuItemSelected(int featureId, MenuItem item) {
 		switch (item.getItemId()) {
@@ -152,123 +152,125 @@ public class Gate365Activity extends BaseActivity implements OnItemClickListener
 			editor.putBoolean(IS_LOGIN, false);
 			editor.putString(USERNAME, "");
 			editor.putString(PASSWORD, "");
-			editor.commit();	            				
+			editor.commit();
 			setContentView(R.layout.activity_login);
-			init();			
+			init();
 			return true;
 
 		default:
 			return super.onMenuItemSelected(featureId, item);
-		}		
-		
+		}
+
 	}
-	
-	public void onLoginButtonHandler(View view){
+
+	public void onLoginButtonHandler(View view) {
 		final InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        inputMethodManager.hideSoftInputFromWindow(edtPassword.getWindowToken(), 0);
-        View viewTmp = getCurrentFocus();
-        if(viewTmp != null){ 
-        	viewTmp.clearFocus();
-        }
-        
-		if(!isNetworkAvailable()){
+		inputMethodManager.hideSoftInputFromWindow(edtPassword.getWindowToken(), 0);
+		View viewTmp = getCurrentFocus();
+		if (viewTmp != null) {
+			viewTmp.clearFocus();
+		}
+
+		if (!isNetworkAvailable()) {
 			DialogHelper.alert(this, R.string.no_internet, R.string.no_internet_avaialbe, null);
 			return;
 		}
-		
+
 		edtUsername.setHintTextColor(getResources().getColor(R.color.gray));
 		edtPassword.setHintTextColor(getResources().getColor(R.color.gray));
-		if(!fakeMode){
+		if (!fakeMode) {
 			if (edtUsername.getText().length() == 0) {
 				Log.i(getId() + " - onLoginButtonHandler", "Please enter username");
 				edtUsername.setHint(R.string.pls_enter_username);
 				edtUsername.setHintTextColor(getResources().getColor(R.color.red));
 				return;
-			} 
+			}
 			if (edtPassword.getText().length() == 0) {
 				Log.i(getId() + " - onLoginButtonHandler", "Please enter password");
 				edtPassword.setHint(R.string.pls_enter_password);
 				edtPassword.setHintTextColor(getResources().getColor(R.color.red));
 				return;
-			}			
+			}
 		}
-		if(loading == null || (loading != null && !loading.isShowing())){
-			loading = ProgressDialog.show(Gate365Activity.this, "", getString(R.string.logging_pls_wait)); 
+		if (loading == null || (loading != null && !loading.isShowing())) {
+			loading = ProgressDialog.show(Gate365Activity.this, "", getString(R.string.logging_pls_wait));
 			loading.show();
 		}
 		Thread thread = new Thread(new Runnable() {
-			
+
 			@Override
 			public void run() {
-				try { 
+				try {
 					JSONObject res;
-					if(fakeMode){
+					if (fakeMode) {
 						res = ServiceManager.login("ux00287", "1");
-					}else{
+					} else {
 						res = ServiceManager.login(edtUsername.getText().toString(), edtPassword.getText().toString());
 					}
-					if(res != null && res.getString("status").equalsIgnoreCase(ServiceManager.SUCCESS_STATUS)){
+					if (res != null && res.getString("status").equalsIgnoreCase(ServiceManager.SUCCESS_STATUS)) {
 						Model.getInstance().setLogin(true);
-						if(fakeMode){
+						if (fakeMode) {
 							Model.getInstance().paserLoginInfo("ux00287", "1");
-						}else{
-							Model.getInstance().paserLoginInfo(edtUsername.getText().toString(), edtPassword.getText().toString());	
+						} else {
+							Model.getInstance().paserLoginInfo(edtUsername.getText().toString(), edtPassword.getText().toString());
 						}
-						
+
 						android.os.Message msg = new Message();
 						msg.what = BaseActivity.NOTE_LOGIN_SUCCESSFULLY;
 						notificationHandler.sendMessage(msg);
-						
-						try{
-							JSONObject r = ServiceManager.getConfiguration(Model.getInstance().getUserInfo().getUsername(), Model.getInstance().getUserInfo().getPassword());
-							if(r != null){
+
+						try {
+							JSONObject r = ServiceManager.getConfiguration(Model.getInstance().getUserInfo().getUsername(), Model.getInstance()
+									.getUserInfo().getPassword());
+							if (r != null) {
 								Model.getInstance().parserConfiguration(r);
 								android.os.Message msg1 = new Message();
 								msg1.what = BaseActivity.NOTE_LOAD_CONFIGURATION_SUCCESSFULLY;
-								notificationHandler.sendMessage(msg1);					
+								notificationHandler.sendMessage(msg1);
 							}
-						}catch(Exception e){
+						} catch (Exception e) {
 							e.printStackTrace();
 						}
-					}else{
+					} else {
 						android.os.Message msg = new Message();
 						msg.what = BaseActivity.NOTE_LOGIN_FAILED;
-						notificationHandler.sendMessage(msg);												
+						notificationHandler.sendMessage(msg);
 					}
 				} catch (Exception e) {
 					e.printStackTrace();
 					android.os.Message msg = new Message();
 					msg.what = BaseActivity.NOTE_COULD_NOT_REQUEST_SERVER_DATA;
-					notificationHandler.sendMessage(msg);	 											
+					notificationHandler.sendMessage(msg);
 				}
-				if(Model.getInstance().isLogin()){
-					try{
-						JSONObject res = ServiceManager.getConfiguration(Model.getInstance().getUserInfo().getUsername(), Model.getInstance().getUserInfo().getPassword());
-						if(res != null){
+				if (Model.getInstance().isLogin()) {
+					try {
+						JSONObject res = ServiceManager.getConfiguration(Model.getInstance().getUserInfo().getUsername(), Model.getInstance()
+								.getUserInfo().getPassword());
+						if (res != null) {
 							Model.getInstance().parserConfiguration(res);
 							android.os.Message msg = new Message();
 							msg.what = BaseActivity.NOTE_LOAD_CONFIGURATION_SUCCESSFULLY;
-							notificationHandler.sendMessage(msg);					
+							notificationHandler.sendMessage(msg);
 						}
-					}catch(Exception e){
+					} catch (Exception e) {
 						e.printStackTrace();
 					}
 				}
 			}
 		});
-		
-		thread.start();				
+
+		thread.start();
 	}
 
 	@Override
 	public void onItemClick(AdapterView<?> adapter, View view, int pos, long id) {
 		Log.i(getId(), "::onItemClick - pos:" + pos + ", id:" + id);
 		Intent intent;
-		switch ((int)id) {
+		switch ((int) id) {
 		case MenuItemInfo.MENU_ITEM_COUNTRY_RISK:
 			intent = new Intent(this, DesCountriesActivity.class);
 			intent.putExtra(DesCountriesActivity.TARGET_TYPE, DesCountriesActivity.TARGET_RISK);
-			startActivityForResult(intent, FINISH_CODE);			
+			startActivityForResult(intent, FINISH_CODE);
 			break;
 
 		case MenuItemInfo.MENU_ITEM_JOURNEYS:
@@ -304,48 +306,48 @@ public class Gate365Activity extends BaseActivity implements OnItemClickListener
 	}
 
 	private OnEditorActionListener onEditorActionListener = new TextView.OnEditorActionListener() {
-	    @Override
-	    public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-	        if (actionId == EditorInfo.IME_ACTION_GO) {
-	        	onLoginButtonHandler(null);
-	            return true;
-	        }
-	        return false;
-	    }
+		@Override
+		public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+			if (actionId == EditorInfo.IME_ACTION_GO) {
+				onLoginButtonHandler(null);
+				return true;
+			}
+			return false;
+		}
 	};
-	
-	private DialogInterface.OnClickListener exitPositiveHandler = new DialogInterface.OnClickListener(){
+
+	private DialogInterface.OnClickListener exitPositiveHandler = new DialogInterface.OnClickListener() {
 
 		@Override
 		public void onClick(DialogInterface dialog, int which) {
 			Gate365Activity.this.exitApp();
 		}
-		
+
 	};
-	private DialogInterface.OnClickListener exitNegativeHandler = new DialogInterface.OnClickListener(){
+	private DialogInterface.OnClickListener exitNegativeHandler = new DialogInterface.OnClickListener() {
 
 		@Override
 		public void onClick(DialogInterface dialog, int which) {
-			
+
 		}
-		
+
 	};
 
 	protected void exitApp() {
 		super.onBackPressed();
-		
+
 	}
-	
-	OnTouchListener onTouchListener = new OnTouchListener(){
-		 
-	    @Override
-	    public boolean onTouch(View v, MotionEvent event) {
-	        if(event.getAction() == MotionEvent.ACTION_MOVE){
-	            return true;
-	        }
-	        return false;
-	    }
-	 
+
+	OnTouchListener onTouchListener = new OnTouchListener() {
+
+		@Override
+		public boolean onTouch(View v, MotionEvent event) {
+			if (event.getAction() == MotionEvent.ACTION_MOVE) {
+				return true;
+			}
+			return false;
+		}
+
 	};
 
 	protected final Handler notificationHandler = new MyHandler(this);
@@ -368,7 +370,7 @@ public class Gate365Activity extends BaseActivity implements OnItemClickListener
 					loading.dismiss();
 				}
 				switch (msg.what) {
-				case NOTE_LOGIN_SUCCESSFULLY: 
+				case NOTE_LOGIN_SUCCESSFULLY:
 					pref = activity.getSharedPreferences(CONFIG_NAME, MODE_PRIVATE);
 					editor = pref.edit();
 					editor.putBoolean(IS_LOGIN, true);
@@ -387,7 +389,7 @@ public class Gate365Activity extends BaseActivity implements OnItemClickListener
 				case NOTE_COULD_NOT_REQUEST_SERVER_DATA:
 					DialogHelper.alert(activity, R.string.load_failed, R.string.could_not_connect_server);
 					break;
-						
+
 				case NOTE_LOAD_CONFIGURATION_SUCCESSFULLY:
 					pref = activity.getSharedPreferences(CONFIG_NAME, MODE_PRIVATE);
 					editor = pref.edit();
@@ -401,12 +403,12 @@ public class Gate365Activity extends BaseActivity implements OnItemClickListener
 			}
 		}
 	}
-	
-	public void onNewLocation(Location location){
+
+	public void onNewLocation(Location location) {
 		Log.d(getId(), "onNewLocation - " + location.getLatitude() + "," + location.getLongitude());
 		android.os.Message msg = new Message();
 		msg.what = BaseActivity.NOTE_LOCATION_CHANGED;
-		notificationHandler.sendMessage(msg);							
+		notificationHandler.sendMessage(msg);
 	}
-	
+
 }
