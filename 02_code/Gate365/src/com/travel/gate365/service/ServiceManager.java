@@ -52,19 +52,19 @@ public class ServiceManager {
 	private static final int TIMEOUT_CONNECTION = 80000;
 	private static final int TIMEOUT_SOCKET = 60000; // 1 minute
 
-	private static final boolean IS_TEST_EVR = true;//testing username = ux00287, pass = 1
-	public static final boolean USER_AUTH_REQUIRED = true;
+	private static final boolean IS_TEST_EVR = false;//testing username = ux00287, pass = 1
+	//public static final boolean USER_AUTH_REQUIRED = true;
 
-	public static final String SERVER_URL = IS_TEST_EVR ? "http://archivist.it/gate365/BB/"	: "http://test.gate365.unicredit.eu/BB/";
-	public static final String URL_LOGIN = SERVER_URL + "Login.aspx";
-	public static final String URL_JOURNEYS = SERVER_URL + "GetTravelDestinations.aspx?type=detail";
-	public static final String URL_ALERTS = SERVER_URL + "GetTravelAlerts.aspx";
-	public static final String URL_PLACES = SERVER_URL + "GetTravelDestinations.aspx?type=group";
-	public static final String URL_ADVICES = SERVER_URL + "GetTravelAdvices.aspx";
-	public static final String URL_RISKS = SERVER_URL + "GetCountryRisk.aspx";
-	public static final String URL_TIPS = SERVER_URL + "GetTravelTips.aspx";
-	public static final String URL_GET_CONFIGURATIONS = SERVER_URL + "GetConfiguration.aspx";
-	public static final String URL_GET_SEND_LOCATION = SERVER_URL + "UpdatePaxPosition.aspx";
+	private static final String SERVER_URL = IS_TEST_EVR ? "http://archivist.it/gate365/BB/"	: "http://test.gate365.unicredit.eu/BB/";
+	private static final String URL_LOGIN = SERVER_URL + "Login.aspx";
+	private static final String URL_JOURNEYS = SERVER_URL + "GetTravelDestinations.aspx?type=detail";
+	private static final String URL_ALERTS = SERVER_URL + "GetTravelAlerts.aspx";
+	private static final String URL_PLACES = SERVER_URL + "GetTravelDestinations.aspx?type=group";
+	private static final String URL_ADVICES = SERVER_URL + "GetTravelAdvices.aspx";
+	private static final String URL_RISKS = SERVER_URL + "GetCountryRisk.aspx";
+	private static final String URL_TIPS = SERVER_URL + "GetTravelTips.aspx";
+	private static final String URL_GET_CONFIGURATIONS = SERVER_URL + "GetConfiguration.aspx";
+	private static final String URL_GET_SEND_LOCATION = SERVER_URL + "UpdatePaxPosition.aspx";
 	
 	public static final String SUCCESS_STATUS = "success";
 	
@@ -197,7 +197,7 @@ public class ServiceManager {
 	 * @return The requested JSON object
 	 * @throws Exception 
 	 */
-	public static JSONObject connect(String url, ArrayList<String> params, int timeoutSocket, int timeoutConnection) throws Exception {
+	private static JSONObject connect(String url, ArrayList<String> params, int timeoutSocket, int timeoutConnection) throws Exception {
 		// prepare the params to append it with url
 		String combinedParams = "";
 		if ((params != null) && !params.isEmpty()) {
