@@ -55,7 +55,7 @@ public class ServiceManager {
 	private static final boolean IS_TEST_EVR = false;//testing username = ux00287, pass = 1
 	//public static final boolean USER_AUTH_REQUIRED = true;
 
-	private static final String SERVER_URL = IS_TEST_EVR ? "http://archivist.it/gate365/BB/"	: "http://test.gate365.unicredit.eu/BB/";
+	private static final String SERVER_URL = IS_TEST_EVR ? "http://archivist.it/gate365/BB/"	: "https://gate365.internal.unicredit.eu/BB/";
 	private static final String URL_LOGIN = SERVER_URL + "Login.aspx";
 	private static final String URL_JOURNEYS = SERVER_URL + "GetTravelDestinations.aspx?type=detail";
 	private static final String URL_ALERTS = SERVER_URL + "GetTravelAlerts.aspx";
